@@ -1,312 +1,534 @@
-# Devin AI 組織横断開発標準リポジトリ
-## Organization Standards Repository for Devin AI
+# Devin組織横断開発標準リポジトリ
 
-## 概要
+**最終更新**: 2025-10-23  
+**バージョン**: 1.1.0  
+**管理者**: DevOps Team
 
-このリポジトリは、組織全体で統一された開発標準、コーディング規約、プロセス、技術方針を定義し、自律型AI Devinが全プロジェクトにおいて一貫した高品質な成果物を生成するための**横断的基盤ドキュメント**です。
+---
 
-**対象範囲**: 全プロジェクト共通の規約・標準・プロセス  
-**更新頻度**: 低頻度（四半期〜年次）  
-**責任者**: アーキテクチャチーム・開発標準委員会
+## 📖 概要
 
-## リポジトリ構成
+このリポジトリは、**Devin AI**を活用した組織横断プロジェクト開発における統一標準を定義・管理します。技術選定、コーディング規約、セキュリティ、インフラ構成など、ソフトウェア開発ライフサイクル全体をカバーする包括的なガイドラインを提供します。
+
+**対象読者**:
+- Devin AI（自律開発・コード生成）
+- 開発者・アーキテクト（レビュー・監督）
+- テクニカルリード（技術意思決定）
+- QAエンジニア（品質保証）
+- DevOps・インフラエンジニア（環境構築・運用）
+
+---
+
+## 🗂️ リポジトリ構成
 
 ```
 devin-organization-standards/
-├── README.md                           # このファイル
-├── 01-coding-standards/                # コーディング規約
-│   ├── 00-general-principles.md       # 共通原則（全言語共通）
-│   ├── typescript-javascript-standards.md # TypeScript/JavaScript統合
-│   ├── python-standards.md           # Python専用
-│   ├── java-standards.md              # Java専用
-│   ├── sql-standards.md               # SQL専用
-│   ├── css-styling-standards.md       # CSS/スタイリング専用
-│   └── README.md                      # 規約概要・使い方
-├── 02-architecture-standards/          # アーキテクチャ標準
-│   ├── system-architecture-patterns.md # システムアーキテクチャ
-│   ├── microservices-guidelines.md    # マイクロサービス指針
-│   ├── database-architecture.md       # データベース設計標準
-│   ├── api-architecture.md            # API設計標準
-│   └── security-architecture.md       # セキュリティアーキテクチャ
-├── 03-development-process/             # 開発プロセス標準
-│   ├── development-lifecycle.md       # 開発ライフサイクル
-│   ├── git-workflow.md                # Git運用規約
+│
+├── README.md                          # このファイル（全体概要・ナビゲーション）
+│
+├── AI-USAGE-GUIDE.md                  # AI活用ガイド（全体概要・ナビゲーション）
+├── AI-WORKFLOWS.md                    # AI向け詳細ワークフロー
+├── AI-PROMPTS.md                      # AI向けプロンプト例集
+├── AI-CHECKLISTS.md                   # AI向けチェックリスト
+├── AI-CODING-INSTRUCTIONS.md          # AI開発者向けコーディング規約参照指示
+├── AI-QUICK-REFERENCE.md              # AI開発者向けクイックリファレンス
+├── AI-PROMPT-TEMPLATES.md             # AIプロンプトテンプレート集
+│
+├── 01-coding-standards/               # コーディング規約（Tier 1: 必須）
+│   ├── README.md                      # セクション概要
+│   ├── 00-general-principles.md       # 全言語共通原則・保守性メトリクス・ドキュメンテーション標準
+│   ├── typescript-javascript-standards.md
+│   ├── python-standards.md
+│   ├── java-standards.md
+│   ├── sql-standards.md
+│   └── css-styling-standards.md
+│
+├── 02-architecture/                   # システム設計標準（Tier 1）
+│   ├── README.md
+│   ├── design-principles.md           # アーキテクチャ設計原則
+│   ├── api-design.md                  # API設計ガイド
+│   ├── microservices-guidelines.md    # マイクロサービス設計
+│   ├── database-design.md             # データベース設計標準
+│   └── frontend-architecture.md       # フロントエンド設計
+│
+├── 03-security/                       # セキュリティ標準（Tier 1）
+│   ├── README.md
+│   ├── security-checklist.md          # セキュリティチェックリスト
+│   ├── authentication-authorization.md # 認証・認可
+│   ├── data-protection.md             # データ保護
+│   ├── vulnerability-management.md     # 脆弱性管理
+│   └── secure-coding-practices.md     # セキュアコーディング
+│
+├── 04-testing/                        # テスト標準（Tier 2: 推奨）
+│   ├── README.md
+│   ├── testing-strategy.md            # テスト戦略
+│   ├── unit-testing.md                # ユニットテスト
+│   ├── integration-testing.md         # 統合テスト
+│   ├── e2e-testing.md                 # E2Eテスト
+│   └── performance-testing.md         # パフォーマンステスト
+│
+├── 05-infrastructure/                 # インフラ標準（Tier 2）
+│   ├── README.md
+│   ├── cloud-providers.md             # クラウドプロバイダー選定
+│   ├── container-standards.md         # コンテナ化標準
+│   ├── ci-cd-pipeline.md              # CI/CDパイプライン
+│   └── monitoring-logging.md          # 監視・ログ
+│
+├── 06-tools-and-environment/          # 開発環境（Tier 3: 任意）
+│   ├── README.md
+│   ├── ide-setup.md                   # IDE設定
+│   ├── linters-formatters.md          # リンター・フォーマッター
+│   └── recommended-extensions.md      # 推奨拡張機能
+│
+├── 07-project-management/             # プロジェクト管理（Tier 2）
+│   ├── README.md
+│   ├── git-workflow.md                # Gitワークフロー
 │   ├── code-review-standards.md       # コードレビュー標準
-│   ├── release-management.md          # リリース管理
-│   └── change-management.md           # 変更管理プロセス
-├── 04-quality-standards/               # 品質標準
-│   ├── testing-standards.md           # テスト標準
-│   ├── code-quality-metrics.md        # コード品質指標
-│   ├── performance-standards.md       # パフォーマンス基準
-│   ├── security-standards.md          # セキュリティ基準
-│   └── accessibility-standards.md     # アクセシビリティ基準
-├── 05-technology-stack/                # 技術スタック標準
-│   ├── approved-technologies.md       # 承認済み技術一覧
-│   ├── frontend-stack.md              # フロントエンド技術
-│   ├── backend-stack.md               # バックエンド技術
-│   ├── database-stack.md              # データベース技術
-│   ├── infrastructure-stack.md        # インフラストラクチャ
-│   └── third-party-services.md        # 外部サービス基準
-├── 06-tools-and-environment/           # ツール・環境標準
-│   ├── development-tools.md           # 開発ツール標準
-│   ├── ci-cd-standards.md             # CI/CD標準
-│   ├── monitoring-logging.md          # 監視・ログ基準
-│   ├── environment-management.md      # 環境管理
-│   └── containerization.md            # コンテナ化標準
-├── 07-security-compliance/             # セキュリティ・コンプライアンス
-│   ├── data-protection.md             # データ保護規約
-│   ├── authentication-authorization.md # 認証・認可標準
-│   ├── vulnerability-management.md    # 脆弱性管理
-│   ├── compliance-requirements.md     # コンプライアンス要件
-│   └── incident-response.md           # インシデント対応
-├── 08-templates/                       # 組織標準テンプレート
-│   ├── project-templates/             # プロジェクトテンプレート
-│   ├── code-templates/                # コードテンプレート
-│   ├── documentation-templates/       # ドキュメントテンプレート
-│   ├── testing-templates/             # テストテンプレート
-│   └── deployment-templates/          # デプロイテンプレート
-├── 09-reference/                       # リファレンス・チェックリスト
-│   ├── decision-matrix/               # 技術選定マトリックス
-│   ├── checklists/                    # 各種チェックリスト
-│   ├── glossary.md                    # 用語集
-│   ├── quick-reference.md             # クイックリファレンス
-│   └── escalation-matrix.md           # エスカレーション基準
-└── 10-governance/                      # ガバナンス
-    ├── standards-governance.md        # 標準化ガバナンス
-    ├── exception-process.md           # 例外承認プロセス
-    ├── update-process.md              # 更新管理プロセス
-    └── compliance-audit.md            # コンプライアンス監査
+│   ├── documentation-standards.md     # ドキュメンテーション
+│   └── release-management.md          # リリース管理
+│
+├── 08-performance/                    # パフォーマンス（Tier 2）
+│   ├── README.md
+│   ├── optimization-guidelines.md     # 最適化ガイドライン
+│   ├── caching-strategies.md          # キャッシング戦略
+│   └── scalability-patterns.md        # スケーラビリティパターン
+│
+├── 09-data-management/                # データ管理（Tier 2）
+│   ├── README.md
+│   ├── data-governance.md             # データガバナンス
+│   ├── backup-recovery.md             # バックアップ・リカバリー
+│   └── data-migration.md              # データ移行
+│
+├── 10-compliance/                     # コンプライアンス（Tier 1）
+│   ├── README.md
+│   ├── gdpr-compliance.md             # GDPR対応
+│   ├── accessibility-standards.md     # アクセシビリティ
+│   └── licensing.md                   # ライセンス管理
+│
+├── _archive/                          # 廃止・旧版アーカイブ
+│
+└── implementation-temp/               # 実装資料（参考用）
+    ├── IMPLEMENTATION_SUMMARY.md      # 実装内容サマリー
+    └── [言語別ドキュメンテーション追加セクション]
+
 ```
 
-## 各セクションの詳細
+---
 
-### 01-coding-standards/ - コーディング規約
+## 📂 各セクション詳細
+
+### 01. コーディング規約（Tier 1: 必須）
+
 **記載内容**:
-- **00-general-principles.md**: SOLID原則・命名規則基本思想・エラーハンドリング基本方針
-- **typescript-javascript-standards.md**: フロントエンド・バックエンド統合規約（React/Next.js、Node.js/NestJS）
-- **python-standards.md**: PEP8準拠+組織拡張（Django/FastAPI、データ処理・AI/ML用途含む）
-- **java-standards.md**: エンタープライズアプリケーション向けJava規約
-- **sql-standards.md**: データベース設計・クエリ最適化・パフォーマンス考慮
-- **css-styling-standards.md**: CSS/Sass/Tailwind CSS規約・レスポンシブデザイン指針
-- **README.md**: 各規約の使い方・適用優先度・ツール設定方法
+- **00-general-principles.md**: SOLID原則・命名規則・エラーハンドリング・**保守性メトリクス（関数/クラスサイズ、複雑度の数値基準）**・**ドキュメンテーション必須レベル（3段階）**
+- **typescript-javascript-standards.md**: TypeScript/JavaScript規約・**JSDoc標準・ESLint設定**
+- **python-standards.md**: Python規約・**Google Style Docstring・Pylint設定**
+- **java-standards.md**: Java規約・**Javadoc標準・CheckStyle設定**
+- **sql-standards.md**: SQL規約・**SQLコメント標準**
+- **css-styling-standards.md**: CSS/SCSS規約・**BEM命名規則・Stylelint設定**
 
 **利用シーン**:
-- **Devinコード生成時**: 言語別の統合ファイルを1回参照で完結
-- **プロジェクト開始時**: 適用する言語の規約ファイルを選択参照
-- **コードレビュー時**: 評価基準として言語固有ファイルを使用
-- **自動化ツール設定時**: ESLint/Prettier/Black等の設定根拠として活用
+- **コード生成前**: AI開発者が言語別規約を確認
+- **コードレビュー時**: レビュアーが基準として参照
+- **リファクタリング時**: 既存コードの品質改善
+- **新規参画時**: 開発者のオンボーディング
 
-### 02-architecture-standards/ - アーキテクチャ標準
-**記載内容**:
-- システムアーキテクチャパターン（レイヤードアーキテクチャ、マイクロサービス等）
-- データベース設計標準・正規化ルール・インデッックス戦略
-- API設計原則・RESTful設計・GraphQL標準
-- セキュリティアーキテクチャ・認証認可パターン
-- パフォーマンス設計指針・スケーラビリティ考慮事項
-
-**利用シーン**:
-- システム設計開始時の基盤アーキテクチャ決定
-- 技術選定時のアーキテクチャ適合性評価
-- アーキテクチャレビュー時の評価基準
-- 新メンバーへのアーキテクチャ教育資料
-
-### 03-development-process/ - 開発プロセス標準
-**記載内容**:
-- 開発ライフサイクル・アジャイル/ウォーターフォールプロセス
-- Git運用規約・ブランチ戦略・マージルール
-- コードレビュープロセス・承認フロー・品質ゲート
-- リリース管理・デプロイメント手順・ロールバック戦略
-- 変更管理・インシデント対応・緊急対応フロー
-
-**利用シーン**:
-- プロジェクト開始時の開発プロセス設計
-- リリース計画策定時のプロセス確認
-- 変更管理・緊急対応時の手順参照
-- チーム間での作業フロー統一
-
-### 04-quality-standards/ - 品質標準
-**記載内容**:
-- テスト戦略・単体テスト/統合テスト/E2Eテスト基準
-- コード品質指標・カバレッジ基準・複雑度制限
-- パフォーマンス基準・レスポンス時間・スループット要件
-- セキュリティ品質基準・脆弱性対応・ペネトレーションテスト
-- アクセシビリティ標準・WCAG準拠レベル
-
-**利用シーン**:
-- 品質チェック・品質ゲート通過判定時
-- テスト設計・テストケース作成時
-- リリース判定・品質評価時
-- 品質改善・技術的負債解消計画策定時
-
-### 05-technology-stack/ - 技術スタック標準
-**記載内容**:
-- 承認済み技術一覧・推奨バージョン・サポート期限
-- フロントエンド/バックエンド/データベース技術標準
-- インフラストラクチャ・クラウドサービス選定基準
-- 外部サービス・SaaS選定基準・ベンダー評価指標
-- 技術選定マトリックス・評価基準・判定フロー
-
-**利用シーン**:
-- 新規プロジェクト開始時の技術選定
-- 既存システムの技術更新・リプレース計画
-- 技術的負債解消・レガシーシステム更新
-- ベンダー選定・調達プロセス
-
-### 06-tools-and-environment/ - ツール・環境標準
-**記載内容**:
-- 開発ツール標準・IDE設定・プラグイン推奨リスト
-- CI/CD標準・パイプライン設定・自動化戦略
-- 監視・ログ管理・APM設定・アラート基準
-- 環境管理・Dev/Staging/Production環境構成
-- コンテナ化標準・Docker/Kubernetes設定規約
-
-**利用シーン**:
-- 開発環境構築・新メンバーオンボーディング時
-- CI/CDパイプライン構築・自動化導入時
-- 運用監視システム構築・アラート設定時
-- インフラ構成変更・環境統合時
-
-### 07-security-compliance/ - セキュリティ・コンプライアンス
-**記載内容**:
-- データ保護規約・個人情報取扱・GDPR/CCPA対応
-- 認証認可標準・OAuth/SAML実装・多要素認証
-- 脆弱性管理・セキュリティテスト・侵入テスト基準
-- コンプライアンス要件・SOX法/ISO27001対応
-- インシデント対応・セキュリティ事故対応フロー
-
-**利用シーン**:
-- セキュリティレビュー・脆弱性評価時
-- 監査対応・コンプライアンスチェック時
-- セキュリティインシデント発生時の対応
-- 法的要件・規制要件への対応確認
-
-### 08-templates/ - 組織標準テンプレート
-**記載内容**:
-- プロジェクトテンプレート・ディレクトリ構成・初期設定
-- コードテンプレート・ボイラープレート・共通ライブラリ
-- ドキュメントテンプレート・要件定義書・設計書ひな形
-- テストテンプレート・テストケース・テストデータ
-- デプロイテンプレート・CI/CD設定・インフラ構成
-
-**利用シーン**:
-- 新規プロジェクト開始時の迅速なセットアップ
-- 新機能開発時のコード雛形として活用
-- ドキュメント作成時の構成・記載内容の統一
-- テスト作成時の効率化・品質統一
-
-### 09-reference/ - リファレンス・チェックリスト
-**記載内容**:
-- 各種チェックリスト・コードレビュー/リリース/セキュリティ
-- 技術選定マトリックス・評価基準・判定フロー
-- 用語集・組織内共通用語・技術用語定義
-- クイックリファレンス・コマンド集・設定例
-- エスカレーション基準・問題発生時の連絡先・手順
-
-**利用シーン**:
-- 作業完了時の品質確認・チェックリスト活用
-- 技術選定時の評価基準・判定マトリックス参照
-- 用語確認・定義統一・コミュニケーション円滑化
-- 緊急時対応・エスカレーション判断
-
-### 10-governance/ - ガバナンス
-**記載内容**:
-- 標準化ガバナンス・標準策定プロセス・承認フロー
-- 例外承認プロセス・特例申請・リスク評価手順
-- 更新管理プロセス・変更管理・バージョン管理
-- コンプライアンス監査・定期監査・改善プロセス
-- 組織体制・責任分担・意思決定権限
-
-**利用シーン**:
-- 標準文書更新・改訂時の承認プロセス
-- 標準例外申請・特例承認時の手続き
-- 定期監査・コンプライアンスチェック時
-- 組織変更・権限変更時のガバナンス確認
-
-## 主要特徴
-
-### **横断性 (Cross-Project)**
-- すべてのプロジェクトで共通適用される規約・標準
-- プロジェクト固有の詳細は含まない
-- 組織全体のベストプラクティスを集約
-
-### **安定性 (Stability)**
-- 長期間変更されない基盤的な規約
-- 変更時は組織全体への影響を慎重に評価
-- バージョン管理による変更履歴の透明性
-
-### **再利用性 (Reusability)**
-- テンプレートによる効率的なプロジェクト開始
-- 標準化されたツールチェーン
-- 共通ライブラリ・フレームワークの推奨
-
-## Devinの活用方法
-
-### **基盤参照 (Foundation Reference)**
+**保守性メトリクス（v1.1.0追加）**:
 ```
-Devin設定例:
-1. 組織標準リポジトリを基盤として常時参照
-2. プロジェクト開始時に該当する標準を適用
-3. コード生成時は規約を厳格に遵守
-4. 技術選定時は承認済み技術スタックから選択
+関数/メソッド行数:
+  - 理想: 20行以内
+  - 推奨上限: 50行
+  - 絶対上限: 100行（超過時は必ずリファクタリング）
+
+クラス/ファイル行数:
+  - 理想: 200行以内
+  - 推奨上限: 400行
+  - 絶対上限: 1000行（超過時は必ず分割）
+
+循環的複雑度:
+  - 理想: 5以下
+  - 推奨上限: 10
+  - 絶対上限: 15（超過時は必ずリファクタリング）
+
+ネスト深さ:
+  - 理想: 2階層以内
+  - 推奨上限: 3階層
+  - 絶対上限: 4階層（超過時は必ずリファクタリング）
+
+パラメータ数:
+  - 理想: 3個以内
+  - 推奨上限: 5個
+  - 絶対上限: 7個（超過時はオブジェクト化検討）
 ```
 
-### **品質保証 (Quality Assurance)**
-- 生成コードの自動品質チェック
-- テンプレートベースの構造化
-- セキュリティ基準の自動適用
-- パフォーマンス基準の遵守
+**ドキュメンテーション必須レベル（v1.1.0追加）**:
+- **Level 1（必須）**: すべてのファイル・パブリッククラス・パブリックAPIにドキュメント必須
+- **Level 2（推奨）**: 複雑なロジック（複雑度10以上）、ビジネスルール、非自明な実装
+- **Level 3（任意）**: 単純な処理（自己文書化優先）
 
-## 更新・ガバナンス
+---
 
-### **更新権限**
-- **Level 1**: アーキテクチャチーム（重要な変更）
-- **Level 2**: 開発標準委員会（軽微な変更）
-- **Level 3**: テクニカルリード（ドキュメント修正）
+### 02. アーキテクチャ設計（Tier 1: 必須）
 
-### **更新プロセス**
-1. **提案** → RFC（Request for Comments）として提出
-2. **レビュー** → 関連チーム・ステークホルダーによる検討
-3. **承認** → 標準委員会による正式承認
-4. **展開** → 全プロジェクトへの適用・移行計画
-5. **監査** → 適用状況の定期的な確認
+**記載内容**:
+- **design-principles.md**: マイクロサービス、レイヤードアーキテクチャ、DDD原則
+- **api-design.md**: RESTful API設計、GraphQL設計、バージョニング戦略
+- **microservices-guidelines.md**: サービス分割、通信パターン、データ整合性
+- **database-design.md**: スキーマ設計、インデックス戦略、データモデリング
+- **frontend-architecture.md**: Component設計、状態管理、ルーティング
 
-### **例外処理**
-- プロジェクト固有の要件で標準を適用できない場合
-- 正式な例外承認プロセスを経て文書化
-- 例外の理由・期間・影響範囲を明記
+**利用シーン**:
+- **プロジェクト初期設計**: システム構成の意思決定
+- **技術選定**: アーキテクチャパターンの選択
+- **リファクタリング**: 既存システムの改善
+- **技術負債解消**: アーキテクチャの再設計
 
-## 連携方法
+---
 
-### **プロジェクトドキュメントリポジトリとの関係**
+### 03. セキュリティ標準（Tier 1: 必須）
+
+**記載内容**:
+- **security-checklist.md**: フェーズ別セキュリティチェック項目
+- **authentication-authorization.md**: OAuth2.0、JWT、RBAC実装
+- **data-protection.md**: 暗号化、個人情報保護、データマスキング
+- **vulnerability-management.md**: 脆弱性スキャン、パッチ適用プロセス
+- **secure-coding-practices.md**: OWASP Top 10対策、入力検証
+
+**利用シーン**:
+- **設計レビュー**: セキュリティリスクの事前評価
+- **実装時**: セキュアコーディング実践
+- **脆弱性対応**: セキュリティインシデントの修正
+- **監査・コンプライアンス**: セキュリティ監査の準備
+
+---
+
+### 04. テスト標準（Tier 2: 推奨）
+
+**記載内容**:
+- **testing-strategy.md**: テストピラミッド、カバレッジ目標
+- **unit-testing.md**: ユニットテストベストプラクティス
+- **integration-testing.md**: 統合テスト戦略
+- **e2e-testing.md**: E2Eテスト自動化
+- **performance-testing.md**: 負荷テスト、ストレステスト
+
+**利用シーン**:
+- **テストコード生成**: AI開発者がテストを自動生成
+- **品質保証**: QAエンジニアがテスト計画策定
+- **リグレッション防止**: 既存機能の保護
+- **CI/CD統合**: 自動テスト実行の設定
+
+---
+
+### 05. インフラ標準（Tier 2: 推奨）
+
+**記載内容**:
+- **cloud-providers.md**: AWS、Azure、GCPの選定基準
+- **container-standards.md**: Docker、Kubernetes設定
+- **ci-cd-pipeline.md**: GitHub Actions、GitLab CI/CD設定
+- **monitoring-logging.md**: Prometheus、Grafana、ELKスタック
+
+**利用シーン**:
+- **環境構築**: 開発・ステージング・本番環境の構築
+- **デプロイ自動化**: CI/CDパイプラインの設定
+- **障害対応**: ログ分析、メトリクス監視
+- **スケーリング**: インフラのスケールアウト設計
+
+---
+
+### 06. 開発環境・ツール（Tier 3: 任意）
+
+**記載内容**:
+- **ide-setup.md**: VSCode、IntelliJ IDEA設定
+- **linters-formatters.md**: ESLint、Prettier、Pylint設定
+- **recommended-extensions.md**: 生産性向上ツール
+
+**利用シーン**:
+- **新規参画時**: 開発環境の統一セットアップ
+- **コードフォーマット自動化**: CI/CDでのコード品質チェック
+- **チーム開発効率化**: ツールの標準化
+
+---
+
+### 07. プロジェクト管理（Tier 2: 推奨）
+
+**記載内容**:
+- **git-workflow.md**: Git Flow、GitHub Flow、トランクベース開発
+- **code-review-standards.md**: レビュープロセス、チェックリスト
+- **documentation-standards.md**: README、API仕様書、運用手順書
+- **release-management.md**: バージョニング、リリースノート作成
+
+**利用シーン**:
+- **ブランチ戦略策定**: プロジェクト開始時のワークフロー決定
+- **コードレビュー**: Pull Request時のレビュー基準
+- **リリース準備**: リリース計画とバージョン管理
+- **ドキュメント作成**: プロジェクトドキュメントの標準化
+
+---
+
+### 08. パフォーマンス最適化（Tier 2: 推奨）
+
+**記載内容**:
+- **optimization-guidelines.md**: フロントエンド・バックエンド最適化
+- **caching-strategies.md**: Redis、Memcached、CDN活用
+- **scalability-patterns.md**: 水平スケーリング、負荷分散
+
+**利用シーン**:
+- **パフォーマンス改善**: レスポンスタイム短縮
+- **スケーラビリティ設計**: 大規模トラフィック対応
+- **コスト最適化**: リソース効率化
+- **ボトルネック解消**: パフォーマンス分析と改善
+
+---
+
+### 09. データ管理（Tier 2: 推奨）
+
+**記載内容**:
+- **data-governance.md**: データ品質、マスターデータ管理
+- **backup-recovery.md**: バックアップ戦略、災害復旧計画
+- **data-migration.md**: データ移行プロセス、検証方法
+
+**利用シーン**:
+- **データ基盤構築**: データウェアハウス、データレイク設計
+- **災害対策**: バックアップ・リカバリー体制構築
+- **システム移行**: レガシーシステムからの移行
+- **データ品質向上**: データクレンジング、正規化
+
+---
+
+### 10. コンプライアンス（Tier 1: 必須）
+
+**記載内容**:
+- **gdpr-compliance.md**: GDPR対応チェックリスト
+- **accessibility-standards.md**: WCAG準拠、アクセシビリティテスト
+- **licensing.md**: OSSライセンス管理
+
+**利用シーン**:
+- **法的リスク回避**: GDPR、個人情報保護法対応
+- **アクセシビリティ対応**: WCAG準拠の実装
+- **ライセンス管理**: OSSライセンスコンプライアンス
+- **監査対応**: 外部監査の準備
+
+---
+
+### AI開発者向けドキュメント
+
+**記載内容**:
+- **AI-USAGE-GUIDE.md**: AI活用の全体概要とナビゲーション（16.2KB）
+- **AI-WORKFLOWS.md**: フェーズ別の詳細ワークフロー（18.0KB）
+- **AI-PROMPTS.md**: 実践的なプロンプト例集（22.8KB）
+- **AI-CHECKLISTS.md**: 検証チェックリスト（13.3KB）
+- **AI-CODING-INSTRUCTIONS.md**: コーディング規約参照指示（15.4KB）
+- **AI-QUICK-REFERENCE.md**: クイックリファレンス（7.3KB）
+- **AI-PROMPT-TEMPLATES.md**: プロンプトテンプレート集（13.3KB）
+
+**利用シーン**:
+- **AI開発ツール（Devin、Cursor、GitHub Copilot等）によるコード生成時**
+- **コーディング規約の迅速な確認**
+- **プロンプト作成時のテンプレート参照**
+- **生成コードの自己検証**
+
+**ドキュメント役割分担**:
 ```
-組織標準リポジトリ (この文書)
-    ↓ 基盤として参照
-プロジェクト固有ドキュメントリポジトリ
-    ↓ 具体的な設計・実装
-プロジェクト成果物
+┌─────────────────────────────────────────────┐
+│ AI-USAGE-GUIDE.md (全体ナビゲーション)      │
+│ - リポジトリ全体の使い方                    │
+│ - フェーズ別ガイド                          │
+│ - ドキュメント間の関係                      │
+└─────────────────────────────────────────────┘
+              ↓
+┌─────────────────────────────────────────────┐
+│ AI-CODING-INSTRUCTIONS.md (コーディング詳細)│
+│ - コーディング規約の詳細参照指示            │
+│ - 数値基準一覧                              │
+│ - 言語別ドキュメンテーション形式            │
+│ - セルフチェックリスト                      │
+└─────────────────────────────────────────────┘
+              ↓
+┌─────────────────────────────────────────────┐
+│ AI-QUICK-REFERENCE.md (クイックリファレンス)│
+│ - コーディング規約の要約版                  │
+│ - 数値基準表                                │
+│ - 必須チェックリスト                        │
+└─────────────────────────────────────────────┘
+              ↓
+┌─────────────────────────────────────────────┐
+│ AI-PROMPT-TEMPLATES.md (プロンプト集)       │
+│ - コード生成用テンプレート                  │
+│ - リファクタリング用テンプレート            │
+│ - レビュー用テンプレート                    │
+└─────────────────────────────────────────────┘
 ```
 
-### **Devin指示例**
+---
+
+### implementation-temp/（実装資料）
+
+**記載内容**:
+- **IMPLEMENTATION_SUMMARY.md**: 実装内容の包括的サマリー
+- **言語別ドキュメンテーション追加セクション**（5ファイル）: 各言語規約に追加した内容の元ファイル
+
+**利用シーン**:
+- **実装内容の確認**: 今回追加した保守性メトリクスとドキュメンテーション標準の詳細
+- **適用手順の参照**: 各言語での適用方法
+- **参考資料**: 将来の規約更新時の参考
+
+**注意**: このディレクトリは参考資料であり、実際の規約は各言語の標準ファイルに統合済みです。
+
+---
+
+## 🎯 主要特徴
+
+### 1. 横断性
+すべてのプロジェクトで共通的に適用可能な標準を定義。特定プロジェクト固有のルールは含まない。
+
+### 2. 安定性
+頻繁に変更されない確立されたベストプラクティスを記載。変更時はバージョン管理とチェンジログで追跡。
+
+### 3. 再利用性
+新規プロジェクト開始時、このリポジトリをテンプレートとして参照可能。
+
+---
+
+## 🤖 Devinの活用方法
+
+### Devinへの指示例
+
+**プロジェクト初期化時**:
 ```
-「新しいWebアプリケーションプロジェクトを開始する。
-組織標準リポジトリのフロントエンド技術スタック、
-コーディング規約、セキュリティ基準を適用し、
-プロジェクト固有要件と合わせて実装せよ。」
+このプロジェクトは、以下の組織標準に準拠してください：
+https://github.com/[your-org]/devin-organization-standards
+
+特に以下を厳守してください：
+- 01-coding-standards/typescript-javascript-standards.md
+- 02-architecture/api-design.md
+- 03-security/security-checklist.md
 ```
 
-## 利用上の注意
+**コード生成時**:
+```
+以下のコーディング規約に準拠したTypeScriptコードを生成してください：
+https://github.com/[your-org]/devin-organization-standards/blob/main/01-coding-standards/typescript-javascript-standards.md
 
-### **適用範囲の明確化**
-- このリポジトリは**HOW（どのように）**を定義
-- プロジェクト固有リポジトリが**WHAT（何を）**を定義
-- 両者の整合性を保つことが重要
+【重要な数値基準】
+- 関数は50行以内、絶対上限100行
+- 循環的複雑度は10以下、絶対上限15
+- すべてのパブリックAPIにJSDocコメント必須
+```
 
-### **柔軟性の確保**
-- 標準に固執しすぎず、プロジェクト要件を優先
-- 技術革新に応じた定期的な見直し
-- 開発者の創造性を阻害しない配慮
+**セキュリティレビュー時**:
+```
+以下のセキュリティチェックリストに基づいてコードを検証してください：
+https://github.com/[your-org]/devin-organization-standards/blob/main/03-security/security-checklist.md
 
-### **継続的改善**
-- プロジェクトからのフィードバック収集
-- 業界トレンドの反映
-- 定期的な有効性評価
+特にOWASP Top 10対策を確認してください。
+```
+
+**AI開発者向けクイックスタート**:
+```
+以下のドキュメントを参照して、コーディング規約を遵守したコードを生成してください：
+
+1. クイックリファレンス（要約版）:
+   /devin-organization-standards/AI-QUICK-REFERENCE.md
+
+2. 詳細指示（数値基準・形式）:
+   /devin-organization-standards/AI-CODING-INSTRUCTIONS.md
+
+3. プロンプトテンプレート（コード生成例）:
+   /devin-organization-standards/AI-PROMPT-TEMPLATES.md
+```
+
+---
+
+## 🔄 更新・ガバナンス
+
+### 更新プロセス
+1. **提案**: Issue作成（テンプレート使用）
+2. **議論**: ステークホルダーレビュー
+3. **承認**: テクニカルリード承認
+4. **マージ**: Pull Request経由で更新
+5. **通知**: 開発チームへのアナウンス
+
+### バージョン管理
+- **Major**: 破壊的変更（例: アーキテクチャ方針の根本的変更）
+- **Minor**: 新規追加（例: 新しい言語の標準追加）
+- **Patch**: 誤字修正、軽微な改善
+
+### 更新履歴（Changelog）
+
+#### v1.1.0 (2025-10-23)
+**追加**:
+- 保守性メトリクス（関数/クラスサイズ、複雑度、ネスト深さ等の数値基準）
+- ドキュメンテーション必須レベル（3段階: 必須/推奨/任意）
+- 言語別ドキュメンテーション標準（JSDoc、Docstring、Javadoc等）
+- 自動チェックツール設定（ESLint、Pylint、CheckStyle、Stylelint）
+- AI開発者向けドキュメント3件（AI-CODING-INSTRUCTIONS.md、AI-QUICK-REFERENCE.md、AI-PROMPT-TEMPLATES.md）
+- implementation-tempディレクトリ（実装資料）
+
+**変更**:
+- 00-general-principles.md: 1.3保守性メトリクス、5.3ドキュメンテーション必須レベル、5.4ファイル/クラスドキュメンテーション標準を追加
+- typescript-javascript-standards.md: 9.JSDoc標準、10.自動チェックツール設定を追加
+- python-standards.md: 11.Docstring標準、12.自動チェックツール設定を追加
+- java-standards.md: 10.Javadoc標準、11.自動チェックツール設定を追加
+- sql-standards.md: 9.SQLコメント標準を追加
+- css-styling-standards.md: 9.CSS/SCSSコメント標準、10.自動チェックツール設定を追加
+
+#### v1.0.0 (2025-10-20)
+- 初版リリース
+- 10セクション、7つのAI向けドキュメント
+
+---
+
+## 📞 連携方法
+
+### 1. GitHubリポジトリとして管理
+```bash
+git clone https://github.com/[your-org]/devin-organization-standards.git
+```
+
+### 2. プロジェクトへの参照
+```
+# プロジェクトのREADME.mdに記載
+このプロジェクトは以下の組織標準に準拠しています：
+https://github.com/[your-org]/devin-organization-standards
+```
+
+### 3. CI/CDパイプラインへの統合
+```yaml
+# .github/workflows/standards-check.yml
+name: Standards Check
+on: [push, pull_request]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run ESLint
+        run: npm run lint
+      - name: Run Pylint
+        run: pylint src/
+```
+
+### 4. Devinへの自動参照
+Devinのプロジェクト設定に、このリポジトリのURLを登録することで、自動的に標準を参照可能。
+
+---
+
+## 📚 関連リソース
+
+- **Devin公式ドキュメント**: https://devin.ai/docs
+- **OWASP**: https://owasp.org
+- **12 Factor App**: https://12factor.net
+- **Clean Code**: Robert C. Martin著
+
+---
+
+## 📝 ライセンス
+
+MIT License（組織内部使用）
+
+---
+
+## ✉️ お問い合わせ
+
+- **DevOps Team**: devops@yourorg.com
+- **GitHub Issues**: https://github.com/[your-org]/devin-organization-standards/issues
