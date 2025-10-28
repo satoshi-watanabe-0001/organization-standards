@@ -1,16 +1,440 @@
-<!--[--><!---->
-<!--[--><!--[--><!--]--><!--[--><!--[--><!--[-->
-[Login](/api/login?redirect_url=%2F)
-# **Welcome to Genspark, the AI Agentic Engine**
+# 品質標準 - テスト標準
 
-![Welcome to Genspark, the AI Agentic Engine](https://mainfunc.ai/blog/images/blog3.png)
+## ドキュメント情報
 
-> 
->  The traditional search has become obsolete and ineffective. As users navigate through endless ads, spam, and biased information, common activities like planning a trip, researching products, or seeking impartial information become frustratingly time-consuming. 
+- **バージョン**: 1.0.0
+- **最終更新日**: 2025-10-24
+- **ステータス**: アクティブ
+- **管理者**: 品質保証チーム
+- **カテゴリー**: 品質標準
 
- Traditional search engines have long acted as gateways to the internet, serving primarily as directories that list web pages potentially containing the answers you're seeking. This approach can often feel like being dropped in the middle of a jungle with an unverified map, requiring you to navigate alone to discern which paths lead to trustworthy and relevant information. These engines rank pages based on factors like keyword relevance and site authority, but they do not necessarily account for the actual quality or potential business biases of those pages. 
+## 目次
 
- In stark contrast, Genspark, our new AI agentic engine, is like having a team of knowledgeable guides. Each guide, or AI agent within our multi-agent framework, not only knows the jungle inside out but also creates unique pathways and gathers the best fruits from various parts of the jungle directly for you, on the fly. Unlike traditional search engines that act as bridges to existing third-party webpages, Genspark agents generate new, custom pages—called [Sparkpages](https://mainfunc.ai/blog/sparkpage_intro)—in real time based on your query. These pages are dynamically generated to directly meet your specific informational needs, synthesizing content from a broad array of relevant sources. Each agent contributes its own unique approach to the search, ensuring a highly personalized and relevant experience, free from the influence of business biases and SEO-driven content.
-<!--]--><!----><!--]--><!--]--><!--]-->
-<!---->
-<!--]-->
+1. [概要](#概要)
+2. [品質目標とメトリクス](#品質目標とメトリクス)
+3. [テストカバレッジ要件](#テストカバレッジ要件)
+4. [品質ゲート](#品質ゲート)
+5. [欠陥管理](#欠陥管理)
+6. [品質レポート](#品質レポート)
+7. [継続的品質改善](#継続的品質改善)
+8. [Devin AIガイドライン](#devin-aiガイドライン)
+
+---
+
+## 概要
+
+### 目的
+
+本ドキュメントは、組織全体で統一された品質標準を定義し、ソフトウェア品質の測定・評価・改善のための基準を確立します。
+
+### 適用範囲
+
+- **コード品質**: コーディング規約遵守、コードレビュー
+- **テスト品質**: テストカバレッジ、テスト設計
+- **製品品質**: バグ密度、パフォーマンス指標
+- **プロセス品質**: 開発プロセスの効率性
+
+### 基本原則
+
+1. **品質の作り込み**: テスト段階ではなく開発段階で品質を確保
+2. **継続的改善**: メトリクスに基づく継続的な品質向上
+3. **自動化優先**: 反復可能な品質チェックの自動化
+4. **早期発見**: 開発初期段階での問題検出
+5. **透明性**: 品質メトリクスの可視化と共有
+
+---
+
+## 品質目標とメトリクス
+
+### コード品質メトリクス
+
+#### 必須メトリクス（Tier 1）
+
+| メトリクス | 目標値 | 許容範囲 | 測定方法 |
+|----------|-------|---------|---------|
+| **テストカバレッジ（行）** | ≥80% | 70-80% | Jest/Pytest/JaCoCo |
+| **テストカバレッジ（ブランチ）** | ≥75% | 65-75% | 同上 |
+| **循環的複雑度** | ≤10 | 10-15 | ESLint/SonarQube |
+| **重複コード率** | <3% | 3-5% | SonarQube |
+| **コードレビュー率** | 100% | 95-100% | GitHub/GitLab |
+| **静的解析エラー** | 0件 | - | ESLint/Pylint/Checkstyle |
+
+#### 推奨メトリクス（Tier 2）
+
+| メトリクス | 目標値 | 測定方法 |
+|----------|-------|---------|
+| **コメント率** | 15-30% | SonarQube |
+| **技術的負債比率** | <5% | SonarQube |
+| **保守性指標** | A-B評価 | SonarQube |
+
+### 製品品質メトリクス
+
+#### バグ密度
+
+```
+バグ密度 = 発見バグ数 / コード規模（KLOC）
+
+目標値:
+- 新規開発: <0.5 bugs/KLOC
+- 既存システム改修: <1.0 bugs/KLOC
+```
+
+#### 欠陥収束率
+
+```
+欠陥収束率 = (今週クローズした欠陥数 - 今週発見された欠陥数) / 今週初めの未解決欠陥数
+
+目標値: >0（収束傾向）
+```
+
+#### 欠陥除去効率（DRE）
+
+```
+DRE = (リリース前に発見された欠陥数) / (全欠陥数) × 100%
+
+目標値: ≥95%
+```
+
+### パフォーマンス品質メトリクス
+
+| メトリクス | 目標値 | 測定方法 |
+|----------|-------|---------|
+| **APIレスポンスタイム（P95）** | <200ms | APM/ロードテスト |
+| **ページロード時間（P95）** | <2秒 | Lighthouse/WebPageTest |
+| **スループット** | 個別定義 | ロードテスト |
+| **エラー率** | <0.1% | APM/ログ分析 |
+
+---
+
+## テストカバレッジ要件
+
+### カバレッジ目標（プロジェクトフェーズ別）
+
+#### 新規開発プロジェクト
+
+```
+全体カバレッジ目標: 80%以上
+
+詳細目標:
+- ビジネスロジック層: 90%以上
+- APIエンドポイント: 85%以上
+- ユーティリティ関数: 80%以上
+- UIコンポーネント: 70%以上
+```
+
+#### レガシーシステム改修
+
+```
+全体カバレッジ目標: 段階的向上
+
+フェーズ1（初期3ヶ月）: 50%以上
+フェーズ2（6ヶ月目）: 65%以上
+フェーズ3（12ヶ月目）: 75%以上
+```
+
+### 重要度別カバレッジ要件
+
+| 重要度 | カバレッジ要件 | 対象コード |
+|-------|--------------|----------|
+| **Critical** | 100% | 認証・認可、決済処理、データ整合性 |
+| **High** | 90%以上 | ビジネスロジック、APIエンドポイント |
+| **Medium** | 80%以上 | 一般的な機能 |
+| **Low** | 70%以上 | ユーティリティ、ヘルパー関数 |
+
+### 除外可能なコード
+
+以下のコードはカバレッジ計算から除外可能：
+
+- **自動生成コード**: Protocol Buffers、OpenAPI生成コード
+- **設定ファイル**: 環境設定、定数定義
+- **型定義のみのファイル**: TypeScriptの型定義（.d.ts）
+- **エントリーポイント**: main関数、index.js（最小限の場合）
+
+```javascript
+/* istanbul ignore next */
+// カバレッジから除外するコードブロック
+```
+
+---
+
+## 品質ゲート
+
+### コミット時の品質ゲート
+
+```yaml
+# pre-commit hooks
+checks:
+  - name: Linting
+    command: npm run lint
+    fail_on_error: true
+    
+  - name: Format check
+    command: npm run format:check
+    fail_on_error: true
+    
+  - name: Type check
+    command: npm run type-check
+    fail_on_error: true
+```
+
+### Pull Request時の品質ゲート
+
+#### 必須チェック（ブロッキング）
+
+- [ ] すべてのユニットテストが成功
+- [ ] コードカバレッジが基準以上（80%）
+- [ ] 静的解析エラーがゼロ
+- [ ] コードレビュー承認（最低1名）
+- [ ] セキュリティスキャン合格
+- [ ] ビルドが成功
+
+#### 推奨チェック（警告のみ）
+
+- [ ] 統合テストが成功
+- [ ] パフォーマンステスト合格
+- [ ] コメント率が基準内
+- [ ] 技術的負債の増加なし
+
+### リリース前の品質ゲート
+
+#### ステージング環境デプロイ前
+
+```
+必須条件:
+✓ 全テストスイート成功（ユニット、統合、E2E）
+✓ セキュリティスキャン合格
+✓ パフォーマンステスト基準達成
+✓ 未解決のCriticalバグがゼロ
+✓ コードレビュー100%完了
+✓ ドキュメント更新完了
+```
+
+#### 本番環境デプロイ前
+
+```
+必須条件:
+✓ ステージング環境で24時間以上正常稼働
+✓ スモークテスト成功
+✓ ロールバック手順確認済み
+✓ 監視・アラート設定済み
+✓ リリースノート作成済み
+✓ ステークホルダー承認取得
+```
+
+---
+
+## 欠陥管理
+
+### 欠陥の重要度分類
+
+#### Severity（深刻度）
+
+| レベル | 定義 | 対応期限 |
+|-------|------|---------|
+| **Critical** | システムダウン、データ損失、セキュリティ侵害 | 即時対応（2時間以内） |
+| **High** | 主要機能の停止、パフォーマンス著しい劣化 | 24時間以内 |
+| **Medium** | 一部機能の不具合、回避策あり | 3営業日以内 |
+| **Low** | UI/UXの軽微な問題、タイポ | 次回リリースまで |
+
+#### Priority（優先度）
+
+| レベル | 定義 |
+|-------|------|
+| **P0** | 即時対応必須（本番環境影響大） |
+| **P1** | 次回リリースで必須 |
+| **P2** | 近い将来の対応が望ましい |
+| **P3** | 時間があれば対応 |
+
+### 欠陥追跡プロセス
+
+```mermaid
+欠陥発見 → トリアージ → 優先度付け → 修正 → レビュー → テスト → クローズ
+```
+
+#### トリアージ基準
+
+```
+Critical + P0 → 即時対応チームアサイン
+High + P1 → 現在スプリントで対応
+Medium + P2 → バックログ上位
+Low + P3 → バックログ下位
+```
+
+---
+
+## 品質レポート
+
+### 週次品質レポート
+
+```markdown
+# 週次品質レポート（YYYY-MM-DD週）
+
+## サマリー
+- テスト成功率: XX%
+- コードカバレッジ: XX%
+- 新規バグ: XX件
+- クローズバグ: XX件
+- 未解決バグ: XX件
+
+## 品質メトリクス推移
+[グラフ: カバレッジ、バグ数、テスト成功率]
+
+## 主要な課題
+1. [課題1]
+2. [課題2]
+
+## 改善アクション
+1. [アクション1]
+2. [アクション2]
+```
+
+### リリース品質レポート
+
+```markdown
+# リリース品質レポート（v1.2.0）
+
+## リリース品質サマリー
+- リリース日: YYYY-MM-DD
+- 総機能数: XX件
+- テスト実施数: XX件
+- 発見バグ数: XX件
+- 修正済みバグ数: XX件
+- DRE（欠陥除去効率）: XX%
+
+## 品質メトリクス
+| メトリクス | 目標 | 実績 | 評価 |
+|----------|------|------|------|
+| コードカバレッジ | 80% | XX% | ✓/✗ |
+| Critical バグ | 0件 | XX件 | ✓/✗ |
+| パフォーマンス | <200ms | XXms | ✓/✗ |
+
+## 既知の問題
+[既知の問題リスト]
+
+## 次回改善計画
+[改善計画]
+```
+
+---
+
+## 継続的品質改善
+
+### 品質改善サイクル（PDCA）
+
+```
+Plan（計画）
+→ 品質目標設定、メトリクス定義
+
+Do（実行）
+→ 開発プロセス実行、品質活動実施
+
+Check（評価）
+→ メトリクス測定、レビュー実施
+
+Act（改善）
+→ 課題特定、改善アクション実施
+```
+
+### 品質振り返り（レトロスペクティブ）
+
+#### スプリント終了時
+
+```
+議題:
+1. 今スプリントの品質メトリクス確認
+2. 品質関連の問題発生状況
+3. 効果的だった品質活動
+4. 改善が必要な領域
+5. 次スプリントのアクション決定
+```
+
+#### リリース後
+
+```
+議題:
+1. リリース品質の総括
+2. 本番環境で発見された問題
+3. 品質プロセスの有効性評価
+4. ベストプラクティスの抽出
+5. 長期的改善計画の策定
+```
+
+---
+
+## Devin AIガイドライン
+
+### AI開発時の品質チェックリスト
+
+#### コード生成時
+
+- [ ] コーディング規約に準拠
+- [ ] 適切なエラーハンドリング実装
+- [ ] ロギング・監視コード追加
+- [ ] セキュリティベストプラクティス適用
+- [ ] パフォーマンス考慮
+
+#### テストコード生成時
+
+- [ ] 正常系テストケース作成
+- [ ] 異常系テストケース作成
+- [ ] 境界値テストケース作成
+- [ ] モック・スタブ適切に使用
+- [ ] テストデータのクリーンアップ実装
+
+#### コードレビュー依頼時
+
+- [ ] セルフレビュー完了
+- [ ] テスト実行・合格確認
+- [ ] カバレッジ基準達成確認
+- [ ] ドキュメント更新
+- [ ] 変更内容の明確な説明
+
+### 自動品質チェック実装
+
+```yaml
+# .github/workflows/quality-check.yml
+name: Quality Check
+
+on: [pull_request]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Lint
+        run: npm run lint
+      
+      - name: Test with coverage
+        run: npm test -- --coverage
+      
+      - name: Check coverage threshold
+        run: |
+          COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.lines.pct')
+          if (( $(echo "$COVERAGE < 80" | bc -l) )); then
+            echo "::error::Coverage $COVERAGE% is below 80% threshold"
+            exit 1
+          fi
+      
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+```
+
+---
+
+## 関連ドキュメント
+
+- [テスト標準（開発プロセス）](../03-development-process/testing-standards.md)
+- [コードレビュー標準](../03-development-process/code-review-standards.md)
+- [コーディング規約](../01-coding-standards/)
+
+---
+
+**最終更新**: 2025-10-24  
+**次回レビュー予定**: 2026-01-24
