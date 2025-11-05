@@ -1,670 +1,1111 @@
-# 開発プロセス標準 / Development Process Standards
-
-**最終更新日**: 2025-10-24  
-**バージョン**: 1.0.0  
-**対象**: 全開発チーム・プロジェクトマネージャー・自律型AI Devin  
-**適用範囲**: 全プロジェクト共通開発プロセス
+# 開発プロセス / Development Process
 
 ---
 
-## 📖 概要
-
-このディレクトリは、組織全体で統一された開発プロセス標準を定義し、効率的で品質の高いソフトウェア開発を支援します。特に自律型AI Devinが組織の開発フローに沿って作業できるよう、明確で実践的なガイドラインを提供します。
-
-### 🎯 目的
-
-- **プロセスの標準化**: 全プロジェクトで統一された開発フローの確立
-- **品質の向上**: コードレビュー、テスト、CI/CDによる品質保証
-- **効率の向上**: 自動化とベストプラクティスによる生産性向上
-- **透明性の確保**: ドキュメンテーションと明確なワークフローによる可視化
-
----
-
-## 📂 ディレクトリ構成
-
-```
-03-development-process/
-├── README.md                        # このファイル
-├── git-workflow.md                  # Gitワークフロー標準
-├── code-review-standards.md         # コードレビュー標準
-├── ci-cd-pipeline.md                # CI/CDパイプライン標準
-├── testing-standards.md             # テスト標準
-├── documentation-standards.md       # ドキュメンテーション標準
-├── release-management.md            # リリース管理標準
-├── technical-debt-management.md     # テクニカルデット管理
-├── feature-flag-management.md       # フィーチャーフラグ管理
-└── code-generation-standards.md     # コード生成標準
+**メタデータ / Metadata**
+```yaml
+version: 2.0.0
+last_updated: 2025-01-15
+status: active
+owner: Engineering Team
+category: development-process
 ```
 
 ---
 
-## 📋 各ファイルの役割
+## 📋 目次 / Table of Contents
 
-### `git-workflow.md` - Gitワークフロー標準 🔴 Tier 1
-**内容**:
-- ブランチ戦略（GitHub Flow + Release Branches）
-- ブランチ命名規則（feature/*, bugfix/*, hotfix/*）
-- コミット規約（Conventional Commits）
-- プルリクエストプロセス
-- マージ戦略
-- リリースフロー
+1. [概要](#概要--overview)
+2. [開発ライフサイクル](#開発ライフサイクル--development-lifecycle)
+3. [プロセスドキュメント](#プロセスドキュメント--process-documents)
+4. [ツールとリソース](#ツールとリソース--tools-and-resources)
+5. [ベストプラクティス](#ベストプラクティス--best-practices)
+6. [関連標準](#関連標準--related-standards)
 
-**対象読者**: 全開発者、Devin AI
+---
 
-**利用シーン**:
-- 新規機能開発開始時
-- バグ修正時
-- プルリクエスト作成時
-- リリース準備時
+## 概要 / Overview
 
-**重要度**: 🔴 **必須** - すべての開発作業で適用
+### 目的 / Purpose
 
-**主要な規約**:
+このディレクトリは、ソフトウェア開発の全プロセスを統括する標準とガイドラインを提供します。計画、実装、テスト、デプロイ、運用、そしてインシデント管理まで、開発ライフサイクル全体をカバーします。
+
+### 適用範囲 / Scope
+
+```yaml
+covered_areas:
+  planning:
+    - プロジェクト計画
+    - スプリント計画
+    - 技術設計
+    - リソース計画
+  
+  development:
+    - コーディング標準(別セクション参照)
+    - ブランチ戦略(別セクション参照)
+    - コードレビュー(別セクション参照)
+    - ペアプログラミング
+  
+  quality_assurance:
+    - テスト戦略(別セクション参照)
+    - 品質基準(別セクション参照)
+    - レビュープロセス
+  
+  deployment:
+    - デプロイメント戦略
+    - リリースプロセス
+    - 変更管理
+  
+  operations:
+    - インシデント管理
+    - オンコール対応
+    - モニタリング
+  
+  improvement:
+    - レトロスペクティブ
+    - プロセス改善
+    - メトリクス分析
 ```
-ブランチ命名:
-  feature/123-user-authentication
-  bugfix/456-login-error
-  hotfix/1.2.3-security-fix
 
-コミットメッセージ:
-  feat: ユーザー認証機能を追加
-  fix: ログインエラーを修正
-  docs: READMEを更新
+### 原則 / Principles
+
+```yaml
+core_principles:
+  agile_mindset:
+    - 反復的・漸進的な開発
+    - 継続的なフィードバック
+    - 変化への適応
+    - チーム協力の重視
+  
+  quality_first:
+    - 品質はすべてのフェーズで考慮
+    - 自動化によるヒューマンエラー削減
+    - テスト駆動開発の推奨
+    - コードレビューの徹底
+  
+  continuous_improvement:
+    - データに基づく意思決定
+    - 定期的なレトロスペクティブ
+    - 学習文化の醸成
+    - プロセスの継続的な最適化
+  
+  collaboration:
+    - 透明性の高いコミュニケーション
+    - 知識の共有
+    - クロスファンクショナルな協力
+    - 心理的安全性の確保
+  
+  customer_focus:
+    - ユーザー価値の最大化
+    - 迅速なフィードバックループ
+    - データドリブンな意思決定
+    - ビジネス目標との整合性
 ```
 
 ---
 
-### `code-review-standards.md` - コードレビュー標準 🔴 Tier 1
-**内容**:
-- コードレビューの目的と原則
-- レビュープロセス（レビュアー選定、タイムライン）
-- レビュー観点とチェックリスト
-- フィードバックの書き方
-- レビュー対応のベストプラクティス
-- Devin AIのセルフレビュー手順
+## 開発ライフサイクル / Development Lifecycle
 
-**対象読者**: 全開発者、レビュアー、Devin AI
+### フェーズ概要 / Phase Overview
 
-**利用シーン**:
-- プルリクエストレビュー時
-- コードレビュアーとしての確認時
-- レビューコメントへの対応時
-- Devin AIの自己チェック時
-
-**重要度**: 🔴 **必須** - すべてのプルリクエストで適用
-
-**主要なレビュー観点**:
-- 機能要件の充足
-- コーディング規約への準拠
-- セキュリティチェック
-- パフォーマンス考慮
-- テストカバレッジ
-- ドキュメント更新
-
----
-
-### `ci-cd-pipeline.md` - CI/CDパイプライン標準 🔴 Tier 1
-**内容**:
-- CI/CDの基本原則
-- パイプライン構成（ビルド、テスト、デプロイ）
-- 環境別デプロイ戦略（開発、ステージング、本番）
-- 自動テスト実行
-- セキュリティスキャン統合
-- デプロイメント承認プロセス
-
-**対象読者**: DevOpsエンジニア、開発者、Devin AI
-
-**利用シーン**:
-- CI/CDパイプライン構築時
-- 新規プロジェクトセットアップ時
-- デプロイメント自動化時
-- パイプライン改善時
-
-**重要度**: 🔴 **必須** - 継続的インテグレーションとデプロイメント
-
-**パイプライン基本構成**:
-```
-1. コミット/プッシュ
-   ↓
-2. CI: ビルド & テスト
-   - リント
-   - ユニットテスト
-   - 統合テスト
-   - セキュリティスキャン
-   ↓
-3. CD: デプロイメント
-   - 開発環境（自動）
-   - ステージング環境（自動）
-   - 本番環境（承認後）
-```
-
----
-
-### `testing-standards.md` - テスト標準 🔴 Tier 1
-**内容**:
-- テスト戦略とテストピラミッド
-- ユニットテスト標準
-- 統合テスト標準
-- E2Eテスト標準
-- テストカバレッジ目標
-- テストデータ管理
-- モックとスタブの使用方法
-
-**対象読者**: 全開発者、QAエンジニア、Devin AI
-
-**利用シーン**:
-- テストコード作成時
-- テスト戦略策定時
-- カバレッジ改善時
-- テストフレームワーク選定時
-
-**重要度**: 🔴 **必須** - 品質保証の基盤
-
-**テストカバレッジ目標**:
-```
-ユニットテスト: 80%以上
-統合テスト: 主要パス100%
-E2Eテスト: クリティカルパス100%
-```
-
----
-
-### `documentation-standards.md` - ドキュメンテーション標準 🟡 Tier 2
-**内容**:
-- ドキュメンテーションの種類と目的
-- README標準（プロジェクトREADME、モジュールREADME）
-- API仕様書標準（OpenAPI/Swagger）
-- アーキテクチャドキュメント標準
-- 運用手順書標準
-- ドキュメントの更新タイミング
-- Markdown記法ガイドライン
-
-**対象読者**: 全開発者、テクニカルライター、Devin AI
-
-**利用シーン**:
-- プロジェクト開始時のREADME作成
-- API仕様書作成時
-- システム設計書作成時
-- 運用手順書作成時
-- ドキュメント更新時
-
-**重要度**: 🟡 **推奨** - 保守性と引き継ぎのために重要
-
-**必須ドキュメント**:
-```
-プロジェクトルート:
-  - README.md（概要、セットアップ、使用方法）
-  - CHANGELOG.md（変更履歴）
-  - CONTRIBUTING.md（コントリビューションガイド）
-
-docs/:
-  - architecture.md（システムアーキテクチャ）
-  - api-spec.yaml（API仕様）
-  - deployment.md（デプロイ手順）
-```
-
----
-
-### `release-management.md` - リリース管理標準 🟡 Tier 2
-**内容**:
-- バージョニング戦略（Semantic Versioning）
-- リリースプロセス
-- リリースノート作成ガイドライン
-- ロールバック手順
-- リリース承認プロセス
-- リリーススケジュール管理
-
-**対象読者**: リリースマネージャー、開発リード、Devin AI
-
-**利用シーン**:
-- リリース計画策定時
-- バージョンアップ時
-- リリースノート作成時
-- ロールバック実施時
-
-**重要度**: 🟡 **推奨** - 安定したリリース運用のため
-
-**Semantic Versioning**:
-```
-Major.Minor.Patch (例: 1.2.3)
-
-Major: 破壊的変更
-Minor: 新機能追加（後方互換性あり）
-Patch: バグ修正
+```yaml
+lifecycle_phases:
+  phase1_discovery:
+    name: "発見・計画 / Discovery & Planning"
+    duration: "1-2週間(プロジェクト規模による)"
+    
+    activities:
+      - 要件収集とユーザーリサーチ
+      - 技術調査と実現可能性評価
+      - アーキテクチャ設計
+      - リスク評価
+      - スコープ定義
+    
+    deliverables:
+      - プロジェクト提案書
+      - 技術設計書
+      - リスク評価レポート
+      - プロジェクト計画
+    
+    stakeholders:
+      - Product Manager
+      - Engineering Lead
+      - Architect
+      - UX Designer
+  
+  phase2_development:
+    name: "開発 / Development"
+    duration: "1-3ヶ月(イテレーティブ)"
+    
+    activities:
+      - スプリント計画(2週間スプリント)
+      - 機能実装
+      - ユニット・統合テスト
+      - コードレビュー
+      - ドキュメンテーション
+    
+    deliverables:
+      - 動作するソフトウェア
+      - テストカバレッジレポート
+      - 技術ドキュメント
+      - リリースノート
+    
+    stakeholders:
+      - Development Team
+      - QA Team
+      - Product Owner
+  
+  phase3_qa_validation:
+    name: "品質保証・検証 / QA & Validation"
+    duration: "1-2週間"
+    
+    activities:
+      - システムテスト
+      - パフォーマンステスト
+      - セキュリティテスト
+      - ユーザー受入テスト(UAT)
+      - バグ修正
+    
+    deliverables:
+      - QAレポート
+      - パフォーマンステスト結果
+      - セキュリティスキャン結果
+      - リリース判定
+    
+    stakeholders:
+      - QA Team
+      - Security Team
+      - Product Manager
+      - Key Users
+  
+  phase4_deployment:
+    name: "デプロイメント / Deployment"
+    duration: "数時間～1日"
+    
+    activities:
+      - 変更要求(CR)の提出・承認
+      - デプロイメント実行
+      - Smoke テスト
+      - モニタリング強化
+      - ロールバック準備
+    
+    deliverables:
+      - デプロイメントレポート
+      - モニタリングダッシュボード
+      - インシデント対応計画
+    
+    stakeholders:
+      - Operations Team
+      - Development Team
+      - On-call Engineers
+  
+  phase5_monitoring:
+    name: "監視・運用 / Monitoring & Operations"
+    duration: "継続的"
+    
+    activities:
+      - パフォーマンスモニタリング
+      - ユーザーフィードバック収集
+      - インシデント対応
+      - メトリクス分析
+      - 継続的な改善
+    
+    deliverables:
+      - メトリクスレポート
+      - インシデントレポート
+      - ユーザーフィードバックサマリー
+      - 改善提案
+    
+    stakeholders:
+      - SRE Team
+      - Customer Support
+      - Product Team
+  
+  phase6_retrospective:
+    name: "振り返り・改善 / Retrospective & Improvement"
+    duration: "スプリント毎、リリース毎"
+    
+    activities:
+      - レトロスペクティブミーティング
+      - KPI分析
+      - プロセス改善の特定
+      - 学びの共有
+      - アクションアイテムの追跡
+    
+    deliverables:
+      - レトロスペクティブレポート
+      - 改善アクションアイテム
+      - ベストプラクティス更新
+    
+    stakeholders:
+      - 全チームメンバー
+      - Engineering Manager
+      - Scrum Master / Agile Coach
 ```
 
----
+### スプリントプロセス / Sprint Process
 
-### `technical-debt-management.md` - テクニカルデット管理 ⚪ Tier 3
-**内容**:
-- テクニカルデットの種類（コード、設計、テスト、ドキュメント、インフラ）
-- デット測定方法と指標
-- 優先順位付けフレームワーク
-- デット対処戦略（ボーイスカウトルール、専用スプリント、段階的リファクタリング）
-- デット防止策（品質ゲート、定期健康診断）
-- チーム文化とプロセス
-- ツールと自動化
-
-**対象読者**: テックリード、開発者、アーキテクト、Devin AI
-
-**利用シーン**:
-- 技術的負債の特定と評価時
-- リファクタリング計画策定時
-- 品質改善活動時
-- 技術的負債スプリント実施時
-
-**重要度**: ⚪ **任意** - 長期的な保守性向上のため
-
-**主要な概念**:
-```
-技術的負債の種類:
-  - コードデット: 重複コード、複雑な処理
-  - 設計デット: 密結合、不適切なアーキテクチャ
-  - テストデット: 低カバレッジ、脆弱なテスト
-  - ドキュメンテーションデット: 古い・不足したドキュメント
-  - インフラストラクチャデット: 手動プロセス、監視不足
-
-対処戦略:
-  - ボーイスカウトルール: 常に改善を加える
-  - 専用デットスプリント: 定期的な集中対処
-  - 段階的リファクタリング: 小さなステップで改善
-```
-
----
-
-### `feature-flag-management.md` - フィーチャーフラグ管理 ⚪ Tier 3
-**内容**:
-- フィーチャーフラグの種類（リリース、実験、運用、権限）
-- フラグ実装パターン
-- フラグ評価戦略（クライアント側/サーバー側）
-- 段階的ロールアウト戦略
-- A/Bテストと実験
-- フラグのライフサイクル管理
-- セキュリティとコンプライアンス
-
-**対象読者**: 開発者、プロダクトマネージャー、DevOpsエンジニア、Devin AI
-
-**利用シーン**:
-- 新機能の段階的リリース時
-- A/Bテスト実施時
-- カナリアリリース実施時
-- 緊急時の機能無効化時
-- 権限ベースの機能制御時
-
-**重要度**: ⚪ **任意** - 継続的デリバリーと実験的開発のため
-
-**主要な概念**:
-```
-フラグの種類:
-  - リリーストグル: 未完成機能の一時的な隠蔽
-  - 実験トグル: A/Bテストと実験用
-  - 運用トグル: システム動作の動的制御
-  - 権限トグル: ユーザー権限ベースの機能制御
-
-ロールアウト戦略:
-  1. 内部テスター（5%）
-  2. ベータユーザー（20%）
-  3. 一般ユーザー（100%）
-  4. フラグ削除
+```yaml
+sprint_cadence:
+  duration: "2週間"
+  
+  sprint_events:
+    sprint_planning:
+      timing: "スプリント開始日(月曜日)"
+      duration: "2-4時間"
+      participants:
+        - Development Team
+        - Product Owner
+        - Scrum Master
+      objectives:
+        - スプリントゴールの定義
+        - ユーザーストーリーの選択
+        - タスク分解と見積もり
+        - コミットメントの確定
+      outputs:
+        - スプリントバックログ
+        - スプリントゴール
+        - タスク割り当て
+    
+    daily_standup:
+      timing: "毎日 10:00(15分)"
+      participants:
+        - Development Team
+        - Scrum Master
+        - Product Owner(オプション)
+      format:
+        - 昨日やったこと
+        - 今日やること
+        - ブロッカー・課題
+      objectives:
+        - 進捗の可視化
+        - 障害の早期発見
+        - チーム同期
+    
+    sprint_review:
+      timing: "スプリント最終日の午前"
+      duration: "1-2時間"
+      participants:
+        - Development Team
+        - Product Owner
+        - Stakeholders
+      objectives:
+        - デモンストレーション
+        - フィードバック収集
+        - 受け入れ判定
+      outputs:
+        - 完了した機能のデモ
+        - ステークホルダーフィードバック
+        - バックログの更新
+    
+    sprint_retrospective:
+      timing: "スプリント最終日の午後"
+      duration: "1-2時間"
+      participants:
+        - Development Team
+        - Scrum Master
+        - (Product Owner)
+      objectives:
+        - プロセスの振り返り
+        - 改善点の特定
+        - アクションアイテムの作成
+      outputs:
+        - レトロスペクティブレポート
+        - 改善アクションアイテム
+        - 次スプリントでの試行事項
+    
+    backlog_refinement:
+      timing: "週中(水曜日)"
+      duration: "1-2時間"
+      participants:
+        - Development Team(一部)
+        - Product Owner
+      objectives:
+        - 今後のストーリーの明確化
+        - 受け入れ基準の定義
+        - 見積もりの実施
+      outputs:
+        - リファインされたバックログ
+        - Ready状態のストーリー
 ```
 
 ---
 
-### `code-generation-standards.md` - コード生成標準 ⚪ Tier 3
-**内容**:
-- コード生成の種類（スキーマ駆動、テンプレート、AST、AI支援）
-- 生成コードの品質基準
-- ジェネレーターの実装パターン
-- カスタマイズとメンテナンス戦略
-- バージョン管理とCI/CD統合
-- 生成コードのテスト戦略
-- トラブルシューティング
+## プロセスドキュメント / Process Documents
 
-**対象読者**: 開発者、アーキテクト、ツールエンジニア、Devin AI
+### このディレクトリのドキュメント / Documents in this Directory
 
-**利用シーン**:
-- APIクライアント/サーバーコード生成時
-- データベースモデル生成時
-- テストデータ生成時
-- ドキュメント自動生成時
-- ボイラープレートコード生成時
-
-**重要度**: ⚪ **任意** - 開発効率向上のため
-
-**主要な概念**:
-```
-生成の種類:
-  - スキーマ駆動: OpenAPI、GraphQLから生成
-  - テンプレートベース: Handlebars、Jinjaなど
-  - ASTベース: 構文木操作による生成
-  - AI支援: GitHub Copilot、Devinによる生成
-
-品質基準:
-  - 可読性: 人間が理解できるコード
-  - 保守性: カスタマイズ可能な構造
-  - 一貫性: 統一されたスタイル
-  - テスト可能性: テストしやすい設計
-```
-
----
-
-## 🤖 Devin（自律型AI）の利用パターン
-
-### パターン1: 新規機能開発時
-```
-1. git-workflow.md でブランチ作成ルールを確認
-2. featureブランチを作成
-3. コーディング規約に従って実装
-4. testing-standards.md に従ってテストコード作成
-5. code-review-standards.md でセルフレビュー
-6. プルリクエスト作成
-7. ci-cd-pipeline.md に従って自動テスト実行確認
-```
-
-**プロンプト例**:
-```
-以下の開発プロセス標準に従って新機能を実装してください：
-- /03-development-process/git-workflow.md
-- /03-development-process/testing-standards.md
-- /03-development-process/code-review-standards.md
-
-機能要件：[要件を記載]
-
-以下の手順で実施：
-1. feature/[issue-番号]-[機能名] ブランチを作成
-2. 機能実装
-3. ユニットテスト作成（カバレッジ80%以上）
-4. セルフレビュー実施
-5. プルリクエスト作成
-```
-
----
-
-### パターン2: コードレビュー時
-```
-1. code-review-standards.md のチェックリストを参照
-2. コーディング規約への準拠を確認
-3. セキュリティチェックリストで確認
-4. テストカバレッジを確認
-5. 建設的なフィードバックを提供
-```
-
-**プロンプト例**:
-```
-以下のコードレビュー標準に基づいてプルリクエストをレビューしてください：
-- /03-development-process/code-review-standards.md
-- /01-coding-standards/[対象言語]-standards.md
-- /07-security-compliance/security-checklist.md
-
-プルリクエスト：[PRへのリンクまたは差分]
-
-以下の観点で確認：
-- 機能要件の充足
-- コーディング規約
-- セキュリティ
-- テストカバレッジ
-- パフォーマンス
-```
-
----
-
-### パターン3: リリース準備時
-```
-1. release-management.md でバージョニングルールを確認
-2. CHANGELOG.mdを更新
-3. リリースノートを作成
-4. testing-standards.md に従ってリグレッションテスト実施
-5. ci-cd-pipeline.md に従ってデプロイメント実行
+```yaml
+process_documents:
+  incident_management:
+    file: "incident-management.md"
+    version: "1.0.0"
+    description: "本番環境インシデントの検知、対応、解決プロセス"
+    key_topics:
+      - インシデント分類(Sev1-4)
+      - 対応プロセス(5フェーズ)
+      - 役割と責任(IC, On-call, SMEなど)
+      - コミュニケーション戦略
+      - Post-Incident Review (PIR)
+      - 予防と改善
+    audience:
+      - すべてのエンジニア
+      - Operations Team
+      - SRE Team
+      - On-call担当者
+    related:
+      - change-management.md
+      - ../06-operations/on-call-guide.md
+      - ../06-operations/monitoring-strategy.md
+  
+  change_management:
+    file: "change-management.md"
+    version: "1.0.0"
+    description: "本番環境への変更を安全に管理するプロセス"
+    key_topics:
+      - 変更分類(標準/通常/重大/緊急)
+      - Change Request プロセス
+      - 承認フロー(CAB含む)
+      - デプロイメント戦略
+      - ロールバック手順
+      - 緊急変更プロセス
+    audience:
+      - すべてのエンジニア
+      - Operations Team
+      - Engineering Managers
+      - CABメンバー
+    related:
+      - incident-management.md
+      - ../06-operations/deployment-strategy.md
+      - ../10-governance/exception-approval-process.md
+  
+  git_workflow:
+    file: "git-workflow.md"
+    version: "2.0.0"
+    description: "Gitブランチ戦略とワークフロー"
+    status: "既存ドキュメント(更新済み)"
+    key_topics:
+      - GitHub Flow / Git Flow
+      - ブランチ命名規則
+      - コミットメッセージ規約
+      - Pull Request プロセス
+      - マージ戦略
+    audience:
+      - すべてのエンジニア
+    related:
+      - code-review-guidelines.md
+      - ../01-coding-standards/
+  
+  code_review:
+    file: "code-review-guidelines.md"
+    version: "2.0.0"
+    description: "コードレビューの標準とベストプラクティス"
+    status: "既存ドキュメント(更新済み)"
+    key_topics:
+      - レビュープロセス
+      - レビュー観点
+      - フィードバックの書き方
+      - レビュアーの責任
+      - タイムライン
+    audience:
+      - すべてのエンジニア
+    related:
+      - git-workflow.md
+      - ../01-coding-standards/
+  
+  testing_strategy:
+    file: "../04-quality-standards/testing-strategy.md"
+    description: "包括的なテスト戦略"
+    note: "品質標準セクションに配置"
+  
+  ci_cd:
+    file: "ci-cd-pipeline.md"
+    version: "2.0.0"
+    description: "CI/CDパイプライン標準"
+    status: "既存ドキュメント(更新済み)"
+    key_topics:
+      - パイプライン構成
+      - 自動テスト
+      - デプロイメント自動化
+      - 環境管理
+    audience:
+      - Development Team
+      - DevOps Team
+    related:
+      - change-management.md
+      - ../06-operations/deployment-strategy.md
 ```
 
-**プロンプト例**:
-```
-以下のリリース管理標準に従ってリリース準備を実施してください：
-- /03-development-process/release-management.md
-- /03-development-process/documentation-standards.md
+### 他セクションの関連ドキュメント / Related Documents in Other Sections
 
-リリースバージョン：v1.2.0
-変更内容：[変更内容のリスト]
-
-実施内容：
-1. バージョン番号の更新
-2. CHANGELOG.md更新
-3. リリースノート作成
-4. タグ作成
-```
-
----
-
-## 👥 開発チームの利用パターン
-
-### 新規メンバーのオンボーディング
-1. **基礎理解**: `README.md`（このファイル）で開発プロセスの全体像を把握
-2. **Git習得**: `git-workflow.md` でブランチ戦略とコミット規約を学習
-3. **レビュー準備**: `code-review-standards.md` でレビュー文化を理解
-4. **実践**: 小規模タスクで開発プロセスを体験
-
-### 開発リードの利用
-1. **プロセス設計**: プロジェクト開始時に各標準を参照してワークフロー決定
-2. **レビュー基準**: コードレビューとプロセスレビューの基準として活用
-3. **改善活動**: 標準を基にしたプロセス改善の実施
-
-### プロジェクトマネージャーの利用
-1. **計画策定**: リリース計画、スプリント計画の基準として参照
-2. **進捗管理**: 標準プロセスに基づく進捗状況の把握
-3. **品質管理**: テスト標準とレビュー標準による品質指標の監視
-
----
-
-## 🔄 開発フロー全体像
-
-```
-┌─────────────────────────────────────────────────┐
-│ 1. 要件定義・設計                               │
-│    - documentation-standards.md                 │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│ 2. 開発開始                                     │
-│    - git-workflow.md（ブランチ作成）            │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│ 3. 実装                                         │
-│    - コーディング規約に従って実装               │
-│    - testing-standards.md（テストコード作成）   │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│ 4. セルフレビュー                               │
-│    - code-review-standards.md                   │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│ 5. プルリクエスト作成                           │
-│    - git-workflow.md（PR作成）                  │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│ 6. CI/CD自動実行                                │
-│    - ci-cd-pipeline.md                          │
-│    - リント、テスト、セキュリティスキャン       │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│ 7. コードレビュー                               │
-│    - code-review-standards.md                   │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│ 8. マージ                                       │
-│    - git-workflow.md（マージ戦略）              │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│ 9. 自動デプロイ                                 │
-│    - ci-cd-pipeline.md                          │
-│    - 開発環境 → ステージング → 本番             │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│ 10. リリース                                    │
-│     - release-management.md                     │
-│     - バージョンタグ、リリースノート            │
-└─────────────────────────────────────────────────┘
+```yaml
+related_documents:
+  coding_standards:
+    location: "../01-coding-standards/"
+    documents:
+      - "Language-specific coding standards"
+      - "Code formatting guidelines"
+      - "Naming conventions"
+      - "Best practices"
+  
+  architecture:
+    location: "../02-architecture-standards/"
+    documents:
+      - "System architecture patterns"
+      - "API design standards"
+      - "Data modeling standards"
+      - "Microservices guidelines"
+  
+  quality:
+    location: "../04-quality-standards/"
+    documents:
+      - "Testing strategy"
+      - "Performance standards"
+      - "Security standards"
+      - "Accessibility guidelines"
+  
+  technology:
+    location: "../05-technology-stack/"
+    documents:
+      - "Approved technologies"
+      - "Framework guidelines"
+      - "Library standards"
+  
+  operations:
+    location: "../06-operations/"
+    documents:
+      - "Deployment strategy"
+      - "Monitoring strategy"
+      - "On-call guide"
+      - "SLA/SLO definitions"
+  
+  templates:
+    location: "../08-templates/"
+    documents:
+      - "Project README template"
+      - "Design document template"
+      - "Incident report template"
+      - "Change request template"
 ```
 
 ---
 
-## ⚙️ プロセス標準の優先順位（Tier分類）
+## ツールとリソース / Tools and Resources
 
-### 🔴 Tier 1: 必須（すべてのプロジェクトで適用）
-- `git-workflow.md` - Gitワークフロー
-- `code-review-standards.md` - コードレビュー
-- `ci-cd-pipeline.md` - CI/CDパイプライン
-- `testing-standards.md` - テスト標準
+### 開発ツール / Development Tools
 
-### 🟡 Tier 2: 推奨（プロジェクト特性に応じて適用）
-- `documentation-standards.md` - ドキュメンテーション
-- `release-management.md` - リリース管理
+```yaml
+development_tools:
+  version_control:
+    primary: "Git / GitHub"
+    practices:
+      - すべてのコードはバージョン管理
+      - 定期的なコミット
+      - 意味のあるコミットメッセージ
+    documentation: "git-workflow.md"
+  
+  ide:
+    recommended:
+      - "Visual Studio Code"
+      - "IntelliJ IDEA"
+      - "PyCharm"
+    plugins:
+      - Linters
+      - Formatters
+      - Git integration
+      - Testing frameworks
+  
+  ci_cd:
+    primary: "[CI/CD Tool - e.g., GitHub Actions, Jenkins]"
+    features:
+      - 自動ビルド
+      - 自動テスト
+      - 自動デプロイ
+      - コード品質チェック
+    documentation: "ci-cd-pipeline.md"
+  
+  code_quality:
+    static_analysis: "[Tool - e.g., SonarQube]"
+    code_coverage: "[Tool - e.g., Codecov]"
+    security_scan: "[Tool - e.g., Snyk, Dependabot]"
+  
+  testing:
+    unit_testing:
+      - Jest (JavaScript)
+      - pytest (Python)
+      - JUnit (Java)
+    integration_testing:
+      - Postman
+      - REST Assured
+    e2e_testing:
+      - Cypress
+      - Selenium
+      - Playwright
+```
 
-### ⚪ Tier 3: 任意（必要に応じて適用）
-- `technical-debt-management.md` - テクニカルデット管理
-- `feature-flag-management.md` - フィーチャーフラグ管理
-- `code-generation-standards.md` - コード生成標準
+### プロジェクト管理ツール / Project Management Tools
 
----
+```yaml
+project_management:
+  issue_tracking:
+    primary: "[Tool - e.g., Jira, Linear]"
+    usage:
+      - ユーザーストーリー管理
+      - バグトラッキング
+      - スプリント計画
+      - バックログ管理
+  
+  documentation:
+    wiki: "[Tool - e.g., Confluence, Notion]"
+    technical_docs: "GitHub (Markdown)"
+    api_docs: "[Tool - e.g., Swagger, Postman]"
+  
+  communication:
+    chat: "Slack"
+    channels:
+      - "#engineering" - 一般的な技術議論
+      - "#incidents" - インシデント対応
+      - "#deployments" - デプロイ通知
+      - "#code-review" - コードレビュー依頼
+      - "#oncall" - オンコール関連
+    video: "Zoom / Google Meet"
+  
+  monitoring:
+    apm: "[Tool - e.g., Datadog, New Relic]"
+    logging: "[Tool - e.g., ELK Stack, Splunk]"
+    incident_management: "[Tool - e.g., PagerDuty]"
+    status_page: "[Tool - e.g., StatusPage]"
+```
 
-## 📊 品質指標とメトリクス
+### リソースライブラリ / Resource Library
 
-### コードレビューメトリクス
-- **レビュー所要時間**: 平均24時間以内
-- **レビューコメント数**: PR当たり平均5〜10件
-- **再レビュー回数**: 平均1〜2回
-
-### CI/CDメトリクス
-- **ビルド成功率**: 95%以上
-- **テスト成功率**: 98%以上
-- **デプロイ頻度**: 週1回以上（目標）
-
-### テストメトリクス
-- **ユニットテストカバレッジ**: 80%以上
-- **統合テストカバレッジ**: 主要パス100%
-- **E2Eテストカバレッジ**: クリティカルパス100%
-
----
-
-## 🔄 更新・ガバナンス
-
-### 標準の更新プロセス
-1. **提案**: 開発チームがIssue作成
-2. **議論**: ステークホルダーレビュー（最低3名の開発者の同意）
-3. **承認**: 開発リード承認
-4. **マージ**: Pull Request経由で更新
-5. **通知**: 全開発チームへのアナウンス
-
-### 定期的な見直し
-- **四半期レビュー**: 各標準の適用状況を評価
-- **年次アップデート**: 新しいツールやベストプラクティスの反映
-- **継続的改善**: チームフィードバックに基づく改善
-
----
-
-## 📚 関連リソース
-
-### 内部ドキュメント
-- **コーディング規約**: `/01-coding-standards/`
-- **アーキテクチャ標準**: `/02-architecture-standards/`
-- **セキュリティ標準**: `/07-security-compliance/`
-- **技術スタック**: `/05-technology-stack/`
-
-### 外部参考資料
-- [GitHub Flow](https://docs.github.com/en/get-started/quickstart/github-flow)
-- [Conventional Commits](https://www.conventionalcommits.org/)
-- [Semantic Versioning](https://semver.org/)
-- [Google Engineering Practices](https://google.github.io/eng-practices/)
-- [The Twelve-Factor App](https://12factor.net/)
-
----
-
-## ✅ クイックチェックリスト
-
-### プロジェクト開始時
-- [ ] Gitリポジトリセットアップ（ブランチ保護設定）
-- [ ] CI/CDパイプライン構築
-- [ ] コードレビュープロセス合意
-- [ ] テスト戦略策定
-- [ ] ドキュメント構造決定
-
-### 開発開始前
-- [ ] ブランチ命名規則を確認
-- [ ] コミット規約を確認
-- [ ] テスト標準を確認
-- [ ] レビュー観点を確認
-
-### プルリクエスト作成前
-- [ ] セルフレビュー完了
-- [ ] テストコード作成完了
-- [ ] ローカルでCI相当のチェック実施
-- [ ] ドキュメント更新（必要な場合）
-
-### リリース前
-- [ ] リグレッションテスト完了
-- [ ] CHANGELOG.md更新
-- [ ] リリースノート作成
-- [ ] ロールバック手順確認
-
----
-
-## 💡 ベストプラクティス
-
-### 開発効率化
-1. **小さなPR**: 変更は小さく、レビューしやすいサイズに
-2. **早期フィードバック**: 実装前に設計レビューを実施
-3. **自動化**: 繰り返し作業は自動化
-4. **継続的統合**: こまめにコミット・プッシュ
-
-### 品質向上
-1. **テストファースト**: テストを先に書く（TDD）
-2. **ペアプログラミング**: 複雑な機能は2人で実装
-3. **定期的なリファクタリング**: 技術負債の蓄積を防ぐ
-4. **セキュリティ意識**: 実装時から常にセキュリティを考慮
-
-### チーム協働
-1. **透明性**: 進捗や課題を可視化
-2. **建設的なフィードバック**: レビューは学びの機会
-3. **知識共有**: ドキュメント化と定期的な勉強会
-4. **心理的安全性**: 失敗を恐れずチャレンジできる環境
-
----
-
-## 🚨 よくある問題と対策
-
-### 問題1: レビューが遅れる
-**対策**:
-- PRサイズを小さくする（変更行数200行以内を目標）
-- レビュアーを明示的にアサイン
-- レビュー優先度を設定
-
-### 問題2: テストが書かれない
-**対策**:
-- CI/CDでカバレッジチェックを必須化
-- テストコードのサンプルを提供
-- ペアプログラミングでテスト文化を醸成
-
-### 問題3: ドキュメントが更新されない
-**対策**:
-- PRチェックリストにドキュメント更新を含める
-- コードと同じリポジトリで管理
-- ドキュメント更新をレビュー項目に含める
+```yaml
+resource_library:
+  templates:
+    location: "../08-templates/"
+    available_templates:
+      - Project README
+      - Design Document
+      - Test Plan
+      - Incident Report
+      - Change Request
+      - Pull Request
+      - Issue (Bug/Feature)
+  
+  examples:
+    code_examples: "GitHub: org/code-examples"
+    reference_implementations: "GitHub: org/reference-apps"
+    architecture_diagrams: "Confluence: Architecture Space"
+  
+  training_materials:
+    onboarding: "Confluence: Onboarding Space"
+    video_tutorials: "Internal Learning Platform"
+    brown_bag_sessions: "Recorded on Zoom"
+    workshops: "Scheduled quarterly"
+  
+  external_resources:
+    books:
+      - "Clean Code by Robert C. Martin"
+      - "The Phoenix Project"
+      - "Site Reliability Engineering (Google)"
+      - "Accelerate"
+    websites:
+      - "Martin Fowler's Blog"
+      - "Google SRE Book"
+      - "12 Factor App"
+    communities:
+      - Internal Tech Talks
+      - External Meetups
+      - Online Communities
+```
 
 ---
 
-## 📞 お問い合わせ
+## ベストプラクティス / Best Practices
 
-- **開発プロセスチーム**: devprocess@yourorg.com
-- **GitHub Issues**: https://github.com/[your-org]/devin-organization-standards/issues
-- **Slack**: #development-process
+### コーディングベストプラクティス / Coding Best Practices
+
+```yaml
+coding_best_practices:
+  code_quality:
+    - 言語固有の標準に従う(../01-coding-standards/ 参照)
+    - DRY原則(Don't Repeat Yourself)
+    - SOLID原則の適用
+    - 適切なデザインパターンの使用
+    - コードの可読性を最優先
+  
+  testing:
+    - テスト駆動開発(TDD)の推奨
+    - 80%以上のコードカバレッジ目標
+    - ユニット、統合、E2Eテストのバランス
+    - テストの保守性を考慮
+  
+  documentation:
+    - 自己文書化コード
+    - 複雑なロジックにはコメント
+    - READMEの充実
+    - APIドキュメントの最新性維持
+  
+  security:
+    - セキュリティベストプラクティスの遵守
+    - 依存関係の定期更新
+    - シークレット管理の徹底
+    - 入力バリデーション
+  
+  performance:
+    - 早すぎる最適化を避ける
+    - パフォーマンステストの実施
+    - ボトルネックの特定と対処
+    - リソース効率の考慮
+```
+
+### コラボレーションベストプラクティス / Collaboration Best Practices
+
+```yaml
+collaboration_best_practices:
+  communication:
+    - 非同期コミュニケーションを基本とする
+    - 明確で簡潔なメッセージ
+    - 適切なチャネルの選択
+    - タイムリーな返信
+    - ドキュメントで残す
+  
+  code_review:
+    - 建設的なフィードバック
+    - 具体的な改善提案
+    - 相手を尊重する姿勢
+    - タイムリーなレビュー(24時間以内)
+    - 学びの機会として捉える
+  
+  knowledge_sharing:
+    - ペアプログラミング
+    - コードウォークスルー
+    - Tech Talks
+    - ドキュメンテーション
+    - メンタリング
+  
+  meeting_efficiency:
+    - 明確な目的とアジェンダ
+    - 必要な参加者のみ
+    - 時間厳守
+    - アクションアイテムの明確化
+    - 議事録の共有
+```
+
+### プロセス改善ベストプラクティス / Process Improvement Best Practices
+
+```yaml
+process_improvement:
+  metrics_driven:
+    - 定量的メトリクスの追跡
+    - データに基づく意思決定
+    - トレンド分析
+    - 目標設定とレビュー
+  
+  continuous_learning:
+    - 定期的なレトロスペクティブ
+    - 失敗から学ぶ文化
+    - 実験と検証
+    - 学びの共有
+  
+  automation:
+    - 繰り返しタスクの自動化
+    - CI/CDの充実
+    - テスト自動化
+    - インフラストラクチャのコード化
+  
+  feedback_loops:
+    - 短いフィードバックサイクル
+    - ユーザーフィードバックの収集
+    - モニタリングと分析
+    - 迅速な調整
+```
 
 ---
 
-**次のステップ**: 各プロセスドキュメントの詳細を確認し、プロジェクトに適用してください。
+## 関連標準 / Related Standards
+
+### 標準ドキュメントのナビゲーション / Standards Navigation
+
+```yaml
+standards_structure:
+  coding:
+    path: "../01-coding-standards/"
+    description: "言語固有のコーディング規約"
+    when_to_use: "コードを書く前に必ず確認"
+  
+  architecture:
+    path: "../02-architecture-standards/"
+    description: "システムアーキテクチャ設計標準"
+    when_to_use: "新規サービス設計、大きな変更時"
+  
+  development_process:
+    path: "./"
+    description: "開発プロセス全体の標準"
+    when_to_use: "日常的な開発作業で常に参照"
+  
+  quality:
+    path: "../04-quality-standards/"
+    description: "品質基準とテスト戦略"
+    when_to_use: "テスト計画、品質レビュー時"
+  
+  technology:
+    path: "../05-technology-stack/"
+    description: "承認済み技術スタック"
+    when_to_use: "技術選定、新規ツール導入時"
+  
+  operations:
+    path: "../06-operations/"
+    description: "運用・デプロイメント標準"
+    when_to_use: "デプロイ、運用タスク時"
+  
+  security:
+    path: "../07-security-standards/"
+    description: "セキュリティ標準"
+    when_to_use: "セキュリティ考慮が必要な時"
+  
+  templates:
+    path: "../08-templates/"
+    description: "各種ドキュメントテンプレート"
+    when_to_use: "新規ドキュメント作成時"
+  
+  reference:
+    path: "../09-reference/"
+    description: "参考資料とベストプラクティス"
+    when_to_use: "深い知識が必要な時"
+  
+  governance:
+    path: "../10-governance/"
+    description: "ガバナンスとポリシー"
+    when_to_use: "例外申請、標準更新時"
+```
+
+### クイックリファレンス / Quick Reference
+
+```yaml
+quick_reference:
+  new_project:
+    steps:
+      1. "プロジェクトREADMEテンプレートを使用"
+      2. "技術スタックを標準から選択"
+      3. "アーキテクチャ設計書を作成"
+      4. "CI/CDパイプラインをセットアップ"
+      5. "コーディング標準を適用"
+    documents:
+      - "../08-templates/project-readme-template.md"
+      - "../05-technology-stack/"
+      - "../02-architecture-standards/"
+      - "./ci-cd-pipeline.md"
+      - "../01-coding-standards/"
+  
+  new_feature:
+    steps:
+      1. "ユーザーストーリーを作成"
+      2. "技術設計(必要に応じて)"
+      3. "機能ブランチを作成"
+      4. "TDDでコーディング"
+      5. "Pull Request作成"
+      6. "コードレビュー"
+      7. "マージとデプロイ"
+    documents:
+      - "./git-workflow.md"
+      - "./code-review-guidelines.md"
+      - "../04-quality-standards/testing-strategy.md"
+      - "./change-management.md"
+  
+  production_issue:
+    steps:
+      1. "インシデント宣言"
+      2. "重要度判定"
+      3. "War Room開設"
+      4. "調査と復旧"
+      5. "Post-Incident Review"
+    documents:
+      - "./incident-management.md"
+      - "../06-operations/on-call-guide.md"
+      - "../08-templates/incident-report-template.md"
+  
+  making_changes:
+    steps:
+      1. "変更分類の判定"
+      2. "Change Request作成"
+      3. "承認取得"
+      4. "実装とテスト"
+      5. "デプロイと監視"
+    documents:
+      - "./change-management.md"
+      - "../08-templates/"
+      - "../06-operations/deployment-strategy.md"
+```
+
+---
+
+## メトリクスとKPI / Metrics and KPIs
+
+### 開発プロセスメトリクス / Development Process Metrics
+
+```yaml
+process_metrics:
+  velocity:
+    metric: "スプリントベロシティ"
+    measurement: "完了ストーリーポイント/スプリント"
+    target: "安定したベロシティ維持"
+    review_frequency: "スプリント毎"
+  
+  lead_time:
+    metric: "リードタイム"
+    measurement: "アイデア → 本番までの時間"
+    target: "<2週間(通常機能)"
+    review_frequency: "月次"
+  
+  cycle_time:
+    metric: "サイクルタイム"
+    measurement: "コーディング開始 → 本番までの時間"
+    target: "<1週間"
+    review_frequency: "月次"
+  
+  deployment_frequency:
+    metric: "デプロイ頻度"
+    measurement: "本番デプロイ回数/日"
+    target: ">1回/日"
+    review_frequency: "週次"
+  
+  change_failure_rate:
+    metric: "変更失敗率"
+    measurement: "失敗デプロイ / 総デプロイ"
+    target: "<5%"
+    review_frequency: "月次"
+  
+  mttr:
+    metric: "平均復旧時間(MTTR)"
+    measurement: "インシデント検知 → 復旧までの時間"
+    target: "<2時間(Sev1)"
+    review_frequency: "月次"
+  
+  code_review_time:
+    metric: "コードレビュー時間"
+    measurement: "PR作成 → 承認までの時間"
+    target: "<24時間"
+    review_frequency: "週次"
+  
+  test_coverage:
+    metric: "テストカバレッジ"
+    measurement: "カバーされたコード行 / 総コード行"
+    target: ">80%"
+    review_frequency: "スプリント毎"
+```
+
+---
+
+## 継続的改善 / Continuous Improvement
+
+### 改善サイクル / Improvement Cycle
+
+```yaml
+improvement_cycle:
+  measure:
+    - メトリクスの収集と分析
+    - トレンドの特定
+    - ボトルネックの発見
+    frequency: "継続的"
+  
+  analyze:
+    - 根本原因分析
+    - パターンの特定
+    - 改善機会の評価
+    frequency: "週次/月次"
+  
+  improve:
+    - 改善策の立案
+    - 実験の設計
+    - パイロット実施
+    frequency: "スプリント毎"
+  
+  standardize:
+    - 成功した改善の標準化
+    - ドキュメント更新
+    - トレーニング実施
+    frequency: "四半期"
+
+improvement_forums:
+  sprint_retrospective:
+    - チームレベルの改善
+    - アクションアイテム追跡
+    frequency: "スプリント毎"
+  
+  engineering_all_hands:
+    - 組織横断的な学び
+    - ベストプラクティス共有
+    frequency: "月次"
+  
+  tech_talks:
+    - 技術的な深堀り
+    - 新技術の紹介
+    frequency: "隔週"
+  
+  quarterly_review:
+    - プロセス全体のレビュー
+    - 標準の更新
+    frequency: "四半期"
+```
+
+---
+
+## よくある質問 / FAQ
+
+### プロセス関連 / Process-Related
+
+```yaml
+faq:
+  q1:
+    question: "緊急のバグ修正はどのプロセスに従うべきですか？"
+    answer: |
+      重要度に応じて異なります：
+      - Sev1インシデント: incident-management.md の緊急対応プロセス
+      - 本番への緊急修正: change-management.md の緊急変更プロセス
+      - 通常のバグ修正: 標準的な開発フロー(git-workflow.md)
+  
+  q2:
+    question: "標準に従わない例外的な対応が必要な場合は？"
+    answer: |
+      例外承認プロセスに従ってください：
+      1. ../10-governance/exception-approval-process.md を参照
+      2. 例外申請書を提出
+      3. 適切な承認を取得
+      4. 承認された条件に従って実施
+  
+  q3:
+    question: "新しい技術を導入したい場合のプロセスは？"
+    answer: |
+      Technology Radarプロセスに従います：
+      1. ../10-governance/technology-radar.md を参照
+      2. 技術評価を実施
+      3. 提案書を作成
+      4. Architecture Review Committee でレビュー
+      5. 承認後、段階的に導入
+  
+  q4:
+    question: "コードレビューはどのくらいの時間で完了すべきですか？"
+    answer: |
+      - 目標: 24時間以内
+      - 小さなPR(<200行): 数時間以内
+      - 大きなPR(>500行): 分割を検討
+      - 緊急修正: 2-4時間以内
+      詳細: code-review-guidelines.md
+  
+  q5:
+    question: "どのテストをどのタイミングで実施すべきですか？"
+    answer: |
+      - ユニットテスト: コーディング時(TDD推奨)
+      - 統合テスト: マージ前(CI/CD)
+      - E2Eテスト: デプロイ前
+      - パフォーマンステスト: リリース前
+      - セキュリティテスト: 定期的 + リリース前
+      詳細: ../04-quality-standards/testing-strategy.md
+```
+
+---
+
+## バージョン履歴 / Version History
+
+```yaml
+changelog:
+  v2.0.0:
+    date: "2025-01-15"
+    changes:
+      - 大幅な改訂と再構成
+      - インシデント管理プロセスの追加
+      - 変更管理プロセスの追加
+      - 開発ライフサイクルの詳細化
+      - スプリントプロセスの明確化
+      - メトリクスとKPIセクションの追加
+      - ツールとリソースの更新
+      - ベストプラクティスの拡充
+    author: "Engineering Team"
+  
+  v1.5.0:
+    date: "2024-09-01"
+    changes:
+      - CI/CDプロセスの更新
+      - コードレビューガイドラインの改善
+    author: "Engineering Team"
+  
+  v1.0.0:
+    date: "2024-01-15"
+    changes:
+      - 初版リリース
+      - 基本的な開発プロセスの定義
+    author: "Engineering Team"
+```
+
+---
+
+## 承認 / Approval
+
+```yaml
+approvals:
+  - role: "VP of Engineering"
+    name: "[Name]"
+    date: "2025-01-15"
+    status: "Approved"
+  
+  - role: "Head of Operations"
+    name: "[Name]"
+    date: "2025-01-15"
+    status: "Approved"
+  
+  - role: "Director of Engineering"
+    name: "[Name]"
+    date: "2025-01-15"
+    status: "Approved"
+```
+
+---
+
+## 連絡先 / Contact Information
+
+```yaml
+contacts:
+  process_questions:
+    team: "Engineering Team"
+    email: "engineering@example.com"
+    slack: "#engineering"
+  
+  incident_management:
+    team: "Operations Team"
+    email: "ops@example.com"
+    slack: "#incidents"
+    on_call: "PagerDuty"
+  
+  change_management:
+    team: "CAB (Change Advisory Board)"
+    email: "cab@example.com"
+    slack: "#change-management"
+  
+  standards_updates:
+    team: "Architecture Team"
+    email: "architecture@example.com"
+    slack: "#architecture"
+```
+
+---
+
+## 次のステップ / Next Steps
+
+### 新規メンバー向け / For New Team Members
+
+1. **オンボーディング**: 社内オンボーディングガイドを参照
+2. **このREADMEを読む**: 開発プロセス全体を理解
+3. **主要ドキュメントを読む**: 
+   - git-workflow.md
+   - code-review-guidelines.md
+   - incident-management.md(オンコール担当の場合)
+4. **ツールのセットアップ**: 開発環境、IDE、アクセス権限
+5. **メンターとペアリング**: 実践的な学習
+
+### 既存メンバー向け / For Existing Team Members
+
+1. **定期的なレビュー**: プロセスドキュメントの四半期レビュー
+2. **継続的改善**: レトロスペクティブでの提案
+3. **知識共有**: 新しい学びの共有
+4. **標準の更新**: 改善提案を提出(../10-governance/standards-update-process.md)

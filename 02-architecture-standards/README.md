@@ -1,344 +1,333 @@
-# アーキテクチャ設計標準 / Architecture Standards
+---
+version: "2.0.0"
+last_updated: "2025-01-15"
+status: "active"
+owner: "Architecture Team"
+category: "architecture"
+---
 
-**最終更新日**: 2025-10-24  
-**バージョン**: 1.0.0  
-**対象**: 全開発チーム・テクニカルリード・自律型AI Devin  
-**適用範囲**: 全プロジェクト共通アーキテクチャ標準
+# アーキテクチャ標準 / Architecture Standards
+
+## 概要 / Overview
+
+このディレクトリには、組織全体で使用されるアーキテクチャ標準とガイドラインが含まれています。
+
+This directory contains architecture standards and guidelines used across the organization.
 
 ---
 
-## 📖 概要
-
-このディレクトリは、組織全体で統一されたアーキテクチャ設計標準を定義し、スケーラブルで保守性の高いシステム構築を支援します。特に自律型AI Devinが一貫したアーキテクチャパターンでシステムを設計できるよう、明確で具体的なガイドラインを提供します。
-
-### 🎯 目的
-
-- **一貫性の確保**: 全プロジェクトで統一されたアーキテクチャパターンの採用
-- **品質の向上**: 実証済みの設計原則とベストプラクティスの適用
-- **生産性の向上**: AI開発者が効率的にシステム設計を実行できる環境の提供
-- **技術負債の削減**: 初期段階から適切な設計判断を行うことで将来の負債を防止
-
----
-
-## 📂 ディレクトリ構成
+## 📁 ディレクトリ構造 / Directory Structure
 
 ```
 02-architecture-standards/
-├── README.md                        # このファイル
-├── design-principles.md             # アーキテクチャ設計原則
-├── api-architecture.md              # API設計標準
-├── microservices-guidelines.md     # マイクロサービス設計
-├── database-design.md              # データベース設計標準
-├── frontend-architecture.md        # フロントエンド設計
-└── security-architecture.md        # セキュリティアーキテクチャ
+├── README.md                      # このファイル / This file
+├── cloud-architecture.md          # クラウドアーキテクチャ標準
+├── frontend-architecture.md       # フロントエンドアーキテクチャ標準
+├── backend-architecture.md        # バックエンドアーキテクチャ標準(Phase 2予定)
+├── microservices-architecture.md  # マイクロサービスアーキテクチャ標準(Phase 2予定)
+├── data-architecture.md           # データアーキテクチャ標準(Phase 2予定)
+└── security-architecture.md       # セキュリティアーキテクチャ標準
 ```
 
 ---
 
-## 📋 各ファイルの役割
+## 📄 ドキュメント一覧 / Document List
 
-### `design-principles.md` - 設計原則の基礎
+### 完成済み / Completed
+
+#### 1. クラウドアーキテクチャ / Cloud Architecture
+**ファイル**: `cloud-architecture.md`
+
 **内容**:
-- SOLID原則、DDD（ドメイン駆動設計）、Clean Architecture
-- レイヤードアーキテクチャ、ヘキサゴナルアーキテクチャ
-- スケーラビリティとパフォーマンスの設計原則
-- 疎結合・高凝集の実現方法
+- AWS基盤アーキテクチャ設計
+- マルチアカウント戦略(Control Tower、Organizations)
+- コンピューティングサービス(ECS Fargate、Lambda、EC2)
+- ストレージとデータベース(RDS Aurora、DynamoDB、S3、EFS)
+- ネットワーク設計(VPC、ALB、CloudFront、Route 53)
+- セキュリティとコンプライアンス
+- 監視とロギング(CloudWatch、X-Ray)
+- バックアップと災害復旧
+- コスト最適化戦略
 
-**対象読者**: アーキテクト、テクニカルリード、Devin AI
+**対象者**: インフラエンジニア、クラウドアーキテクト、DevOpsエンジニア
 
-**利用シーン**:
-- プロジェクト初期のアーキテクチャ選定時
-- 技術負債のリファクタリング計画時
-- アーキテクチャレビュー時
+**更新頻度**: 四半期ごと
 
 ---
 
-### `api-architecture.md` - API設計標準
+#### 2. フロントエンドアーキテクチャ / Frontend Architecture
+**ファイル**: `frontend-architecture.md`
+
 **内容**:
-- RESTful API設計原則（リソース指向、HTTPメソッド、ステータスコード）
-- GraphQL設計パターン
-- APIバージョニング戦略
-- エラーハンドリングとレスポンス形式
-- APIドキュメンテーション（OpenAPI/Swagger）
+- Next.js 15 App Router アーキテクチャ
+- アプリケーション構造とディレクトリ設計
+- 状態管理戦略(Zustand、React Context)
+- ルーティングとナビゲーション
+- コンポーネント設計パターン
+- データフェッチング(Server Components、SWR)
+- パフォーマンス最適化
+- SEO対策とメタデータ管理
+- アクセシビリティ標準
+- セキュリティベストプラクティス
+- テスト戦略(Unit、Integration、E2E)
+- 国際化(next-intl)
+- ビルドと最適化
+- モニタリングとエラートラッキング(Sentry)
 
-**対象読者**: バックエンド開発者、Devin AI
+**対象者**: フロントエンドエンジニア、フルスタックエンジニア、UIエンジニア
 
-**利用シーン**:
-- Web API、マイクロサービスAPI設計時
-- API仕様書作成時
-- クライアント・サーバー間の通信設計時
+**更新頻度**: 四半期ごと
 
 ---
 
-### `microservices-guidelines.md` - マイクロサービス設計
-**内容**:
-- サービス分割戦略（ドメイン境界、コンテキストマッピング）
-- サービス間通信パターン（同期/非同期、メッセージキュー）
-- データ整合性の保証（分散トランザクション、Saga パターン）
-- サービスディスカバリー、API Gateway
-- 障害分離とサーキットブレーカー
+### 計画中 / Planned
 
-**対象読者**: アーキテクト、マイクロサービス開発者、Devin AI
+#### 3. バックエンドアーキテクチャ / Backend Architecture
+**ファイル**: `backend-architecture.md`(Phase 2予定)
 
-**利用シーン**:
-- モノリスからマイクロサービスへの移行時
-- 大規模システムのアーキテクチャ設計時
-- サービス間通信の設計時
+**予定内容**:
+- APIアーキテクチャ設計(REST、GraphQL)
+- サーバーサイド技術スタック
+- データベース設計パターン
+- 認証と認可
+- メッセージング(Kafka、SQS)
+- キャッシュ戦略(Redis、ElastiCache)
+- バックグラウンドジョブ処理
+- エラーハンドリングとロギング
 
----
+**優先度**: 高
 
-### `database-design.md` - データベース設計標準
-**内容**:
-- スキーマ設計原則（正規化、非正規化の判断基準）
-- インデックス戦略とクエリ最適化
-- データモデリング（ER図、論理設計、物理設計）
-- トランザクション設計
-- RDBMS vs NoSQL の選定基準
-
-**対象読者**: データベースエンジニア、バックエンド開発者、Devin AI
-
-**利用シーン**:
-- データベーススキーマ設計時
-- パフォーマンス最適化時
-- データベース技術選定時
+**予定時期**: 2025年Q2
 
 ---
 
-### `frontend-architecture.md` - フロントエンド設計
-**内容**:
-- コンポーネント設計原則（Atomic Design、再利用性）
-- 状態管理戦略（Redux、Context API、Zustand）
-- ルーティング設計
-- パフォーマンス最適化（コード分割、遅延読み込み）
-- アクセシビリティとSEO対策
+#### 4. マイクロサービスアーキテクチャ / Microservices Architecture
+**ファイル**: `microservices-architecture.md`(Phase 2予定)
 
-**対象読者**: フロントエンド開発者、Devin AI
+**予定内容**:
+- マイクロサービス設計原則
+- サービス境界の定義
+- サービス間通信パターン
+- データ管理とトランザクション
+- サービスディスカバリー
+- API Gateway パターン
+- 分散トレーシング
+- サーキットブレーカーとリトライ戦略
 
-**利用シーン**:
-- SPAアプリケーション設計時
-- コンポーネント設計時
-- フロントエンドのパフォーマンス改善時
+**優先度**: 中
+
+**予定時期**: 2025年Q3
 
 ---
 
-### `security-architecture.md` - セキュリティアーキテクチャ
-**内容**:
-- セキュアアーキテクチャ設計原則
+#### 5. データアーキテクチャ / Data Architecture
+**ファイル**: `data-architecture.md`(Phase 2予定)
+
+**予定内容**:
+- データモデリング標準
+- データウェアハウス設計
+- ETL/ELTパイプライン
+- データレイク構成
+- マスターデータ管理
+- データガバナンス
+- データ品質管理
+- リアルタイムデータ処理
+
+**優先度**: 中
+
+**予定時期**: 2025年Q3
+
+---
+
+#### 6. セキュリティアーキテクチャ / Security Architecture
+**ファイル**: `security-architecture.md`
+
+**予定内容**:
 - ゼロトラストアーキテクチャ
-- 認証・認可のアーキテクチャ設計
-- データ暗号化戦略
-- セキュリティゾーニングとネットワーク分離
+- 認証・認可フレームワーク
+- データ暗号化標準
+- ネットワークセキュリティ
+- アプリケーションセキュリティ
+- セキュリティ監視とインシデント対応
+- コンプライアンス要件
+- 脆弱性管理
 
-**対象読者**: セキュリティエンジニア、アーキテクト、Devin AI
+**優先度**: 高
 
-**利用シーン**:
-- セキュリティ設計レビュー時
-- システム全体のセキュリティ戦略策定時
-- 機密情報を扱うシステムの設計時
-
----
-
-## 🤖 Devin（自律型AI）の利用パターン
-
-### パターン1: 新規プロジェクト設計時
-```
-1. design-principles.md を参照してアーキテクチャパターンを選択
-2. 各専門ファイル（API、DB、フロントエンド等）を参照して詳細設計
-3. security-architecture.md でセキュリティ要件を確認
-4. 設計ドキュメントを生成
-```
-
-**プロンプト例**:
-```
-以下のアーキテクチャ標準に準拠したシステム設計を行ってください：
-- /02-architecture-standards/design-principles.md
-- /02-architecture-standards/api-architecture.md
-- /02-architecture-standards/database-design.md
-
-要件：[プロジェクト要件を記載]
-```
+**予定時期**: 2025年Q2
 
 ---
 
-### パターン2: 既存システムのリファクタリング時
-```
-1. design-principles.md の原則と現状を比較
-2. 該当する専門ファイルでベストプラクティスを確認
-3. リファクタリング計画を策定
-4. 段階的な改善を実行
-```
+## 🎯 アーキテクチャ原則 / Architecture Principles
 
-**プロンプト例**:
-```
-以下のアーキテクチャ原則に基づいて、既存システムの問題点を分析してください：
-- /02-architecture-standards/design-principles.md
-- /02-architecture-standards/microservices-guidelines.md
+### 1. スケーラビリティ / Scalability
+- 水平スケーリングを優先
+- ステートレス設計
+- 分散システムパターンの採用
 
-現状のアーキテクチャ：[現状を記載]
-```
+### 2. 可用性 / Availability
+- マルチAZ構成
+- 自動フェイルオーバー
+- 99.9%以上の稼働率目標
 
----
+### 3. セキュリティ / Security
+- 多層防御(Defense in Depth)
+- 最小権限の原則
+- ゼロトラスト原則
 
-### パターン3: アーキテクチャレビュー時
-```
-1. 該当するアーキテクチャファイルを参照
-2. チェックリストを使用して設計をレビュー
-3. 改善提案を生成
-```
+### 4. 保守性 / Maintainability
+- 疎結合な設計
+- 標準化されたパターン
+- 包括的なドキュメント
 
-**プロンプト例**:
-```
-以下の標準に基づいてアーキテクチャレビューを実施してください：
-- /02-architecture-standards/design-principles.md
-- /02-architecture-standards/security-architecture.md
+### 5. コスト効率 / Cost Efficiency
+- リソース使用の最適化
+- 自動スケーリング
+- 定期的なコストレビュー
 
-レビュー対象：[設計ドキュメントへのパスまたは内容]
-```
+### 6. パフォーマンス / Performance
+- レスポンスタイム最適化
+- キャッシュ戦略
+- 非同期処理の活用
 
 ---
 
-## 👥 開発チームの利用パターン
+## 🔄 アーキテクチャレビュープロセス / Architecture Review Process
 
-### 新規メンバーのオンボーディング
-1. **基礎理解**: `design-principles.md`で組織のアーキテクチャ哲学を理解
-2. **専門分野習得**: 担当領域（API、DB、フロントエンド等）の標準を学習
-3. **実践**: 小規模タスクで標準を適用
+### レビュー対象 / Review Scope
+- 新規システム設計
+- 既存システムの大規模変更
+- 新技術の導入
+- アーキテクチャパターンの変更
 
-### テクニカルリードの利用
-1. **技術選定**: プロジェクト開始時に該当ファイルを参照して技術スタック決定
-2. **レビュー基準**: コードレビューとアーキテクチャレビューの基準として活用
-3. **チーム教育**: 標準を基にしたトレーニング実施
+### レビュープロセス / Review Process
 
-### アーキテクトの利用
-1. **標準策定**: 新しいアーキテクチャパターンの評価と標準への反映
-2. **技術負債管理**: 既存システムと標準の Gap 分析
-3. **横断的ガイダンス**: 複数プロジェクト間でのアーキテクチャ整合性確保
+#### 1. 設計提案 / Design Proposal
+- アーキテクチャ設計書の作成
+- トレードオフ分析
+- リスク評価
 
----
+#### 2. レビュー会議 / Review Meeting
+- アーキテクチャチームによるレビュー
+- 技術的妥当性の検証
+- 標準適合性の確認
 
-## 📊 アーキテクチャ選定フローチャート
+#### 3. 承認 / Approval
+- レビュー結果の文書化
+- 必要な修正の実施
+- 最終承認
 
-```
-プロジェクト開始
-    ↓
-[要件分析]
-    ↓
-┌─────────────────────────┐
-│ 規模・複雑度の評価      │
-└───────┬─────────────────┘
-        ↓
-  ┌─────┴─────┐
-  │           │
-小規模      大規模・複雑
-  │           │
-  ↓           ↓
-モノリス    マイクロサービス
-(Layered)   (microservices-guidelines.md)
-  ↓           ↓
-[API設計] ←─────┘
-(api-architecture.md)
-  ↓
-[データベース設計]
-(database-design.md)
-  ↓
-[フロントエンド設計]
-(frontend-architecture.md)
-  ↓
-[セキュリティ設計]
-(security-architecture.md)
-  ↓
-設計完了
-```
+#### 4. フォローアップ / Follow-up
+- 実装状況の確認
+- 問題点の収集
+- ドキュメントの更新
 
 ---
 
-## ⚙️ 設計原則の優先順位（Tier分類）
+## 📊 アーキテクチャ決定記録 / Architecture Decision Records (ADR)
 
-### 🔴 Tier 1: 必須（すべてのプロジェクトで適用）
-- `design-principles.md` - 基本設計原則
-- `security-architecture.md` - セキュリティ設計
-- `api-architecture.md` または `frontend-architecture.md` - プロジェクトタイプに応じて選択
+### ADR管理 / ADR Management
+アーキテクチャに関する重要な決定は、ADRとして記録されます。
 
-### 🟡 Tier 2: 推奨（プロジェクト特性に応じて適用）
-- `database-design.md` - データベースを使用する場合
-- `microservices-guidelines.md` - マイクロサービスアーキテクチャ採用時
+- **保存場所**: `/devin-organization-standards/10-governance/adr/`
+- **形式**: Markdown形式
+- **テンプレート**: `08-templates/adr-template.md`
 
-### 🟢 Tier 3: 任意（必要に応じて参照）
-- 特定の技術スタックやパターンに特化したガイドライン
+### ADR作成プロセス / ADR Creation Process
 
----
-
-## 🔄 更新・ガバナンス
-
-### 標準の更新プロセス
-1. **提案**: アーキテクチャチームがIssue作成
-2. **議論**: ステークホルダーレビュー（最低2名のアーキテクト承認）
-3. **承認**: テクニカルリード最終承認
-4. **マージ**: Pull Request経由で更新
-5. **通知**: 全開発チームへのアナウンス
-
-### バージョン管理
-- **Major**: アーキテクチャパターンの根本的変更（例: モノリス→マイクロサービス）
-- **Minor**: 新しい設計パターンの追加
-- **Patch**: 誤字修正、軽微な改善
+1. 決定が必要な問題の特定
+2. ADRドラフトの作成
+3. ステークホルダーレビュー
+4. 決定と承認
+5. ADRの公開
 
 ---
 
-## 📚 関連リソース
+## 🛠️ アーキテクチャツール / Architecture Tools
 
-### 内部ドキュメント
-- **コーディング規約**: `/01-coding-standards/`
-- **セキュリティ標準**: `/07-security-compliance/`
-- **技術スタック**: `/05-technology-stack/`
+### 設計ツール / Design Tools
+- **図作成**: draw.io、Lucidchart
+- **モデリング**: ArchiMate、C4 Model
+- **プロトタイピング**: Figma、AWS Architecture Icons
 
-### 外部参考資料
-- [The Twelve-Factor App](https://12factor.net/)
-- [Martin Fowler's Architecture Guide](https://martinfowler.com/architecture/)
-- [Microsoft Azure Architecture Center](https://docs.microsoft.com/en-us/azure/architecture/)
+### 分析ツール / Analysis Tools
+- **コスト分析**: AWS Cost Explorer、CloudHealth
+- **パフォーマンス**: CloudWatch、Datadog
+- **セキュリティ**: AWS Security Hub、Prowler
+
+### ドキュメンテーション / Documentation
+- **API仕様**: OpenAPI/Swagger
+- **アーキテクチャ図**: C4 Model
+- **データモデル**: ERD(Entity Relationship Diagram)
+
+---
+
+## 📚 参考資料 / References
+
+### 書籍 / Books
+1. 「クリーンアーキテクチャ」ロバート・C・マーティン
+2. 「マイクロサービスパターン」Chris Richardson
+3. 「データ指向アプリケーションデザイン」Martin Kleppmann
+4. 「Site Reliability Engineering」Google
+
+### オンラインリソース / Online Resources
 - [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/)
-- [Clean Architecture by Robert C. Martin](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+- [12 Factor App](https://12factor.net/)
+- [Microservices.io](https://microservices.io/)
+- [Martin Fowler's Blog](https://martinfowler.com/)
+
+### 内部リソース / Internal Resources
+- [技術スタック](/devin-organization-standards/05-technology-stack/)
+- [開発プロセス](/devin-organization-standards/03-development-process/)
+- [品質基準](/devin-organization-standards/04-quality-standards/)
 
 ---
 
-## ✅ クイックチェックリスト
+## 📝 貢献 / Contributing
 
-### 設計開始前の確認事項
-- [ ] プロジェクト要件と制約を明確化
-- [ ] 適用すべきアーキテクチャパターンを選定
-- [ ] 該当する標準ドキュメントをすべて確認
-- [ ] セキュリティ要件を確認
+### ドキュメントの改善 / Document Improvements
+アーキテクチャ標準の改善提案は、以下の手順で行ってください：
 
-### 設計完了時の確認事項
-- [ ] `design-principles.md` の原則に準拠
-- [ ] API/DB/フロントエンドの設計標準に準拠
-- [ ] `security-architecture.md` のセキュリティ要件を満たす
-- [ ] スケーラビリティとパフォーマンス要件を考慮
-- [ ] ドキュメント化が完了（アーキテクチャ図、設計書等）
+1. 改善提案をGitHub Issueで作成
+2. プルリクエストを提出
+3. アーキテクチャチームのレビュー
+4. 承認後にマージ
 
----
-
-## 💡 ベストプラクティス
-
-### 設計時の推奨事項
-1. **シンプルさを優先**: 必要以上に複雑な設計は避ける（YAGNI原則）
-2. **段階的な進化**: 小さく始めて必要に応じて拡張
-3. **自動化を考慮**: CI/CD、テスト、デプロイの自動化を設計段階から考慮
-4. **監視可能性**: ログ、メトリクス、トレーシングを設計に組み込む
-
-### よくある落とし穴
-- ❌ 過剰なマイクロサービス分割（Distributed Monolith）
-- ❌ セキュリティの後回し（Security by Design の欠如）
-- ❌ データベース設計の軽視（後のパフォーマンス問題の原因）
-- ❌ ドキュメント化の欠如（属人化と技術負債の蓄積）
+### 新規ドキュメントの追加 / Adding New Documents
+1. ドキュメントテンプレートを使用
+2. 内容を作成
+3. レビュープロセスを経る
+4. README.mdを更新
 
 ---
 
-## 📞 お問い合わせ
+## バージョン履歴 / Version History
 
-- **アーキテクチャチーム**: architecture@yourorg.com
-- **GitHub Issues**: https://github.com/[your-org]/devin-organization-standards/issues
-- **Slack**: #architecture-standards
+| バージョン | 日付 | 変更内容 | 担当者 |
+|---------|------|---------|--------|
+| 2.0.0 | 2025-01-15 | フロントエンドアーキテクチャドキュメント追加、構造改善 | Architecture Team |
+| 1.1.0 | 2025-01-10 | クラウドアーキテクチャドキュメント追加 | Architecture Team |
+| 1.0.0 | 2024-12-01 | 初版作成 | Architecture Team |
 
 ---
 
-**次のステップ**: 各アーキテクチャファイルの詳細を確認し、プロジェクトに適用してください。
+## 承認 / Approval
+
+| 役割 | 氏名 | 承認日 |
+|-----|------|--------|
+| CTO | [Name] | 2025-01-15 |
+| Lead Architect | [Name] | 2025-01-15 |
+| Architecture Team Lead | [Name] | 2025-01-15 |
+
+---
+
+## お問い合わせ / Contact
+
+### アーキテクチャチーム / Architecture Team
+- **Email**: architecture@company.com
+- **Slack**: #architecture
+- **会議**: 毎週火曜日 14:00-15:00
+
+### 緊急連絡先 / Emergency Contact
+- **On-Call**: architecture-oncall@company.com
+- **電話**: +81-XX-XXXX-XXXX(24時間対応)

@@ -1,531 +1,631 @@
-# 04-quality-standards - 品質基準ガイド
+---
+version: "2.0.0"
+last_updated: "2025-01-15"
+status: "active"
+owner: "QA Team"
+category: "quality"
+---
 
-## 概要
+# 品質基準 / Quality Standards
 
-このディレクトリには、ソフトウェア開発における品質保証とテストに関する包括的な基準とガイドラインが含まれています。すべてのドキュメントは言語非依存であり、プロジェクトの品質文化を確立するための実践的なガイダンスを提供します。
+## 概要 / Overview
 
-## 📚 ドキュメント構成
+このディレクトリには、組織全体で適用される品質基準とテスト標準が含まれています。
 
-### Phase 1: 基礎ドキュメント
-
-| ドキュメント | サイズ | 説明 |
-|--------------|--------|------|
-| [testing-standards.md](testing-standards.md) | 11.2 KB | テスト基準の概要と全体方針 |
-| [code-quality-standards.md](code-quality-standards.md) | 31.8 KB | コード品質基準、静的解析、レビュー規約 |
-| [quality-metrics.md](quality-metrics.md) | 33.2 KB | 品質メトリクス、測定方法、目標設定 |
-| [security-testing.md](security-testing.md) | 36.6 KB | セキュリティテスト戦略と脆弱性管理 |
-
-### Phase 2: テスト実装ガイド（推奨ドキュメント）
-
-| ドキュメント | サイズ | 主要トピック |
-|--------------|--------|--------------|
-| [testing-strategy.md](testing-strategy.md) | 26.2 KB | テスト全体戦略、テストピラミッド、品質ゲート |
-| [unit-testing.md](unit-testing.md) | 42.9 KB | ユニットテスト実装、TDD、モック戦略、カバレッジ |
-| [integration-testing.md](integration-testing.md) | 32.8 KB | 統合テスト、API/DB/外部サービステスト |
-| [e2e-testing.md](e2e-testing.md) | 67.7 KB | E2Eテスト、Page Object Model、クロスブラウザテスト |
-| [defect-management.md](defect-management.md) | 71.3 KB | 欠陥管理、ライフサイクル、RCA、メトリクス |
-| [test-data-management.md](test-data-management.md) | 63.8 KB | テストデータ戦略、マスキング、コンプライアンス |
+This directory contains quality standards and testing standards applied across the organization.
 
 ---
 
-## 🎯 利用方法
+## 📁 ディレクトリ構造 / Directory Structure
 
-### 1. プロジェクト開始時
-
-**最初に読むべきドキュメント**:
-1. **testing-strategy.md** - プロジェクト全体のテスト戦略を理解
-2. **code-quality-standards.md** - コード品質の基準を確認
-3. **quality-metrics.md** - 品質目標とメトリクスを設定
-
-**アクション**:
-- テスト戦略ドキュメントを作成
-- 品質ゲートを定義
-- CI/CDパイプラインに品質チェックを統合
-
-### 2. 開発フェーズ
-
-**開発者向け**:
-- **unit-testing.md** - ユニットテストの書き方とTDDの実践
-- **code-quality-standards.md** - コードレビュー時のチェックリスト
-
-**QAエンジニア向け**:
-- **integration-testing.md** - 統合テストの設計と実装
-- **e2e-testing.md** - E2Eテストシナリオの作成
-- **test-data-management.md** - テストデータの準備と管理
-
-**アクション**:
-- ユニットテストを開発と同時に作成
-- コードレビューで品質基準を確認
-- テストデータを適切にマスキング
-
-### 3. テスト実行フェーズ
-
-**参照ドキュメント**:
-- **testing-strategy.md** - テストレベルの優先順位
-- **e2e-testing.md** - E2Eテストの実行とトラブルシューティング
-- **test-data-management.md** - テスト環境のデータ準備
-
-**アクション**:
-- テストピラミッドに従ってテストを実行
-- 失敗したテストのデバッグ
-- テスト結果のレポーティング
-
-### 4. 欠陥発見時
-
-**必読ドキュメント**:
-- **defect-management.md** - 欠陥の報告、トリアージ、管理
-
-**アクション**:
-- 詳細な欠陥レポートを作成
-- 重要度と優先度を設定
-- 根本原因分析（RCA）を実施
-
-### 5. リリース前
-
-**確認事項**:
-- **quality-metrics.md** - 品質メトリクスの目標達成を確認
-- **security-testing.md** - セキュリティテストの完了確認
-- **testing-strategy.md** - 品質ゲートのクリア確認
-
-**アクション**:
-- すべての品質ゲートをパス
-- リリースレポートを作成
-- 既知の問題をドキュメント化
-
-### 6. リリース後
-
-**振り返り**:
-- **defect-management.md** - エスケープ率の分析
-- **quality-metrics.md** - メトリクスのトレンド分析
-
-**アクション**:
-- 本番欠陥の根本原因分析
-- プロセス改善の特定
-- 次回スプリントへの反映
+```
+04-quality-standards/
+├── README.md                      # このファイル / This file
+├── code-quality.md                # コード品質基準（既存）
+├── testing-standards.md           # テスト標準（既存）
+├── security-standards.md          # セキュリティ基準（既存）
+├── performance-testing.md         # パフォーマンステスト標準（新規）
+├── load-testing.md                # 負荷テスト標準（新規）
+├── api-testing.md                 # APIテスト標準（Phase 2予定）
+├── e2e-testing.md                 # E2Eテスト標準
+└── accessibility-testing.md       # アクセシビリティテスト標準（Phase 2予定）
+```
 
 ---
 
-## 📖 各ドキュメントの詳細ガイド
+## 📄 ドキュメント一覧 / Document List
 
-### testing-strategy.md - テスト全体戦略
+### 完成済み / Completed
 
-**対象者**: 全チームメンバー、特にテックリード、QAリード
+#### 1. コード品質基準 / Code Quality Standards
+**ファイル**: `code-quality.md`（既存）
 
-**主要内容**:
-- **テストピラミッド**: ユニット、統合、E2Eの最適なバランス
-- **テストレベル**: 各レベルの役割と責任範囲
-- **品質ゲート**: リリース判定基準
-- **リスクベーステスト**: 優先順位付けの方法
-
-**いつ使う**:
-- ✅ プロジェクト開始時のテスト計画策定
-- ✅ テスト工数の見積もり
-- ✅ テスト自動化戦略の立案
-- ✅ 品質目標の設定
-
-**キーポイント**:
-- テストピラミッドでは、ユニットテスト70%、統合テスト20%、E2Eテスト10%が目安
-- リスクの高い機能に重点的にテストリソースを配分
-- 品質ゲートは測定可能な指標で定義
-
----
-
-### unit-testing.md - ユニットテスト実装ガイド
+**内容**:
+- コーディング規約
+- コードレビュープロセス
+- 静的解析ツール
+- リファクタリングガイドライン
 
 **対象者**: 全開発者
 
-**主要内容**:
-- **TDD（Test-Driven Development）**: テスト駆動開発の実践
-- **テスト構造**: Arrange-Act-Assert パターン
-- **モック戦略**: 依存関係の分離方法
-- **カバレッジ目標**: 80%以上を推奨
-- **テストの独立性**: 各テストが他のテストに影響しない設計
+**更新頻度**: 四半期ごと
 
-**いつ使う**:
-- ✅ 新機能の開発時
-- ✅ バグ修正時（リグレッションテスト追加）
-- ✅ リファクタリング前
-- ✅ コードレビュー時の品質確認
+---
 
-**キーポイント**:
-- テストは高速（ミリ秒単位）で実行可能に
-- 1つのテストで1つの概念のみを検証
-- モックは必要最小限に（過度なモックは避ける）
-- テスト名は検証内容を明確に表現
+#### 2. テスト標準 / Testing Standards
+**ファイル**: `testing-standards.md`（既存）
 
-**実装パターン例**:
+**内容**:
+- テスト戦略
+- テストピラミッド
+- ユニットテスト
+- 統合テスト
+- テストカバレッジ基準
+
+**対象者**: 全開発者、QAエンジニア
+
+**更新頻度**: 半期ごと
+
+---
+
+#### 3. セキュリティ基準 / Security Standards
+**ファイル**: `security-standards.md`（既存）
+
+**内容**:
+- セキュリティテスト
+- 脆弱性スキャン
+- ペネトレーションテスト
+- セキュアコーディング
+
+**対象者**: 全開発者、セキュリティチーム
+
+**更新頻度**: 四半期ごと
+
+---
+
+#### 4. パフォーマンステスト標準 / Performance Testing Standards
+**ファイル**: `performance-testing.md`（新規）
+
+**内容**:
+- パフォーマンステストの種類
+  - ロードテスト
+  - ストレステスト
+  - スパイクテスト
+  - エンデュランステスト
+  - スケーラビリティテスト
+- パフォーマンス目標値
+  - Webアプリケーション目標
+  - API目標
+  - データベース目標
+- テストツール
+  - k6
+  - Apache JMeter
+  - Gatling
+  - Lighthouse
+  - Artillery
+- テスト環境とデータ準備
+- テスト計画と実行手順
+- メトリクスと測定方法
+- 結果分析とレポーティング
+- 継続的改善プロセス
+
+**対象者**: QAエンジニア、パフォーマンスエンジニア、DevOpsエンジニア
+
+**更新頻度**: 四半期ごと
+
+**関連ドキュメント**:
+- 負荷テスト標準
+- フロントエンドアーキテクチャ
+- クラウドアーキテクチャ
+
+---
+
+#### 5. 負荷テスト標準 / Load Testing Standards
+**ファイル**: `load-testing.md`（新規）
+
+**内容**:
+- 負荷テストの目的とスコープ
+- 負荷テストの種類
+  - ベースライン負荷テスト
+  - ピーク負荷テスト
+  - ストレステスト
+  - スパイクテスト
+  - ソークテスト
+- 負荷テスト戦略
+  - テスト計画フレームワーク
+  - リスク管理
+- テストシナリオ設計
+  - シナリオ設計原則
+  - ECサイトシナリオ
+  - SaaSシナリオ
+  - マイクロサービスシナリオ
+- 負荷モデリング
+  - ユーザー行動モデル
+  - 負荷分散パターン
+  - 負荷計算式
+- k6実装ガイド
+  - プロジェクト構造
+  - ヘルパー関数
+  - 認証モジュール
+  - カスタムメトリクス
+  - 実行スクリプト
+- 実行とモニタリング
+  - 実行前チェックリスト
+  - リアルタイムモニタリング
+  - アラート設定
+- 結果評価と比較分析
+- トラブルシューティング
+- ベストプラクティス
+
+**対象者**: QAエンジニア、パフォーマンスエンジニア、開発者
+
+**更新頻度**: 四半期ごと
+
+**関連ドキュメント**:
+- パフォーマンステスト標準
+- クラウドアーキテクチャ
+- 技術スタック
+
+---
+
+### 計画中 / Planned
+
+#### 6. APIテスト標準 / API Testing Standards
+**ファイル**: `api-testing.md`（Phase 2予定）
+
+**予定内容**:
+- REST API テスト
+- GraphQL API テスト
+- コントラクトテスト
+- APIセキュリティテスト
+- API パフォーマンステスト
+- API モックとスタブ
+- テスト自動化
+- ドキュメント生成
+
+**対象者**: バックエンドエンジニア、QAエンジニア
+
+**優先度**: 高
+
+**予定時期**: 2025年Q2
+
+---
+
+#### 7. E2Eテスト標準 / End-to-End Testing Standards
+**ファイル**: `e2e-testing.md`
+
+**予定内容**:
+- E2Eテスト戦略
+- Playwright 使用ガイド
+- テストシナリオ設計
+- ページオブジェクトモデル
+- テストデータ管理
+- 並列実行とCI/CD統合
+- ビジュアルリグレッションテスト
+- クロスブラウザテスト
+
+**対象者**: QAエンジニア、フロントエンドエンジニア
+
+**優先度**: 高
+
+**予定時期**: 2025年Q2
+
+---
+
+#### 8. アクセシビリティテスト標準 / Accessibility Testing Standards
+**ファイル**: `accessibility-testing.md`（Phase 2予定）
+
+**予定内容**:
+- WCAG 2.1/2.2 準拠基準
+- 自動アクセシビリティテスト
+- 手動テストチェックリスト
+- スクリーンリーダーテスト
+- キーボードナビゲーションテスト
+- カラーコントラストチェック
+- アクセシビリティ監査
+- 修正ガイドライン
+
+**対象者**: フロントエンドエンジニア、デザイナー、QAエンジニア
+
+**優先度**: 中
+
+**予定時期**: 2025年Q3
+
+---
+
+## 🎯 品質目標 / Quality Objectives
+
+### 全体目標 / Overall Objectives
+
+```yaml
+quality_objectives:
+  code_coverage:
+    unit_tests: "> 80%"
+    integration_tests: "> 70%"
+    e2e_tests: "Critical paths covered"
+  
+  defect_density:
+    target: "< 1 defect per 1000 LOC"
+    critical_bugs: "0 in production"
+  
+  performance:
+    page_load: "< 2 seconds"
+    api_response_p95: "< 500ms"
+    availability: "> 99.9%"
+  
+  security:
+    vulnerability_scan: "Weekly"
+    critical_vulnerabilities: "0 tolerance"
+    security_patches: "Within 24 hours"
+  
+  accessibility:
+    wcag_level: "AA compliance"
+    automated_score: "> 95%"
 ```
-// Given（前提条件の準備）
-// When（テスト対象の実行）
-// Then（結果の検証）
+
+### 品質メトリクス / Quality Metrics
+
+```yaml
+quality_metrics:
+  code_quality:
+    - metric: "コードカバレッジ"
+      target: "> 80%"
+      measurement: "自動計測（Jest/Vitest）"
+    
+    - metric: "循環的複雑度"
+      target: "< 10 per function"
+      measurement: "ESLint/SonarQube"
+    
+    - metric: "技術的負債"
+      target: "< 5% of development time"
+      measurement: "SonarQube Technical Debt Ratio"
+  
+  test_effectiveness:
+    - metric: "テスト実行時間"
+      target: "< 10分（CI）"
+      measurement: "CI/CD パイプライン"
+    
+    - metric: "テスト安定性"
+      target: "> 95% pass rate"
+      measurement: "Test flakiness monitoring"
+    
+    - metric: "バグ検出率"
+      target: "> 90% before production"
+      measurement: "Defect tracking system"
+  
+  performance:
+    - metric: "Core Web Vitals"
+      target: "All metrics in 'Good' range"
+      measurement: "Lighthouse CI"
+    
+    - metric: "API レスポンスタイム"
+      target: "P95 < 500ms"
+      measurement: "APM tools"
+    
+    - metric: "エラー率"
+      target: "< 0.1%"
+      measurement: "Error tracking (Sentry)"
 ```
 
 ---
 
-### integration-testing.md - 統合テスト実装ガイド
+## 🔄 品質保証プロセス / Quality Assurance Process
 
-**対象者**: 開発者、QAエンジニア
+### 開発フロー / Development Flow
 
-**主要内容**:
-- **統合戦略**: ボトムアップ、トップダウン、サンドイッチアプローチ
-- **APIテスト**: RESTful、GraphQL、gRPC
-- **データベーステスト**: トランザクション、整合性、パフォーマンス
-- **外部サービス統合**: 認証、決済、通知サービス
-- **メッセージングテスト**: Pub/Sub、イベント駆動アーキテクチャ
+```yaml
+development_flow:
+  1_planning:
+    activities:
+      - 要件定義
+      - テスト計画作成
+      - 品質目標設定
+    deliverables:
+      - 機能仕様書
+      - テスト計画書
+      - 受け入れ基準
+  
+  2_development:
+    activities:
+      - TDD/BDD実践
+      - ユニットテスト作成
+      - コードレビュー
+      - 静的解析実施
+    quality_gates:
+      - ユニットテストパス率 > 95%
+      - カバレッジ > 80%
+      - Lint エラー = 0
+  
+  3_integration:
+    activities:
+      - 統合テスト実施
+      - APIテスト実施
+      - パフォーマンステスト
+    quality_gates:
+      - 統合テストパス率 > 95%
+      - APIレスポンスタイム達成
+      - セキュリティスキャン通過
+  
+  4_staging:
+    activities:
+      - E2Eテスト実施
+      - 負荷テスト実施
+      - セキュリティテスト
+      - アクセシビリティテスト
+    quality_gates:
+      - E2Eテストパス率 = 100%
+      - パフォーマンス目標達成
+      - セキュリティ脆弱性 = 0
+      - WCAG AA準拠
+  
+  5_production:
+    activities:
+      - スモークテスト
+      - モニタリング
+      - インシデント対応
+    quality_gates:
+      - スモークテスト通過
+      - エラー率 < 0.1%
+      - 可用性 > 99.9%
+```
 
-**いつ使う**:
-- ✅ コンポーネント間の連携確認
-- ✅ APIエンドポイントの動作検証
-- ✅ データベーススキーマ変更後
-- ✅ 外部サービス統合時
+### 品質ゲート / Quality Gates
 
-**キーポイント**:
-- 統合テストは実際の依存関係を使用（モック最小限）
-- テストデータの分離と独立性を確保
-- トランザクションロールバックでクリーンアップ
-- 実行時間は秒単位を目標
-
-**統合戦略の選択**:
-- **ボトムアップ**: データ層から順に統合（推奨）
-- **トップダウン**: UI層から統合
-- **サンドイッチ**: 両方を並行
-
----
-
-### e2e-testing.md - E2Eテスト実装ガイド
-
-**対象者**: QAエンジニア、自動化エンジニア
-
-**主要内容**:
-- **ユーザーフロー定義**: ビジネスクリティカルなシナリオ
-- **Page Object Model**: UIテストの保守性向上パターン
-- **クロスブラウザテスト**: Chrome、Firefox、Safari、Edge
-- **待機戦略**: 明示的待機、流暢待機
-- **CI/CD統合**: パイプラインへの組み込み
-- **フレーク対策**: 不安定なテストの改善
-
-**いつ使う**:
-- ✅ 主要なユーザーフローの検証
-- ✅ リリース前の最終確認
-- ✅ リグレッションテスト
-- ✅ クロスブラウザ互換性確認
-
-**キーポイント**:
-- ビジネスクリティカルなフローに絞る（10-15%のテストケース）
-- Page Object Modelで保守性を向上
-- 固定待機（sleep）は使用しない
-- スクリーンショットを失敗時に自動取得
-
-**優先度設定**:
-- **P1（最優先）**: ユーザー登録、ログイン、決済
-- **P2（高優先）**: データ作成・更新、検索
-- **P3（中優先）**: 設定変更、エクスポート
-
----
-
-### defect-management.md - 欠陥管理ガイド
-
-**対象者**: 全開発者、QAエンジニア、プロジェクトマネージャー
-
-**主要内容**:
-- **欠陥ライフサイクル**: New → Open → In Progress → Fixed → Verified → Closed
-- **重要度と優先度**: Critical/High/Medium/Low、P1/P2/P3/P4
-- **欠陥レポート作成**: 再現手順、期待結果、実際の結果
-- **トリアージプロセス**: 検証、優先度決定、担当者割当
-- **根本原因分析（RCA）**: 5-Why分析、フィッシュボーン図
-- **メトリクス**: TTF（Time To Fix）、再オープン率、エスケープ率
-
-**いつ使う**:
-- ✅ バグ発見時の報告
-- ✅ トリアージ会議
-- ✅ 欠陥修正時
-- ✅ 根本原因分析実施時
-- ✅ 品質レポート作成時
-
-**キーポイント**:
-- 欠陥レポートは再現可能な手順を明記
-- 重要度と優先度は別の概念（重要度=技術的影響、優先度=ビジネス優先）
-- 5-Why分析で真の根本原因を特定
-- SLA（Service Level Agreement）を定義
-
-**SLA例**:
-- **P1（最優先）**: 初回対応1時間、修正24時間
-- **P2（高優先）**: 初回対応4時間、修正3日
-- **P3（中優先）**: 初回対応1営業日、修正1週間
-
----
-
-### test-data-management.md - テストデータ管理ガイド
-
-**対象者**: 開発者、QAエンジニア、データエンジニア
-
-**主要内容**:
-- **データソース戦略**: 本番データ、合成データ、サブセット、手動作成
-- **データプライバシー**: GDPR、CCPA、HIPAA、PCI DSS対応
-- **データマスキング**: 完全削除、部分マスキング、置換、トークン化、暗号化
-- **データ生成**: Faker、データビルダー、ファクトリパターン
-- **データライフサイクル**: 計画 → 生成 → 検証 → 保存 → 配布 → 使用 → 更新 → アーカイブ → 削除
-- **データベース管理**: インメモリDB、コンテナDB、スナップショット
-
-**いつ使う**:
-- ✅ テスト環境構築時
-- ✅ 本番データをテストに使用する前
-- ✅ 大量のテストデータ生成時
-- ✅ データプライバシー監査時
-- ✅ テストデータの定期更新時
-
-**キーポイント**:
-- 本番データは必ずマスキング（GDPR等のコンプライアンス）
-- テストデータの独立性を確保（テスト間の干渉を防ぐ）
-- データ生成を自動化（手動作成は非効率）
-- データライフサイクル全体を管理
-
-**データソース選択基準**:
-- **ユニットテスト**: 合成データまたは手動作成
-- **統合テスト**: サブセット（マスキング済）または合成データ
-- **E2Eテスト**: 本番サブセット（マスキング済）
-- **パフォーマンステスト**: 大量の合成データ
-
-**マスキング手法**:
-| 手法 | セキュリティ | 有用性 | 使用場面 |
-|------|--------------|--------|----------|
-| 完全削除 | 最高 | 最低 | 機密度最高のデータ |
-| 部分マスキング | 高 | 中 | クレジットカード、電話番号 |
-| 置換 | 中 | 高 | 一般的なPII |
-| トークン化 | 高 | 中 | データ関係性を保持 |
-| 暗号化 | 最高 | 低 | 一時的な保護 |
+```yaml
+quality_gates:
+  commit_stage:
+    required:
+      - ☑ ユニットテストすべて成功
+      - ☑ Lintエラーなし
+      - ☑ コードフォーマット適用済み
+      - ☑ 型チェック通過
+    optional:
+      - カバレッジ増加
+      - 複雑度が基準内
+  
+  pull_request_stage:
+    required:
+      - ☑ すべてのテスト成功
+      - ☑ カバレッジ基準達成
+      - ☑ コードレビュー承認（2名以上）
+      - ☑ セキュリティスキャン通過
+      - ☑ ビルド成功
+    optional:
+      - パフォーマンステスト（主要変更時）
+      - アクセシビリティチェック
+  
+  staging_deployment:
+    required:
+      - ☑ 統合テストすべて成功
+      - ☑ E2Eテスト通過
+      - ☑ セキュリティテスト通過
+      - ☑ パフォーマンステスト基準達成
+    optional:
+      - 負荷テスト（大規模変更時）
+      - 手動探索的テスト
+  
+  production_deployment:
+    required:
+      - ☑ Staging検証完了
+      - ☑ スモークテスト通過
+      - ☑ ロールバック計画準備
+      - ☑ モニタリング設定完了
+      - ☑ プロダクトオーナー承認
+    optional:
+      - カナリアデプロイ
+      - ブルーグリーンデプロイ
+```
 
 ---
 
-## 🔧 実践的な活用シナリオ
+## 🛠️ 品質ツール / Quality Tools
 
-### シナリオ1: 新規プロジェクトの立ち上げ
+### テストツール / Testing Tools
 
-**週1: 計画フェーズ**
-1. **testing-strategy.md**を読んでテスト戦略を策定
-2. **quality-metrics.md**で品質目標を設定
-3. チームでテストレベルの責任を明確化
+```yaml
+testing_tools:
+  unit_testing:
+    - tool: "Jest"
+      purpose: "JavaScriptユニットテスト"
+      coverage: "フロントエンド、バックエンド"
+    
+    - tool: "Vitest"
+      purpose: "Viteベースのユニットテスト"
+      coverage: "フロントエンド（Next.js/React）"
+    
+    - tool: "React Testing Library"
+      purpose: "Reactコンポーネントテスト"
+      coverage: "フロントエンド"
+  
+  integration_testing:
+    - tool: "Supertest"
+      purpose: "APIテスト"
+      coverage: "バックエンド"
+    
+    - tool: "MSW (Mock Service Worker)"
+      purpose: "APIモック"
+      coverage: "フロントエンド、統合テスト"
+  
+  e2e_testing:
+    - tool: "Playwright"
+      purpose: "E2Eテスト"
+      coverage: "フルスタック"
+    
+    - tool: "Cypress"
+      purpose: "E2Eテスト（既存）"
+      coverage: "フロントエンド中心"
+  
+  performance_testing:
+    - tool: "k6"
+      purpose: "負荷テスト、パフォーマンステスト"
+      coverage: "API、バックエンド"
+    
+    - tool: "Lighthouse CI"
+      purpose: "Webパフォーマンス測定"
+      coverage: "フロントエンド"
+  
+  security_testing:
+    - tool: "OWASP ZAP"
+      purpose: "脆弱性スキャン"
+      coverage: "Webアプリケーション"
+    
+    - tool: "Snyk"
+      purpose: "依存関係の脆弱性検査"
+      coverage: "全プロジェクト"
+  
+  accessibility_testing:
+    - tool: "axe-core"
+      purpose: "アクセシビリティ自動テスト"
+      coverage: "フロントエンド"
+    
+    - tool: "Lighthouse"
+      purpose: "アクセシビリティ監査"
+      coverage: "Webアプリケーション"
+```
 
-**週2-4: 環境構築フェーズ**
-1. **test-data-management.md**でテストデータ戦略を決定
-2. CI/CDパイプラインに品質ゲートを統合
-3. **code-quality-standards.md**に基づく静的解析ツール導入
+### 品質分析ツール / Quality Analysis Tools
 
-**週5以降: 開発フェーズ**
-1. **unit-testing.md**に従ってTDDを実践
-2. **integration-testing.md**で統合テストを段階的に追加
-3. **defect-management.md**で欠陥管理プロセスを運用
-
----
-
-### シナリオ2: レガシーシステムへのテスト導入
-
-**ステップ1: 現状分析**
-- **quality-metrics.md**で現在の品質レベルを測定
-- **defect-management.md**で過去の欠陥データを分析
-
-**ステップ2: 段階的導入**
-1. **リスクの高い領域から**:
-   - **unit-testing.md**でクリティカルなロジックにユニットテスト追加
-   - **integration-testing.md**で主要なAPIエンドポイントをカバー
-
-2. **自動化の拡大**:
-   - **e2e-testing.md**でビジネスクリティカルなフローを自動化
-   - **test-data-management.md**でテストデータを整備
-
-**ステップ3: 継続的改善**
-- **testing-strategy.md**で品質ゲートを段階的に厳格化
-- **defect-management.md**のメトリクスでトレンドを監視
-
----
-
-### シナリオ3: 品質問題の対応
-
-**問題: 本番で頻繁にバグが発見される**
-
-**調査**:
-1. **defect-management.md**のエスケープ率を計算
-2. **quality-metrics.md**でカバレッジを確認
-3. **testing-strategy.md**のテストピラミッドバランスを評価
-
-**改善アクション**:
-1. **unit-testing.md**: カバレッジを80%以上に向上
-2. **e2e-testing.md**: ユーザーフローのカバレッジを拡大
-3. **defect-management.md**: 根本原因分析（RCA）を全クリティカル欠陥に実施
-4. **test-data-management.md**: 本番データの特性を反映したテストデータ作成
-
----
-
-### シナリオ4: セキュリティコンプライアンス対応
-
-**要件: GDPR準拠のテストデータ管理**
-
-**実施事項**:
-1. **test-data-management.md**のコンプライアンスセクションを確認
-2. 本番データ使用時の必須マスキング手法を導入
-3. データ保持期間ポリシーを定義
-4. アクセスログとデータ削除プロセスを確立
-5. **security-testing.md**でセキュリティテストを強化
-
----
-
-## 🎓 学習パス
-
-### 初心者向け（テスト経験なし）
-
-**Week 1-2: 基礎理解**
-1. **testing-strategy.md** - なぜテストが必要か
-2. **unit-testing.md** - 最初のテストを書く
-3. **code-quality-standards.md** - 良いコードとは
-
-**Week 3-4: 実践**
-1. **unit-testing.md**のTDDセクションで開発
-2. **defect-management.md**でバグ報告の練習
-3. **test-data-management.md**でデータ準備
-
-### 中級者向け（基本的なテスト経験あり）
-
-**Week 1-2: テスト戦略**
-1. **testing-strategy.md** - 全体戦略の理解
-2. **integration-testing.md** - 統合テストの設計
-3. **quality-metrics.md** - メトリクス測定
-
-**Week 3-4: 高度なテスト**
-1. **e2e-testing.md** - E2Eテスト自動化
-2. **test-data-management.md** - データマスキング実装
-3. **defect-management.md** - RCA実施
-
-### 上級者向け（テストリード、QAリード）
-
-**継続的な参照**
-1. **testing-strategy.md** - チームの戦略策定
-2. **quality-metrics.md** - KPI設定とトレンド分析
-3. **defect-management.md** - プロセス改善
-4. 全ドキュメントのDevin AIガイドラインセクション
+```yaml
+quality_analysis_tools:
+  static_analysis:
+    - tool: "ESLint"
+      purpose: "JavaScript/TypeScript静的解析"
+    
+    - tool: "Prettier"
+      purpose: "コードフォーマット"
+    
+    - tool: "TypeScript"
+      purpose: "型チェック"
+    
+    - tool: "SonarQube"
+      purpose: "コード品質分析、技術的負債測定"
+  
+  monitoring:
+    - tool: "Sentry"
+      purpose: "エラートラッキング"
+    
+    - tool: "Datadog"
+      purpose: "APM、インフラ監視"
+    
+    - tool: "CloudWatch"
+      purpose: "AWSリソース監視"
+  
+  ci_cd:
+    - tool: "GitHub Actions"
+      purpose: "CI/CDパイプライン"
+    
+    - tool: "Docker"
+      purpose: "コンテナ化、環境一貫性"
+```
 
 ---
 
-## 📊 品質ダッシュボードの構築
+## 📊 品質レポート / Quality Reports
 
-これらのドキュメントに基づいて、以下の指標を追跡することを推奨します：
+### 定期レポート / Regular Reports
 
-### コードカバレッジ（unit-testing.md）
-- ✅ ライン/分岐/関数カバレッジ: 80%以上
-- ✅ クリティカルパスカバレッジ: 100%
-
-### テスト実行（testing-strategy.md）
-- ✅ ユニットテスト実行時間: <5分
-- ✅ 統合テスト実行時間: <15分
-- ✅ E2Eテスト実行時間: <30分
-
-### 欠陥メトリクス（defect-management.md）
-- ✅ 平均修正時間（TTF）
-- ✅ 再オープン率: <10%
-- ✅ エスケープ率: <5%
-
-### 品質ゲート（quality-metrics.md）
-- ✅ すべての品質ゲートをパス
-- ✅ セキュリティスキャン: 0クリティカル脆弱性
-- ✅ コードレビュー承認率: 100%
-
----
-
-## 🤖 Devin AI 活用ガイド
-
-すべてのドキュメントには「Devin AIガイドライン」セクションが含まれています。
-
-### AI活用の推奨シーン
-
-**テストコード生成**:
-- **unit-testing.md**: ユニットテストの自動生成
-- **integration-testing.md**: 統合テストスクリプト生成
-- **e2e-testing.md**: Page Objectとテストシナリオ生成
-
-**データ処理**:
-- **test-data-management.md**: テストデータ生成とマスキング
-- **defect-management.md**: 欠陥データ分析とトレンド予測
-
-**コード分析**:
-- **code-quality-standards.md**: コード品質問題の検出
-- **quality-metrics.md**: メトリクス計算と可視化
-
-### プロンプト例
-
-各ドキュメントのDevin AIガイドラインセクションには、具体的なプロンプト例が記載されています。
+```yaml
+quality_reports:
+  daily:
+    - CI/CDパイプライン実行結果
+    - テスト成功率
+    - ビルド成功率
+    - 新規バグ数
+  
+  weekly:
+    - テストカバレッジトレンド
+    - コード品質メトリクス
+    - パフォーマンスメトリクス
+    - セキュリティスキャン結果
+  
+  monthly:
+    - 総合品質レポート
+    - 品質目標達成状況
+    - 改善提案
+    - ベンチマーク比較
+  
+  quarterly:
+    - 品質戦略レビュー
+    - ツール評価
+    - プロセス改善
+    - 年間計画更新
+```
 
 ---
 
-## 🔗 関連リソース
+## 📚 トレーニングとドキュメント / Training and Documentation
 
-### 他のディレクトリとの関連
+### トレーニングプログラム / Training Programs
 
-- **[01-coding-standards](../01-coding-standards/)**: 各言語の具体的な実装詳細
-- **[02-architecture-standards](../02-architecture-standards/)**: アーキテクチャレベルのテスト戦略
-- **[03-development-process](../03-development-process/)**: 開発プロセスへのテスト統合
-
-### 外部参考資料
-
-- **テストピラミッド**: Martin Fowler's Testing Pyramid
-- **TDD**: Kent Beck's Test-Driven Development
-- **Page Object Model**: Selenium公式ドキュメント
-- **データプライバシー**: GDPR、CCPA公式ガイドライン
-
----
-
-## 📝 ドキュメントのメンテナンス
-
-### 更新頻度
-
-- **四半期レビュー**: 全ドキュメントの内容を見直し
-- **新技術導入時**: 関連ドキュメントを更新
-- **重大なインシデント後**: 教訓をドキュメントに反映
-
-### フィードバック
-
-ドキュメントの改善提案は以下の方法で受け付けています：
-- プルリクエスト
-- イシュートラッカー
-- チームミーティングでの議論
+```yaml
+training_programs:
+  onboarding:
+    - 品質基準の概要
+    - テストツールの使い方
+    - コーディング規約
+    - コードレビュープロセス
+    duration: "1週間"
+  
+  continuous_learning:
+    - テスト駆動開発（TDD）ワークショップ
+    - パフォーマンステストトレーニング
+    - セキュリティベストプラクティス
+    - アクセシビリティ基礎
+    frequency: "四半期ごと"
+  
+  advanced:
+    - 高度なテスト戦略
+    - パフォーマンスチューニング
+    - セキュリティ監査
+    - 品質メトリクス分析
+    frequency: "半年ごと"
+```
 
 ---
 
-## ✅ クイックチェックリスト
+## 🔗 関連リソース / Related Resources
 
-### プロジェクト開始時
-- [ ] testing-strategy.mdを読んでテスト戦略を策定
-- [ ] quality-metrics.mdで品質目標を設定
-- [ ] test-data-management.mdでデータ戦略を決定
-- [ ] CI/CDパイプラインに品質ゲートを統合
+### 内部ドキュメント / Internal Documents
+- [アーキテクチャ標準](/devin-organization-standards/02-architecture-standards/)
+- [開発プロセス](/devin-organization-standards/03-development-process/)
+- [技術スタック](/devin-organization-standards/05-technology-stack/)
+- [テンプレート集](/devin-organization-standards/08-templates/)
 
-### 開発中
-- [ ] unit-testing.mdに従ってTDDを実践
-- [ ] code-quality-standards.mdでコードレビュー
-- [ ] defect-management.mdでバグを適切に管理
-- [ ] テストカバレッジ80%以上を維持
-
-### リリース前
-- [ ] integration-testing.mdで統合テスト実施
-- [ ] e2e-testing.mdでE2Eテスト実施
-- [ ] quality-metrics.mdの品質ゲートをクリア
-- [ ] security-testing.mdでセキュリティ検証
-
-### リリース後
-- [ ] defect-management.mdでエスケープ率を分析
-- [ ] 根本原因分析（RCA）を実施
-- [ ] プロセス改善項目を特定
-- [ ] ドキュメントを最新化
+### 外部リソース / External Resources
+- [ISTQB (International Software Testing Qualifications Board)](https://www.istqb.org/)
+- [Test Automation University](https://testautomationu.applitools.com/)
+- [Google Testing Blog](https://testing.googleblog.com/)
+- [Martin Fowler's Testing](https://martinfowler.com/testing/)
 
 ---
 
-## 📞 サポート
+## バージョン履歴 / Version History
 
-質問やサポートが必要な場合は、以下にお問い合わせください：
-- QAチームリード
-- テックリード
-- プロジェクトマネージャー
+| バージョン | 日付 | 変更内容 | 担当者 |
+|---------|------|---------|--------|
+| 2.0.0 | 2025-01-15 | パフォーマンステスト標準、負荷テスト標準を追加、構造改善 | QA Team |
+| 1.0.0 | 2024-12-01 | 初版作成 | QA Team |
 
 ---
 
-**最終更新**: 2025-10-27  
-**バージョン**: 2.0.0  
-**ステータス**: アクティブ
+## 承認 / Approval
+
+| 役割 | 氏名 | 承認日 |
+|-----|------|--------|
+| QA Manager | [Name] | 2025-01-15 |
+| Engineering Manager | [Name] | 2025-01-15 |
+| CTO | [Name] | 2025-01-15 |
+
+---
+
+## お問い合わせ / Contact
+
+### QA Team
+- **Email**: qa-team@company.com
+- **Slack**: #qa-general
+- **会議**: 毎週木曜日 15:00-16:00
+
+### 品質保証に関する問い合わせ
+- **緊急**: qa-oncall@company.com
+- **一般**: qa-support@company.com
+
