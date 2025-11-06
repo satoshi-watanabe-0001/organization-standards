@@ -1,0 +1,40 @@
+def function_name(param_name: Type) -> ReturnType:
+    """[関数の目的を1行で記述]
+    
+    [詳細説明:
+     - この関数が何をするか
+     - どのように動作するか
+     - 重要な副作用（あれば）
+     - ビジネスルール・制約
+    ]
+    
+    Args:
+        param_name: [パラメータの説明
+            - 型の説明
+            - 制約・バリデーション
+            - デフォルト値（あれば）
+        ]
+    
+    Returns:
+        [戻り値の説明
+         - 成功時の戻り値
+         - 失敗時の戻り値（None等）
+        ]
+    
+    Raises:
+        ErrorType: [エラーが発生する条件]
+    
+    Example:
+        >>> result = function_name(param)
+        >>> print(result)
+        
+        >>> # エラーハンドリングの例
+        >>> try:
+        ...     result = function_name(param)
+        ... except ErrorType as e:
+        ...     print(f"Error: {e}")
+    
+    Note:
+        [追加の注意事項や制約]
+    """
+    pass

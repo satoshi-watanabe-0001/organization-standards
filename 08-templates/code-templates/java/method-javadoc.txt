@@ -1,0 +1,40 @@
+/**
+ * [メソッドの目的を1行で記述]
+ * 
+ * <p>[詳細説明:
+ * <ul>
+ *   <li>このメソッドが何をするか</li>
+ *   <li>どのように動作するか</li>
+ *   <li>重要な副作用（あれば）</li>
+ *   <li>ビジネスルール・制約</li>
+ * </ul>
+ * </p>
+ * 
+ * <p>Example usage:
+ * <pre>{@code
+ * ReturnType result = methodName(param);
+ * System.out.println(result);
+ * 
+ * // エラーハンドリングの例
+ * try {
+ *     ReturnType result = methodName(param);
+ * } catch (ErrorType e) {
+ *     // エラー処理
+ * }
+ * }</pre>
+ * </p>
+ * 
+ * @param paramName [パラメータの説明
+ *                   - 型の説明
+ *                   - 制約・バリデーション
+ *                   - デフォルト値（あれば）]
+ * @return [戻り値の説明
+ *          - 成功時の戻り値
+ *          - 失敗時の戻り値（null等）]
+ * @throws ErrorType [エラーが発生する条件]
+ * @see RelatedMethod
+ */
+public ReturnType methodName(Type paramName) throws ErrorType {
+    // 実装
+    return null;
+}

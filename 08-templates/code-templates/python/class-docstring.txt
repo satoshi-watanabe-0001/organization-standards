@@ -1,0 +1,28 @@
+class ClassName:
+    """[クラスの目的を1行で記述]
+    
+    [詳細説明:
+     - このクラスの責任
+     - 主要な機能
+     - 設計パターン（該当する場合）
+     - 注意事項・制約
+    ]
+    
+    Attributes:
+        property_name: [プロパティの説明]
+        another_property: [別のプロパティの説明]
+    
+    Example:
+        >>> instance = ClassName(param1, param2)
+        >>> result = instance.do_something()
+        >>> print(result)
+    """
+    
+    def __init__(self, param1: Type1, param2: Type2):
+        """コンストラクタ
+        
+        Args:
+            param1: [パラメータ1の説明]
+            param2: [パラメータ2の説明]
+        """
+        self.property_name = param1

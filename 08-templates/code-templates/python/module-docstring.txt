@@ -1,0 +1,13 @@
+"""[モジュールの目的を1行で記述]
+
+[詳細説明（2-3行）:
+ - このモジュールが担当する責任
+ - 他のモジュールとの関係
+ - 重要な設計上の決定事項
+]
+
+Typical usage example:
+    from module_name import ClassName
+    instance = ClassName()
+    result = instance.do_something()
+"""

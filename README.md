@@ -1,8 +1,8 @@
 ---
 title: "Devin Organization Standards"
-version: "2.0.0"
+version: "2.2.0"
 created_date: "2025-10-20"
-last_updated: "2025-11-05"
+last_updated: "2025-11-06"
 status: "Active"
 owner: "Engineering Leadership Team"
 ---
@@ -11,11 +11,191 @@ owner: "Engineering Leadership Team"
 
 > 組織全体で統一された開発標準とベストプラクティスの包括的なドキュメント集
 
-**バージョン**: 2.0.0  
-**最終更新**: 2025-11-05  
+**バージョン**: 2.2.0  
+**最終更新**: 2025-11-06  
 **管理者**: Engineering Leadership Team
 
 ---
+
+## 🚀 クイックスタート（初回利用者向け） ⭐NEW
+
+### 📖 読む順序ガイド
+
+```
+┌─────────────────────────────────────────────────────┐
+│ 1️⃣ まず最初に読むべき（必須・5分）                    │
+│   ✓ このREADME.md（今読んでいるファイル）             │
+│     → 全体構造と3層アーキテクチャを理解              │
+├─────────────────────────────────────────────────────┤
+│ 2️⃣ 次に読むべき（必須・15分）                        │
+│   ✓ 00-guides/DOCUMENT-USAGE-MANUAL.md             │
+│     → ドキュメント体系の利用方法を理解               │
+├─────────────────────────────────────────────────────┤
+│ 3️⃣ ロール別の主要ガイドを読む（必須・30分）           │
+│   🤖 AIエージェント:                                │
+│     ✓ 00-guides/AI-MASTER-WORKFLOW-GUIDE.md        │
+│     ✓ 00-guides/AI-PRE-WORK-CHECKLIST.md ⭐NEW     │
+│     ✓ 00-guides/ai-guides/AI-QUICK-REFERENCE.md    │
+│   👤 人間開発者:                                     │
+│     ✓ 01-coding-standards/00-general-principles.md │
+│     ✓ 03-development-process/git-workflow.md       │
+├─────────────────────────────────────────────────────┤
+│ 4️⃣ 作業開始時に参照（必要に応じて）                   │
+│   ・phase-guides/ (Phase 0-6の詳細ガイド)          │
+│   ・01-10/ (組織標準ドキュメント)                   │
+│   ・08-templates/ (テンプレート集)                  │
+└─────────────────────────────────────────────────────┘
+```
+
+---
+
+### 🤖 AIエージェント向けクイックスタート
+
+#### ステップ1: 初回セットアップ（30-60分・1回のみ）
+
+**実行すること**:
+1. ✅ このREADME.md を読む（5分）
+2. ✅ `00-guides/DOCUMENT-USAGE-MANUAL.md` を読む（15分）
+3. ✅ `00-guides/AI-MASTER-WORKFLOW-GUIDE.md` を読む（20分）
+4. ✅ `00-guides/AI-PRE-WORK-CHECKLIST.md` ⭐NEW を確認（5分）
+5. ✅ `00-guides/ai-guides/AI-QUICK-REFERENCE.md` で数値基準を把握（5分）
+
+**完了チェック**:
+- [ ] ドキュメント体系の3層構造を理解した
+- [ ] Phase 0-6の開発フローを理解した
+- [ ] フェーズスキップの判断基準を理解した
+- [ ] 各フェーズで参照すべきドキュメントの探し方がわかった
+
+#### ステップ2: PBI受領後の標準手順（毎回実行）
+
+```
+1. 📋 AI-PRE-WORK-CHECKLIST.md でPBI受領時チェックを実施
+   ↓
+2. 📘 AI-MASTER-WORKFLOW-GUIDE.md を開く
+   ↓
+3. 🎯 Phase 0 (要件分析) セクションから開始
+   ↓
+4. ⚖️ フェーズスキップ判断フローで実行すべきフェーズを決定
+   ↓
+5. 📂 各フェーズガイドに従って順次実行
+   ↓
+6. ✅ 各フェーズの完了チェックリストで確認
+   ↓
+7. 📊 進捗トラッキング（08-templates/progress-tracking-template.md）
+```
+
+**重要**: 全フェーズを実行する必要はありません！
+- 新規プロジェクト → 全フェーズ (Phase 0-6)
+- 既存への機能追加 → Phase 1 スキップ
+- バグ修正 → Phase 0 (簡易版) → 3 → 4
+- 詳細は `AI-MASTER-WORKFLOW-GUIDE.md` の「フェーズ実行の判断ガイド」を参照
+
+---
+
+### 👤 人間開発者向けクイックスタート
+
+#### 🆕 新規開発者（読む順序・2-3時間）
+
+1. **このREADME.md** - 全体像を把握（10分）
+2. **01-coding-standards/00-general-principles.md** - コーディング原則（30分）
+3. **03-development-process/git-workflow.md** - Git使用方法（30分）
+4. **03-development-process/code-review-guidelines.md** - コードレビュー（30分）
+5. **08-templates/pull-request-template.md** - PR作成方法（15分）
+6. **09-reference/glossary.md** - 技術用語集（参照用）
+
+#### 👨‍💻 シニアエンジニア（重要ドキュメント）
+
+- `02-architecture-standards/` - 全アーキテクチャ標準
+- `09-reference/design-patterns.md` - デザインパターン
+- `09-reference/anti-patterns.md` - アンチパターン
+- `04-quality-standards/` - 品質標準全般
+- `10-governance/technology-radar.md` - 技術選定ガイド
+
+#### 🏗️ アーキテクト（必読ドキュメント）
+
+- `02-architecture-standards/cloud-architecture.md` - クラウドアーキテクチャ
+- `02-architecture-standards/microservices-architecture.md` - マイクロサービス
+- `05-technology-stack/` - 全技術スタック標準
+- `09-reference/case-studies.md` - 実装事例
+- `10-governance/standards-update-process.md` - 標準更新プロセス
+
+#### 📊 プロジェクトマネージャー（重要ドキュメント）
+
+- `03-development-process/` - 全開発プロセス
+- `10-governance/` - 全ガバナンス標準
+- `08-templates/technical-proposal-template.md` - 技術提案
+- `08-templates/meeting-minutes-template.md` - 議事録
+- `09-reference/best-practices.md` - ベストプラクティス
+
+#### 🔧 DevOpsエンジニア（必読ドキュメント）
+
+- `03-development-process/ci-cd-pipeline.md` - CI/CD標準
+- `05-technology-stack/infrastructure-stack.md` - インフラ技術スタック
+- `06-tools-and-environment/` - ツールと環境
+- `07-security-compliance/` - セキュリティ標準
+- `03-development-process/incident-management.md` - インシデント管理
+
+---
+
+## 🏗️ ドキュメント体系の3層アーキテクチャ
+
+本体系は**3つの階層**で構成されており、上から順に参照します。
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Layer 1: マスタードキュメント（司令塔）⭐                 │
+│  役割: 全体の流れと判断基準を提供                          │
+│                                                           │
+│  📘 AI-MASTER-WORKFLOW-GUIDE.md (40KB)                   │
+│     └─ PBIから全フェーズの統合ワークフロー                 │
+│  📘 DOCUMENT-USAGE-MANUAL.md (29KB)                      │
+│     └─ ドキュメント体系の利用マニュアル                    │
+│  📘 AI-PRE-WORK-CHECKLIST.md ⭐NEW                       │
+│     └─ 作業開始前チェックリスト                           │
+│                                                           │
+├─────────────────────────────────────────────────────────┤
+│  Layer 2: フェーズ別・AI活用ガイド（実行手順）             │
+│  役割: 具体的な作業手順とドキュメント参照先を提供           │
+│                                                           │
+│  📂 phase-guides/ (Phase 0-6の7ファイル)                 │
+│     ├─ phase-0-requirements-planning-guide.md           │
+│     ├─ phase-1-project-initialization-guide.md          │
+│     ├─ phase-2-design-guide.md                          │
+│     ├─ phase-3-implementation-guide.md                  │
+│     ├─ phase-4-review-qa-guide.md                       │
+│     ├─ phase-5-deployment-guide.md                      │
+│     └─ phase-6-operations-maintenance-guide.md          │
+│                                                           │
+│  📂 ai-guides/ (AI活用ガイド7ファイル)                    │
+│     ├─ AI-CHECKLISTS.md                                 │
+│     ├─ AI-QUICK-REFERENCE.md                            │
+│     └─ その他5ファイル                                   │
+│                                                           │
+├─────────────────────────────────────────────────────────┤
+│  Layer 3: 組織標準ドキュメント（参照標準）                 │
+│  役割: 詳細な技術標準とベストプラクティスを提供            │
+│                                                           │
+│  📂 10カテゴリ、97ファイル                                │
+│     ├─ 01-coding-standards/ (Tier 1) ⭐⭐⭐⭐⭐           │
+│     ├─ 02-architecture-standards/ (Tier 1) ⭐⭐⭐⭐⭐     │
+│     ├─ 03-development-process/ (Tier 3) ⭐⭐⭐           │
+│     ├─ 04-quality-standards/ (Tier 2) ⭐⭐⭐⭐            │
+│     ├─ 05-technology-stack/ (Tier 1) ⭐⭐⭐⭐⭐           │
+│     ├─ 06-tools-and-environment/ (Tier 3) ⭐⭐⭐         │
+│     ├─ 07-security-compliance/ (Tier 2) ⭐⭐⭐⭐          │
+│     ├─ 08-templates/ (Tier 4) ⭐⭐                       │
+│     ├─ 09-reference/ (Tier 4) ⭐⭐                       │
+│     └─ 10-governance/ (Tier 4) ⭐⭐                      │
+└─────────────────────────────────────────────────────────┘
+```
+
+**使い方のポイント**:
+- **Layer 1** → プロジェクト開始時・迷った時に読む（1回読めばOK）
+- **Layer 2** → 各フェーズ実行時に読む（フェーズごとに参照）
+- **Layer 3** → 実装・レビュー時に読む（必要に応じて）
+
+---
+
 
 ## 📖 プロジェクト概要
 
@@ -59,6 +239,11 @@ devin-organization-standards/
 ├── 00-guides/ ⭐ 統合ガイド
 │   ├── AI-MASTER-WORKFLOW-GUIDE.md (40KB) - PBIベースの全フェーズ統合ワークフロー
 │   ├── DOCUMENT-USAGE-MANUAL.md (29KB) - ドキュメント体系利用マニュアル
+│   ├── AI-PRE-WORK-CHECKLIST.md ⭐NEW - 作業開始前チェックリスト
+│   ├── AI-DOCUMENTATION-COMMENT-CHECKLIST.md ⭐NEW - ドキュメントコメント品質チェックリスト
+│   ├── phase-3-implementation-guide-addition.md ⭐NEW - Phase 3実装ガイド追加セクション
+│   ├── phase-4-review-qa-guide-addition.md ⭐NEW - Phase 4レビューガイド追加セクション
+│   ├── master-workflow-guide-addition.md ⭐NEW - マスターワークフローガイド追加セクション
 │   ├── phase-guides/ - 開発フェーズ別ガイド (全7フェーズ)
 │   │   ├── phase-0-requirements-planning-guide.md - 要件分析・企画
 │   │   ├── phase-1-project-initialization-guide.md - プロジェクト初期化
@@ -141,8 +326,9 @@ devin-organization-standards/
 │   ├── vulnerability-management.md
 │   ├── compliance-requirements.md
 │   └── security-testing.md
-├── 08-templates/ (11ファイル) ⭐ 新規セクション
+├── 08-templates/ (12ファイル + code-templates/) ⭐ 新規セクション
 │   ├── README.md
+│   ├── progress-tracking-template.md ⭐NEW - 進捗トラッキング
 │   ├── project-readme-template.md
 │   ├── api-specification-template.md
 │   ├── design-document-template.md
@@ -152,7 +338,23 @@ devin-organization-standards/
 │   ├── issue-feature-request-template.md
 │   ├── incident-report-template.md
 │   ├── meeting-minutes-template.md
-│   └── technical-proposal-template.md
+│   ├── technical-proposal-template.md
+│   └── code-templates/ ⭐NEW - ドキュメントコメントテンプレート
+│       ├── README.md - テンプレート使用ガイド
+│       ├── typescript/ - TypeScript/JavaScript用 (4テンプレート)
+│       │   ├── file-header.txt - ファイルヘッダーJSDoc
+│       │   ├── class-jsdoc.txt - クラスJSDoc
+│       │   ├── function-jsdoc.txt - 関数JSDoc
+│       │   └── interface-jsdoc.txt - インターフェースJSDoc
+│       ├── python/ - Python用 (3テンプレート)
+│       │   ├── module-docstring.txt - モジュールDocstring
+│       │   ├── class-docstring.txt - クラスDocstring
+│       │   └── function-docstring.txt - 関数Docstring
+│       └── java/ - Java用 (4テンプレート)
+│           ├── file-header.txt - ファイルヘッダーJavadoc
+│           ├── class-javadoc.txt - クラスJavadoc
+│           ├── method-javadoc.txt - メソッドJavadoc
+│           └── package-info-template.java - パッケージJavadoc
 ├── 09-reference/ (9ファイル) ⭐ 新規セクション
 │   ├── README.md
 │   ├── glossary.md
@@ -173,7 +375,7 @@ devin-organization-standards/
     ├── reports/ - 完了報告書
     └── misc/ - その他アーカイブ
 
-総計: 97ファイル、約750KB (既存標準) + 約200KB (ガイド)
+総計: 115ファイル、約750KB (既存標準) + 約200KB (ガイド) + 約20KB (コードテンプレート)
 ```
 
 ---
@@ -330,10 +532,14 @@ AIエージェントの実行精度を高めるためのプロンプトとガイ
 **主要ドキュメント**:
 - `AI-MASTER-WORKFLOW-GUIDE.md` - PBIベースの全フェーズ統合ワークフロー
 - `DOCUMENT-USAGE-MANUAL.md` - ドキュメント体系利用マニュアル
+- `AI-DOCUMENTATION-COMMENT-CHECKLIST.md` ⭐NEW - ドキュメントコメント品質チェックリスト
+- `phase-3-implementation-guide-addition.md` ⭐NEW - Phase 3実装ガイド追加（ドキュメントコメント必須化）
+- `phase-4-review-qa-guide-addition.md` ⭐NEW - Phase 4レビューガイド追加（コメント品質検証）
+- `master-workflow-guide-addition.md` ⭐NEW - マスターワークフローガイド追加（3.7セクション）
 - `phase-guides/` - 開発フェーズ別ガイド（全7フェーズ）
 - `ai-guides/` - AI向けプロンプト・ガイド
 
-**いつ使う**: プロジェクト開始時、各フェーズ実行時、ドキュメント参照時
+**いつ使う**: プロジェクト開始時、各フェーズ実行時、ドキュメント参照時、実装中のコメント記載時
 
 **重要度**: ⭐⭐⭐⭐⭐ 必須
 
@@ -341,6 +547,8 @@ AIエージェントの実行精度を高めるためのプロンプトとガイ
 - AIの参照漏れ防止
 - 開発効率50%向上
 - 人間のレビュー時間30%削減
+- ドキュメントコメントの品質向上と標準化
+- コード可読性の向上
 
 ---
 
@@ -459,7 +667,7 @@ AIエージェントの実行精度を高めるためのプロンプトとガイ
 
 ### 08. テンプレート集 ⭐ 新規
 
-**目的**: ドキュメント作成時間の削減
+**目的**: ドキュメント作成時間の削減、コードの標準化
 
 **主要ドキュメント**:
 - `project-readme-template.md` - プロジェクトREADME
@@ -467,12 +675,21 @@ AIエージェントの実行精度を高めるためのプロンプトとガイ
 - `design-document-template.md` - 設計書
 - `test-plan-template.md` - テスト計画書
 - その他7つのテンプレート
+- `code-templates/` ⭐NEW - ドキュメントコメントテンプレート集
+  - `README.md` - テンプレート使用ガイド
+  - `typescript/` - TypeScript/JavaScript用テンプレート（4ファイル）
+  - `python/` - Python用テンプレート（3ファイル）
+  - `java/` - Java用テンプレート（4ファイル）
 
-**いつ使う**: 新規ドキュメント作成時
+**いつ使う**: 新規ドキュメント作成時、コード実装時（ファイル/クラス/関数作成時）
 
-**重要度**: ⭐⭐⭐⭐ 高
+**重要度**: ⭐⭐⭐⭐⭐ 必須（code-templatesは実装時に常時参照）
 
-**期待効果**: ドキュメント作成時間50%削減
+**期待効果**: 
+- ドキュメント作成時間50%削減
+- ドキュメントコメント記載時間70%削減
+- コメント品質の標準化
+- Why重視のコメント文化の定着
 
 ---
 
@@ -899,9 +1116,46 @@ owner: "担当チーム"
 
 ## 📋 バージョン情報
 
-### 現在のバージョン: 2.0.0
+### 現在のバージョン: 2.2.0
 
 ### バージョン履歴
+
+#### v2.2.0 (2025-11-06) - ドキュメントコメント標準化
+
+**追加**:
+- ✨ ドキュメントコメント標準化関連ファイル（16ファイル）
+  - AI-DOCUMENTATION-COMMENT-CHECKLIST.md - 全言語対応チェックリスト
+  - phase-3-implementation-guide-addition.md - Phase 3ガイド追加セクション（3.7）
+  - phase-4-review-qa-guide-addition.md - Phase 4ガイド追加セクション
+  - master-workflow-guide-addition.md - マスターワークフローガイド追加セクション
+  - code-templates/ - 言語別ドキュメントコメントテンプレート
+    - TypeScript/JavaScript用: 4テンプレート（JSDoc形式）
+    - Python用: 3テンプレート（Google Style Docstring）
+    - Java用: 4テンプレート（Javadoc形式）
+
+**改善**:
+- 📚 ドキュメントコメント必須化の明確化
+  - パブリックAPI: 100%カバレッジ必須
+  - 複雑なロジック: 80%以上推奨
+  - Why重視（70%）のコメント方針
+- 🔧 自動チェック設定ガイド追加
+  - ESLint + eslint-plugin-jsdoc（TypeScript/JavaScript）
+  - pylint + pydocstyle（Python）
+  - Checkstyle（Java）
+- 🎯 実装フローへの組み込み
+  - Phase 3: テンプレート参照 → 実装 → 自己チェック
+  - Phase 4: 自動チェック → 手動レビュー → 品質確認
+
+**期待効果**:
+- ドキュメントコメント記載時間70%削減
+- コメント品質の標準化と向上
+- コード可読性・保守性の向上
+- Why重視のコメント文化の定着
+
+**統計**:
+- 総ファイル数: 99 → 115（+16）
+- 総データ量: ~950KB → ~970KB
+- カバレッジ: 100% → 100%（品質強化）
 
 #### v2.0.0 (2025-10-28) - 大規模アップデート
 
@@ -963,5 +1217,5 @@ owner: "担当チーム"
 
 ---
 
-**最終更新**: 2025-10-28  
-**バージョン**: 2.0.0  
+**最終更新**: 2025-11-06  
+**バージョン**: 2.2.0  

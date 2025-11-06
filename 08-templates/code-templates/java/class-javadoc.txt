@@ -1,0 +1,39 @@
+/**
+ * [クラスの目的を1行で記述]
+ * 
+ * <p>[詳細説明:
+ * <ul>
+ *   <li>このクラスの責任</li>
+ *   <li>主要な機能</li>
+ *   <li>設計パターン（該当する場合）</li>
+ *   <li>注意事項・制約</li>
+ * </ul>
+ * </p>
+ * 
+ * <p>Example usage:
+ * <pre>{@code
+ * ClassName instance = new ClassName(param1, param2);
+ * ResultType result = instance.doSomething();
+ * }</pre>
+ * </p>
+ * 
+ * @author [作成者名]
+ * @version 1.0.0
+ * @since [作成日]
+ * @see RelatedClass
+ */
+public class ClassName {
+    
+    /** [プロパティの説明] */
+    private Type propertyName;
+    
+    /**
+     * コンストラクタ
+     * 
+     * @param param1 [パラメータ1の説明]
+     * @param param2 [パラメータ2の説明]
+     */
+    public ClassName(Type1 param1, Type2 param2) {
+        // 実装
+    }
+}
