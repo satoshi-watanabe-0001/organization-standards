@@ -1,8 +1,8 @@
 ---
 title: "Devin Organization Standards"
-version: "2.2.0"
+version: "2.3.0"
 created_date: "2025-10-20"
-last_updated: "2025-11-06"
+last_updated: "2025-11-07"
 status: "Active"
 owner: "Engineering Leadership Team"
 ---
@@ -11,8 +11,8 @@ owner: "Engineering Leadership Team"
 
 > 組織全体で統一された開発標準とベストプラクティスの包括的なドキュメント集
 
-**バージョン**: 2.2.0  
-**最終更新**: 2025-11-06  
+**バージョン**: 2.3.0  
+**最終更新**: 2025-11-07  
 **管理者**: Engineering Leadership Team
 
 ---
@@ -533,9 +533,34 @@ AIエージェントの実行精度を高めるためのプロンプトとガイ
 - `AI-MASTER-WORKFLOW-GUIDE.md` - PBIベースの全フェーズ統合ワークフロー
 - `DOCUMENT-USAGE-MANUAL.md` - ドキュメント体系利用マニュアル
 - `AI-DOCUMENTATION-COMMENT-CHECKLIST.md` ⭐NEW - ドキュメントコメント品質チェックリスト
+- `DOCUMENTATION-COMMENT-ISSUE-SOLUTION.md` ⭐NEW - ドキュメントコメント漏れ問題の解決策
+  - 対象言語: Java (Javadoc), TypeScript (JSDoc), Python (Docstring)
+  - 内容: CI品質ゲート設定方法、コードテンプレート、6つの解決策
+  - 参照: Phase 3実装ガイド Section 10、CI-SETUP-CHECKLIST Section 5.2
+- `PR-LANGUAGE-ISSUE-SOLUTION.md` ⭐NEW - PR言語問題の解決策
+  - 用途: PR説明文の日本語必須化
+  - 内容: CI品質ゲート設定、PRテンプレート整備、運用フロー
+  - 効果: 英語PR自動却下、botによる修正ガイダンス
+  - 参照: Phase 4レビューガイド Step 4.1.6、PRテンプレート
 - `phase-3-implementation-guide-addition.md` ⭐NEW - Phase 3実装ガイド追加（ドキュメントコメント必須化）
 - `phase-4-review-qa-guide-addition.md` ⭐NEW - Phase 4レビューガイド追加（コメント品質検証）
 - `master-workflow-guide-addition.md` ⭐NEW - マスターワークフローガイド追加（3.7セクション）
+- `phase-3-sql-migration-addition.md` ⭐NEW - Phase 3実装ガイド追加（SQLマイグレーション実装標準）
+  - 用途: データベーススキーマ変更を含む実装タスク
+  - 内容: マイグレーションファイル作成準備、必須コメント規約、完全なSQLテンプレート、実装チェックリスト40項目以上、CI/CD統合手順
+  - 効果: SQLコメント不足問題（EC-15類似）の再発防止
+  - 参照: Phase 3実装ガイド Section 3.8、sql-standards.md
+- `ci-setup-sql-quality-gate.md` ⭐NEW - CI-SETUP-CHECKLIST追加（SQL品質ゲート自動チェック）
+  - 用途: SQLマイグレーションコメント品質の自動検証
+  - 内容: GitHub Actions完全版YAML、自動チェックロジック、PR自動コメント投稿機能
+  - 効果: PRマージ前にコメント品質を自動検証、レビュー時間30%削減
+  - 参照: CI-SETUP-CHECKLIST Section 5.3、GitHub Actions設定
+- `SQL-MIGRATION-COMMENT-SOLUTION.md` ⭐NEW - SQLマイグレーション問題の包括的解決ガイド
+  - 対象: EC-15類似のSQLコメント不足問題
+  - 内容: 修正版SQLファイル例、コメント記述ガイドライン、CI/CD自動チェック設定
+- `DEVIN-INITIAL-SETUP-GUIDE.md` ⭐NEW - Devin初期設定包括ガイド
+  - 用途: Devinアカウント・GitHub統合・権限設定
+  - 内容: アカウント設定、GitHub統合手順、権限レベル詳細、Secrets管理、統合サービス設定
 - `phase-guides/` - 開発フェーズ別ガイド（全7フェーズ）
 - `ai-guides/` - AI向けプロンプト・ガイド
 
@@ -680,6 +705,14 @@ AIエージェントの実行精度を高めるためのプロンプトとガイ
   - `typescript/` - TypeScript/JavaScript用テンプレート（4ファイル）
   - `python/` - Python用テンプレート（3ファイル）
   - `java/` - Java用テンプレート（4ファイル）
+- `pr-templates/` ⭐NEW - プルリクエストテンプレート集
+  - `PULL_REQUEST_TEMPLATE.md` - デフォルトPRテンプレート（日本語必須）
+  - `README.md` - テンプレート使用ガイド
+  - 目的: PR説明文の標準化、日本語記載の促進
+- `ci-templates/github-actions/` ⭐NEW - GitHub Actions CI品質ゲート（言語非依存）
+  - `pr-language-check.yaml` - PR言語チェックCI
+  - 詳細ドキュメント・使用ガイド
+  - 目的: 英語PRの自動検出・マージ防止
 
 **いつ使う**: 新規ドキュメント作成時、コード実装時（ファイル/クラス/関数作成時）
 
@@ -1219,3 +1252,70 @@ owner: "担当チーム"
 
 **最終更新**: 2025-11-06  
 **バージョン**: 2.2.0  
+
+---
+
+## 📝 更新履歴
+
+### v2.3.0 (2025-11-07) - SQLマイグレーション標準のプロセス統合
+
+#### 🎯 主な変更
+
+**新規ドキュメント追加**:
+- `phase-3-sql-migration-addition.md`: Phase 3実装ガイドへの統合用セクション（Section 3.8）
+- `ci-setup-sql-quality-gate.md`: CI-SETUP-CHECKLISTへの統合用セクション（Section 5.3）
+- `SQL-MIGRATION-COMMENT-SOLUTION.md`: SQLマイグレーションコメント不足問題の包括的解決ガイド
+- `DEVIN-INITIAL-SETUP-GUIDE.md`: Devin初期設定包括ガイド（アカウント、GitHub統合、権限設定）
+
+#### 📝 改善内容
+
+**Phase 3実装ガイド拡張**:
+- Section 3.8「データベースマイグレーション実装」を追加
+- SQLマイグレーションファイル作成時の必須コメント規約を明示
+- すぐに使える完全なSQLテンプレートを提供
+- 40項目以上の実装チェックリストを導入
+
+**CI/CD自動化強化**:
+- SQLマイグレーションコメント品質ゲートを導入（Section 5.3）
+- GitHub Actions自動チェックワークフロー追加
+- PR作成時に自動でコメント品質を検証
+- エラー検出時は詳細フィードバックをPRに自動投稿
+
+#### 🐛 解決した問題
+
+- **EC-15類似問題の再発防止**: SQLマイグレーションファイルのドキュメントコメント不足
+- **実装時の標準参照不足**: 実装フェーズで組織標準が参照されにくい問題
+- **手動レビュー負荷**: SQLコメント品質の手動チェックに時間がかかる問題
+- **Devin権限設定の不明確さ**: GitHub PRマージの一貫性、Space編集権限の問題
+
+#### 📊 期待される効果
+
+- SQLコメント不足によるPR差し戻し率: **90%削減**
+- SQLレビュー時間（平均）: **30%短縮**
+- 新規メンバーのSQL作成時間: **50%短縮**
+- SQLドキュメント品質スコア: **80点以上**（3ヶ月以内）
+
+#### 🔗 関連ドキュメント
+
+- 統合指示書: `INTEGRATION-INSTRUCTIONS.md`
+- チーム周知文書: `TEAM-ANNOUNCEMENT.md`
+- 完了報告書: `INTEGRATION-COMPLETION-REPORT.md`
+- 組織標準: `01-coding-standards/sql-standards.md`
+
+#### 👥 影響範囲
+
+- **開発者**: Phase 3実装時にSection 3.8を参照、テンプレート利用
+- **AIエージェント**: マスターワークフローからPhase 3新セクションを自動参照
+- **レビュアー**: CI自動チェック結果を活用、手動確認の効率化
+- **CI/CD管理者**: 新しいワークフローファイルの設置と監視
+
+---
+
+### v2.2.0 (2025-11-06) - ドキュメントコメント標準の強化
+
+- ドキュメントコメント品質チェックリスト追加
+- Phase 3実装ガイドへのドキュメントコメント必須化セクション追加
+- CI-SETUP-CHECKLISTへのドキュメントコメント品質ゲート追加
+- PR言語問題の解決策追加（日本語必須化）
+
+---

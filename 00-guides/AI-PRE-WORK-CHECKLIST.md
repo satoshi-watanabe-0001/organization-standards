@@ -334,6 +334,12 @@ audience: "AI Agents"
 - [ ] テスト駆動開発（TDD）を採用するか
 - [ ] 既存コードとの整合性を確認したか
 
+- [ ] **ドキュメントコメント要件を確認したか** ⭐NEW
+  - 📖 参照: [Phase 3実装ガイド - Section 10](./phase-guides/phase-3-implementation-guide.md#10-ドキュメントコメント必須化ガイド全言語共通-new)
+  - 📖 詳細: [DOCUMENTATION-COMMENT-ISSUE-SOLUTION.md](./DOCUMENTATION-COMMENT-ISSUE-SOLUTION.md)
+  - パブリックAPI（クラス/関数/メソッド）には必須
+  - 言語別フォーマット（Javadoc/JSDoc/Docstring）に従う
+  - CI品質ゲートで検証される
 **🟡 AI活用システム開発ドキュメントの確認**:
 - [ ] 🟡 **AI活用システム開発ドキュメント/04_詳細設計/ および 05_実装/ を確認**
   - [ ] 詳細設計書の作成ルールを確認
@@ -348,6 +354,12 @@ audience: "AI Agents"
 - [ ] セキュリティスキャンツールを実行したか
 - [ ] 品質メトリクスの基準値を確認したか
 
+- [ ] **PR作成時の言語要件を確認したか** ⭐NEW
+  - 📖 参照: [PRテンプレート](../08-templates/pr-templates/PULL_REQUEST_TEMPLATE.md)
+  - 📖 詳細: [PR言語問題の解決策](./PR-LANGUAGE-ISSUE-SOLUTION.md)
+  - PRタイトル・説明文は日本語必須
+  - CI品質ゲートで自動検証される
+  - 英語記載の場合はPR再作成が必要
 ### Phase 5: デプロイメント
 
 **🔴 AI活用システム開発ドキュメントの確認**:

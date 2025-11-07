@@ -1,0 +1,79 @@
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  
+  // テストファイルのパターン
+  testMatch: [
+    '**/__tests__/**/*.test.ts',
+    '**/?(*.)+(spec|test).ts'
+  ],
+  
+  // カバレッジ収集設定
+  collectCoverage: true,
+  collectCoverageFrom: [
+    'src/**/*.ts',
+    '!src/**/*.d.ts',
+    '!src/**/*.test.ts',
+    '!src/**/*.spec.ts',
+    '!src/**/__tests__/**',
+    '!src/**/index.ts',  // エントリーポイントは除外（必要に応じて調整）
+  ],
+  
+  // ✅ 必須: カバレッジ閾値設定（組織標準: 80%）
+  coverageThreshold: {
+    global: {
+      lines: 80,
+      functions: 80,
+      branches: 80,
+      statements: 80
+    }
+  },
+  
+  // カバレッジレポート形式
+  coverageReporters: [
+    'text',        // コンソール出力
+    'text-summary', // サマリー出力
+    'html',        // HTMLレポート
+    'lcov'         // lcovレポート（CI用）
+  ],
+  
+  // カバレッジ出力ディレクトリ
+  coverageDirectory: 'coverage',
+  
+  // モジュール解決
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  
+  // トランスフォーム設定
+  transform: {
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        tsconfig: {
+          esModuleInterop: true,
+          allowSyntheticDefaultImports: true
+        }
+      }
+    ]
+  },
+  
+  // パスマッピング（必要に応じて tsconfig.json と合わせる）
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1'
+  },
+  
+  // テストのタイムアウト
+  testTimeout: 10000,
+  
+  // 並列実行設定
+  maxWorkers: '50%',
+  
+  // verbose出力
+  verbose: true
+};
+
+// ========================================
+// 参照ドキュメント
+// ========================================
+// - /00-guides/CI-SETUP-CHECKLIST.md
+// - /03-development-process/ci-cd-pipeline.md
+// - /04-quality-standards/testing-standards.md
