@@ -1,0 +1,254 @@
+name: Security Scan
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+  schedule:
+    # 毎週月曜日 9:00 (JST) に実行
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  pull-requests: write
+
+jobs:
+  dependency-check:
+    name: 依存関係脆弱性スキャン
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: OWASP Dependency-Check
+        uses: dependency-check/Dependency-Check_Action@main
+        id: depcheck
+        with:
+          project: ${{ github.repository }}
+          path: '.'
+          format: 'HTML'
+          args: >
+            --enableRetired
+            --failOnCVSS 7
+            --suppression dependency-check-suppressions.xml
+
+      - name: Upload Dependency-Check Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-check-report
+          path: ${{ github.workspace }}/reports
+
+      - name: Comment on PR (脆弱性検出時)
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🔴 セキュリティスキャン失敗
+
+            **依存関係に脆弱性が検出されました！**
+
+            ### 確認方法
+            1. GitHub Actions の "Artifacts" セクションから \`dependency-check-report\` をダウンロード
+            2. レポートを確認して、検出された脆弱性を特定
+            3. 以下のいずれかの方法で対処してください：
+
+            ### 対処方法
+
+            #### 方法1: 依存関係を更新（推奨）
+            \`\`\`bash
+            # 脆弱性のあるライブラリを最新版に更新
+            # Maven の場合
+            mvn versions:use-latest-releases
+
+            # Gradle の場合
+            ./gradlew dependencyUpdates
+
+            # npm の場合
+            npm audit fix
+
+            # pip の場合
+            pip install --upgrade <package-name>
+            \`\`\`
+
+            #### 方法2: 誤検出の場合（抑制ファイルを使用）
+            プロジェクトルートに \`dependency-check-suppressions.xml\` を作成：
+            \`\`\`xml
+            <?xml version="1.0" encoding="UTF-8"?>
+            <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+              <suppress>
+                <notes>理由を記載</notes>
+                <cve>CVE-2023-XXXXX</cve>
+              </suppress>
+            </suppressions>
+            \`\`\`
+
+            ### 参考資料
+            - [OWASP Dependency-Check Documentation](https://jeremylong.github.io/DependencyCheck/)
+            - [National Vulnerability Database](https://nvd.nist.gov/)
+            `
+            })
+
+  secret-scan:
+    name: シークレットスキャン
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: TruffleHog Secret Scan
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+          extra_args: --debug --only-verified
+
+      - name: Comment on PR (シークレット検出時)
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🔴 シークレットスキャン失敗
+
+            **ハードコードされた認証情報が検出されました！**
+
+            ### 緊急対応が必要です
+
+            検出されたシークレットは以下のいずれかの可能性があります：
+            - API キー
+            - パスワード
+            - トークン
+            - 秘密鍵
+            - データベース接続文字列
+
+            ### 対処手順
+
+            #### Step 1: 即座にシークレットを無効化
+            \`\`\`bash
+            # 検出されたAPIキー/トークンを直ちに無効化してください
+            # 例: GitHub Personal Access Token
+            # → GitHub Settings → Developer settings → Personal access tokens → 該当トークンを削除
+            \`\`\`
+
+            #### Step 2: Gitの履歴から削除
+            \`\`\`bash
+            # BFG Repo-Cleaner を使用（推奨）
+            java -jar bfg.jar --replace-text passwords.txt <repo>
+
+            # または git filter-branch
+            git filter-branch --force --index-filter \\
+              'git rm --cached --ignore-unmatch <ファイル>' \\
+              --prune-empty --tag-name-filter cat -- --all
+
+            # 強制プッシュ（注意: チーム全員への通知が必要）
+            git push origin --force --all
+            \`\`\`
+
+            #### Step 3: 環境変数/シークレット管理に移行
+            \`\`\`bash
+            # GitHub Secrets に登録
+            # Settings → Secrets and variables → Actions → New repository secret
+
+            # コード内での使用例
+            # \${{ secrets.API_KEY }}
+            \`\`\`
+
+            #### Step 4: .gitignore に追加
+            \`\`\`bash
+            # .gitignore に追加して今後の漏洩を防止
+            echo ".env" >> .gitignore
+            echo "*.key" >> .gitignore
+            echo "*.pem" >> .gitignore
+            \`\`\`
+
+            ### 参考資料
+            - [GitHub Secrets Management](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
+            - [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/)
+            `
+            })
+
+  security-summary:
+    name: セキュリティスキャン結果サマリー
+    runs-on: ubuntu-latest
+    needs: [dependency-check, secret-scan]
+    if: always()
+    
+    steps:
+      - name: Create Summary
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const depCheckResult = '${{ needs.dependency-check.result }}';
+            const secretScanResult = '${{ needs.secret-scan.result }}';
+            
+            let summary = '# 🔒 セキュリティスキャン結果\n\n';
+            
+            // 依存関係脆弱性スキャン
+            summary += '## 依存関係脆弱性スキャン\n';
+            if (depCheckResult === 'success') {
+              summary += '✅ **合格**: 脆弱性は検出されませんでした\n\n';
+            } else {
+              summary += '❌ **失敗**: 脆弱性が検出されました\n\n';
+            }
+            
+            // シークレットスキャン
+            summary += '## シークレットスキャン\n';
+            if (secretScanResult === 'success') {
+              summary += '✅ **合格**: ハードコードされた認証情報は検出されませんでした\n\n';
+            } else {
+              summary += '❌ **失敗**: ハードコードされた認証情報が検出されました\n\n';
+            }
+            
+            // 総合判定
+            summary += '## 総合判定\n';
+            if (depCheckResult === 'success' && secretScanResult === 'success') {
+              summary += '✅ **すべてのセキュリティスキャンが合格しました**\n\n';
+            } else {
+              summary += '❌ **セキュリティスキャンに失敗しました。上記のコメントを確認して対処してください。**\n\n';
+            }
+            
+            core.summary.addRaw(summary);
+            await core.summary.write();
+
+      - name: Comment on PR (サマリー)
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const depCheckResult = '${{ needs.dependency-check.result }}';
+            const secretScanResult = '${{ needs.secret-scan.result }}';
+            
+            let body = '## 🔒 セキュリティスキャン結果\n\n';
+            body += '| スキャン項目 | 結果 |\n';
+            body += '|------------|------|\n';
+            body += `| 依存関係脆弱性 | ${depCheckResult === 'success' ? '✅ 合格' : '❌ 失敗'} |\n`;
+            body += `| シークレット | ${secretScanResult === 'success' ? '✅ 合格' : '❌ 失敗'} |\n\n`;
+            
+            if (depCheckResult === 'success' && secretScanResult === 'success') {
+              body += '✅ **すべてのセキュリティスキャンが合格しました！**\n';
+            } else {
+              body += '⚠️ **セキュリティスキャンに失敗しました。詳細は上記のコメントを確認してください。**\n';
+            }
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            })

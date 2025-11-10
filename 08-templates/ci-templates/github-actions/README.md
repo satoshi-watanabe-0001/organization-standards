@@ -3,32 +3,37 @@
 ## 📋 目次
 - [概要](#概要)
 - [テンプレート一覧](#テンプレート一覧)
+- [どのCIファイルを使うべきか](#どのciファイルを使うべきか)
+- [推奨CI構成](#推奨ci構成)
 - [使用方法](#使用方法)
 - [ベストプラクティス](#ベストプラクティス)
+- [よくある質問（FAQ）](#よくある質問faq)
 - [関連ドキュメント](#関連ドキュメント)
 
 ---
 
 ## 概要
 
-このディレクトリには、GitHub Actionsで使用する**言語非依存のCI品質ゲート**テンプレートが格納されています。
+このディレクトリには、GitHub Actionsで使用する**CI/CD品質ゲート**テンプレートが格納されています。
 
 ### 目的
 - **組織標準の統一**: すべてのプロジェクトで同じCI品質ゲートを使用
 - **品質保証**: PRの品質を自動的に検証
+- **セキュリティ強化**: 脆弱性やシークレット漏洩を防止
 - **効率化**: 手動チェックを自動化
 - **強制力**: CI失敗でマージを防止
 
 ### 対象プロジェクト
 - すべてのGitHubリポジトリ
-- すべてのプログラミング言語（言語非依存）
+- Java、Node.js、Python プロジェクト
 
 ---
 
 ## テンプレート一覧
 
-### 1. PR言語チェック（必須）
+### 🔴 必須テンプレート
 
+#### 1. PR言語チェック
 **ファイル**: `pr-language-check.yaml`
 
 **用途**: PRのタイトル・説明文が日本語で記載されているかを自動検証
@@ -39,11 +44,268 @@
 - ✅ botコメントで修正方法を自動提示
 - ✅ 技術用語（API、JWT等）の英語表記は許可
 
-**適用対象**: すべてのプロジェクト（必須）
+**適用対象**: すべてのプロジェクト（**必須**）
 
-**優先度**: 🔴 最優先
+**実行時間**: 5-10秒
 
 **詳細ドキュメント**: [pr-language-check.md](./pr-language-check.md)
+
+---
+
+### 🔴 最優先テンプレート
+
+#### 2. セキュリティスキャン
+**ファイル**: `security-scan.yaml`
+
+**用途**: 依存関係の脆弱性とハードコードされた認証情報を自動検出
+
+**機能**:
+- ✅ OWASP Dependency-Check（依存関係脆弱性スキャン）
+- ✅ TruffleHog Secret Scan（シークレットスキャン）
+- ✅ 毎週月曜日に定期実行
+- ✅ CVSS 7.0以上の脆弱性でCI失敗
+
+**適用対象**: すべてのプロジェクト（**最優先**）
+
+**実行時間**: 4-7分
+
+**効果**: セキュリティインシデントを未然に防止（80%のリスクをカバー）
+
+**詳細ドキュメント**: [security-scan.md](./security-scan.md)
+
+---
+
+### 🟡 推奨テンプレート
+
+#### 3. PRセルフレビューリマインダー
+**ファイル**: `pr-self-review-reminder.yml`
+
+**用途**: PRが投稿された際に、セルフレビューを促すリマインダーコメントを自動投稿
+
+**機能**:
+- ✅ PR初回投稿時のみ自動コメント
+- ✅ 組織標準ドキュメントへの参照を提示
+- ✅ AIエージェントが自律的にチェックリストを選定
+- ✅ 重複投稿を自動防止
+
+**適用対象**: すべてのプロジェクト（推奨）
+
+**実行時間**: 5秒（初回のみ）
+
+**詳細ドキュメント**: [pr-self-review-reminder.md](./pr-self-review-reminder.md)
+
+---
+
+#### 4. コード品質分析
+**ファイル**: `code-quality.yaml`
+
+**用途**: コード品質を自動分析し、保守性を向上
+
+**機能**:
+- ✅ SonarCloud（総合的なコード品質分析）
+- ✅ SpotBugs（Java静的解析）
+- ✅ PMD（Javaコード品質チェック）
+- ✅ ESLint（Node.js静的解析）
+- ✅ Pylint（Python静的解析）
+
+**適用対象**: コード品質を重視するプロジェクト（推奨）
+
+**実行時間**: 5-10分
+
+**効果**: 技術的負債の蓄積を防止、潜在的なバグの早期発見
+
+**詳細ドキュメント**: [code-quality.md](./code-quality.md)
+
+---
+
+#### 5. 統合テスト
+**ファイル**: `integration-test.yaml`
+
+**用途**: データベースやAPIを含む統合テストを自動実行
+
+**機能**:
+- ✅ GitHub Actions Services（PostgreSQL/MySQL/Redis）
+- ✅ TestContainers（Dockerベースの統合テスト）
+- ✅ REST API テスト（REST Assured）
+- ✅ Node.js/Python 統合テスト
+
+**適用対象**: データベース連携があるプロジェクト（推奨）
+
+**実行時間**: 10-15分
+
+**効果**: 実環境に近いテスト、コンポーネント間の連携検証
+
+**詳細ドキュメント**: [integration-test.md](./integration-test.md)
+
+---
+
+## どのCIファイルを使うべきか
+
+### プロジェクトのフェーズ別
+
+#### 🚀 新規プロジェクト立ち上げ時（必須のみ）
+
+最初は**最小限の構成**から始めましょう：
+
+```
+.github/workflows/
+├── pr-language-check.yaml         # 必須
+├── security-scan.yaml             # 最優先
+└── pr-self-review-reminder.yml    # 推奨
+```
+
+**所要時間**: 30分程度でセットアップ完了
+
+---
+
+#### 📈 プロジェクト成長期（品質重視）
+
+プロジェクトが成長したら、**品質ゲート**を追加：
+
+```
+.github/workflows/
+├── pr-language-check.yaml         # 必須
+├── security-scan.yaml             # 最優先
+├── pr-self-review-reminder.yml    # 推奨
+├── code-quality.yaml              # ← 追加
+└── ci.yaml                        # プロジェクト固有のCI
+```
+
+**追加理由**: 技術的負債の蓄積を防ぐため
+
+---
+
+#### 🏢 本番運用フェーズ（完全構成）
+
+本番運用時は、**完全な品質保証**を実施：
+
+```
+.github/workflows/
+├── pr-language-check.yaml         # 必須
+├── security-scan.yaml             # 最優先
+├── pr-self-review-reminder.yml    # 推奨
+├── code-quality.yaml              # 推奨
+├── integration-test.yaml          # ← 追加
+└── ci.yaml                        # プロジェクト固有のCI
+```
+
+**追加理由**: 実環境に近い統合テストで品質を保証
+
+---
+
+### プロジェクトの種類別
+
+#### 🟢 シンプルなプロジェクト（API、ライブラリ等）
+
+```
+.github/workflows/
+├── pr-language-check.yaml
+├── security-scan.yaml
+├── pr-self-review-reminder.yml
+└── ci.yaml  # ビルド、単体テスト、カバレッジ
+```
+
+**理由**: データベース連携がないため、統合テストは不要
+
+---
+
+#### 🟡 中規模プロジェクト（Web API、マイクロサービス）
+
+```
+.github/workflows/
+├── pr-language-check.yaml
+├── security-scan.yaml
+├── pr-self-review-reminder.yml
+├── code-quality.yaml
+└── ci.yaml
+```
+
+**理由**: コード品質を重視し、技術的負債を防止
+
+---
+
+#### 🔴 大規模プロジェクト（エンタープライズシステム）
+
+```
+.github/workflows/
+├── pr-language-check.yaml
+├── security-scan.yaml
+├── pr-self-review-reminder.yml
+├── code-quality.yaml
+├── integration-test.yaml
+└── ci.yaml
+```
+
+**理由**: 完全な品質保証が必要
+
+---
+
+### 機能別の使い分け
+
+| 目的 | 使用するテンプレート | 優先度 |
+|------|---------------------|--------|
+| **日本語PR強制** | pr-language-check.yaml | 🔴 必須 |
+| **セキュリティ強化** | security-scan.yaml | 🔴 最優先 |
+| **AIセルフレビュー促進** | pr-self-review-reminder.yml | 🟡 推奨 |
+| **コード品質向上** | code-quality.yaml | 🟡 推奨 |
+| **統合テスト実施** | integration-test.yaml | 🟡 推奨 |
+| **ビルド・単体テスト** | ci.yaml（個別作成） | 🔴 必須 |
+
+---
+
+## 推奨CI構成
+
+### 最小構成（新規プロジェクト）
+
+```bash
+# ステップ1: 必須テンプレートをコピー
+cp pr-language-check.yaml <project>/.github/workflows/
+cp security-scan.yaml <project>/.github/workflows/
+cp pr-self-review-reminder.yml <project>/.github/workflows/
+
+# ステップ2: Dependabot を有効化（5分）
+# Settings → Security → Dependabot alerts/updates を有効化
+
+# ステップ3: GitHub Secret Scanning を有効化（5分）
+# Settings → Security → Secret scanning を有効化
+```
+
+**所要時間**: 30分  
+**効果**: 基本的な品質保証＋セキュリティ強化
+
+---
+
+### 推奨構成（成長期プロジェクト）
+
+```bash
+# 最小構成に加えて
+cp code-quality.yaml <project>/.github/workflows/
+
+# SonarCloud セットアップ（15分）
+# 1. SonarCloud にログイン
+# 2. プロジェクトをインポート
+# 3. SONAR_TOKEN を GitHub Secrets に登録
+```
+
+**所要時間**: 1時間  
+**効果**: コード品質の継続的な向上
+
+---
+
+### 完全構成（本番運用プロジェクト）
+
+```bash
+# 推奨構成に加えて
+cp integration-test.yaml <project>/.github/workflows/
+
+# 統合テストの設定（1-2時間）
+# 1. pom.xml/build.gradle に統合テスト用プロファイルを追加
+# 2. TestContainers の依存関係を追加
+# 3. 統合テストクラスを作成
+```
+
+**所要時間**: 2-3時間  
+**効果**: 実環境に近いテストで品質保証
 
 ---
 
@@ -51,13 +313,23 @@
 
 ### Step 1: 必要なテンプレートを選択
 
-すべてのプロジェクトで **PR言語チェック** は必須です。
+上記の「どのCIファイルを使うべきか」を参照して、プロジェクトに必要なテンプレートを選択してください。
+
+**最低限**:
+- ✅ `pr-language-check.yaml` - すべてのプロジェクトで必須
+- ✅ `security-scan.yaml` - セキュリティ強化（最優先）
+
+**推奨**:
+- ✅ `pr-self-review-reminder.yml` - AIによるセルフレビューを促進
+- ✅ `code-quality.yaml` - コード品質の継続的な向上
+- ✅ `integration-test.yaml` - データベース連携があるプロジェクト
 
 ---
 
 ### Step 2: プロジェクトへの配置
 
-#### 方法1: 個別ファイルをコピー
+#### 方法1: 個別ファイルをコピー（推奨）
+
 ```bash
 # プロジェクトのルートディレクトリに移動
 cd <project-root>
@@ -65,21 +337,56 @@ cd <project-root>
 # .github/workflows/ ディレクトリを作成（存在しない場合）
 mkdir -p .github/workflows
 
-# テンプレートをコピー
+# 必須: PR言語チェック
 cp /path/to/devin-organization-standards/08-templates/ci-templates/github-actions/pr-language-check.yaml \
    .github/workflows/pr-language-check.yaml
+
+# 最優先: セキュリティスキャン
+cp /path/to/devin-organization-standards/08-templates/ci-templates/github-actions/security-scan.yaml \
+   .github/workflows/security-scan.yaml
+
+# 推奨: PRセルフレビューリマインダー
+cp /path/to/devin-organization-standards/08-templates/ci-templates/github-actions/pr-self-review-reminder.yml \
+   .github/workflows/pr-self-review-reminder.yml
+
+# 推奨: コード品質分析
+cp /path/to/devin-organization-standards/08-templates/ci-templates/github-actions/code-quality.yaml \
+   .github/workflows/code-quality.yaml
+
+# 推奨: 統合テスト
+cp /path/to/devin-organization-standards/08-templates/ci-templates/github-actions/integration-test.yaml \
+   .github/workflows/integration-test.yaml
 ```
 
 #### 方法2: 一括コピー
+
 ```bash
 # すべてのGitHub Actions CIテンプレートをコピー
 cp /path/to/devin-organization-standards/08-templates/ci-templates/github-actions/*.yaml \
    <project-root>/.github/workflows/
+cp /path/to/devin-organization-standards/08-templates/ci-templates/github-actions/*.yml \
+   <project-root>/.github/workflows/
 ```
+
+**注意**: 一括コピーは、プロジェクトに不要なCIファイルも含まれる可能性があるため、個別コピーを推奨します。
 
 ---
 
-### Step 3: コミット＆プッシュ
+### Step 3: 追加設定（テンプレートごとに異なる）
+
+各テンプレートの詳細ドキュメントを参照して、追加設定を行ってください：
+
+| テンプレート | 追加設定 | 所要時間 |
+|-------------|---------|---------|
+| pr-language-check.yaml | 不要 | 0分 |
+| security-scan.yaml | Dependabot/Secret Scanning有効化 | 10分 |
+| pr-self-review-reminder.yml | 不要 | 0分 |
+| code-quality.yaml | SonarCloud セットアップ | 15分 |
+| integration-test.yaml | pom.xml/build.gradle 設定 | 1-2時間 |
+
+---
+
+### Step 4: コミット＆プッシュ
 
 ```bash
 # ファイルをステージング
@@ -88,7 +395,12 @@ git add .github/workflows/
 # コミット
 git commit -m "feat: GitHub Actions CI品質ゲートを追加
 
-- PR言語チェックを追加（日本語必須）
+追加したCI:
+- PR言語チェック（日本語必須）
+- セキュリティスキャン（脆弱性＋シークレット検出）
+- PRセルフレビューリマインダー
+- コード品質分析（SonarCloud）
+- 統合テスト（TestContainers）
 
 参照: devin-organization-standards/08-templates/ci-templates/github-actions/"
 
@@ -98,7 +410,7 @@ git push origin main
 
 ---
 
-### Step 4: ブランチ保護ルールの設定（推奨）
+### Step 5: ブランチ保護ルールの設定（必須）
 
 #### なぜ必要？
 - CIが失敗してもマージできてしまう問題を防止
@@ -118,6 +430,9 @@ git push origin main
    - ✅ Require branches to be up to date before merging
    - ステータスチェック選択: 
      - `日本語記載チェック` または `PR Language Check`
+     - `依存関係脆弱性スキャン`
+     - `シークレットスキャン`
+     - `SonarCloud 分析`（使用している場合）
      - （その他、プロジェクト固有のCI）
 
 4. **保存**
@@ -125,10 +440,14 @@ git push origin main
 
 ---
 
-### Step 5: 動作確認
+### Step 6: 動作確認
 
 各テンプレートの詳細ドキュメントを参照してください：
 - [PR言語チェックの動作確認](./pr-language-check.md#動作確認)
+- [セキュリティスキャンの動作確認](./security-scan.md#セットアップ方法)
+- [PRセルフレビューリマインダーの動作確認](./pr-self-review-reminder.md#セットアップ方法)
+- [コード品質分析の動作確認](./code-quality.md#セットアップ方法)
+- [統合テストの動作確認](./integration-test.md#セットアップ方法)
 
 ---
 
@@ -141,9 +460,12 @@ git push origin main
 **推奨構成**:
 ```
 <project-root>/.github/workflows/
-├── ci.yaml                      # プロジェクト固有のCI（ビルド、テスト等）
-├── pr-language-check.yaml       # 組織標準（必須）
-└── （その他、プロジェクト固有のCI）
+├── ci.yaml                        # プロジェクト固有のCI（ビルド、テスト等）
+├── pr-language-check.yaml         # 組織標準（必須）
+├── security-scan.yaml             # 組織標準（最優先）
+├── pr-self-review-reminder.yml    # 組織標準（推奨）
+├── code-quality.yaml              # 組織標準（推奨）
+└── integration-test.yaml          # 組織標準（推奨）
 ```
 
 ---
@@ -169,16 +491,16 @@ git push origin main
 git pull origin main
 
 # 2. 差分を確認
-diff <project-root>/.github/workflows/pr-language-check.yaml \
-     /path/to/devin-organization-standards/08-templates/ci-templates/github-actions/pr-language-check.yaml
+diff <project-root>/.github/workflows/security-scan.yaml \
+     /path/to/devin-organization-standards/08-templates/ci-templates/github-actions/security-scan.yaml
 
 # 3. 更新が必要な場合、上書き
-cp /path/to/devin-organization-standards/08-templates/ci-templates/github-actions/pr-language-check.yaml \
-   <project-root>/.github/workflows/pr-language-check.yaml
+cp /path/to/devin-organization-standards/08-templates/ci-templates/github-actions/security-scan.yaml \
+   <project-root>/.github/workflows/security-scan.yaml
 
 # 4. コミット＆プッシュ
-git add .github/workflows/pr-language-check.yaml
-git commit -m "chore: PR言語チェックCIを最新版に更新"
+git add .github/workflows/security-scan.yaml
+git commit -m "chore: セキュリティスキャンCIを最新版に更新"
 git push
 ```
 
@@ -203,6 +525,19 @@ CI品質ゲートが失敗した場合、以下の手順で対応してくださ
 4. **それでも解決しない場合**
    - 組織標準チームに相談
    - Issueを作成
+
+---
+
+### 5. セキュリティを最優先
+
+**重要**: セキュリティスキャンは最優先で導入してください。
+
+**即座に実施可能**（所要時間: 10分）:
+1. Dependabot alerts 有効化
+2. Dependabot security updates 有効化
+3. GitHub Secret Scanning 有効化
+
+**効果**: これだけで80%のセキュリティリスクをカバーできます。
 
 ---
 
@@ -243,6 +578,133 @@ CI品質ゲートが失敗した場合、以下の手順で対応してくださ
 
 ---
 
+### 問題: CI実行時間が長すぎる
+
+**対処方法**:
+
+#### 1. 不要なCIを削除
+プロジェクトに不要なCIファイルは削除してください。
+
+#### 2. CI実行を並列化
+```yaml
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        java: [17]
+```
+
+#### 3. キャッシュを活用
+```yaml
+- name: Cache Maven packages
+  uses: actions/cache@v4
+  with:
+    path: ~/.m2
+    key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+```
+
+---
+
+## よくある質問（FAQ）
+
+### Q1: すべてのテンプレートを使用する必要がありますか？
+
+**A**: いいえ。プロジェクトの状況に応じて選択してください。
+
+**最低限**:
+- ✅ `pr-language-check.yaml`（必須）
+- ✅ `security-scan.yaml`（最優先）
+
+**推奨**:
+- ✅ `pr-self-review-reminder.yml`
+- ✅ `code-quality.yaml`
+- ✅ `integration-test.yaml`
+
+---
+
+### Q2: CI実行にどれくらいの時間がかかりますか？
+
+**A**: 構成により異なります。
+
+| 構成 | 実行時間 |
+|------|---------|
+| 最小構成 | 5-10分 |
+| 推奨構成 | 10-15分 |
+| 完全構成 | 15-25分 |
+
+---
+
+### Q3: GitHub Actions の無料枠で足りますか？
+
+**A**: はい、多くのプロジェクトで無料枠内（月2,000分）で運用できます。
+
+**月間コスト試算**（PR 50回/月の場合）:
+- 最小構成: $0（約250分/月）
+- 推奨構成: $0（約750分/月）
+- 完全構成: $0（約1,250分/月）
+
+---
+
+### Q4: SonarCloud は必須ですか？
+
+**A**: 必須ではありませんが、強く推奨します。
+
+**理由**:
+- コード品質の継続的な監視
+- 技術的負債の早期発見
+- パブリックリポジトリは無料
+
+---
+
+### Q5: 統合テストは必ず必要ですか？
+
+**A**: データベース連携があるプロジェクトでは強く推奨します。
+
+**推奨するプロジェクト**:
+- Web API
+- マイクロサービス
+- データベース連携があるアプリケーション
+
+**不要なプロジェクト**:
+- ライブラリ
+- CLIツール
+- フロントエンドのみのプロジェクト
+
+---
+
+### Q6: Dependabot と OWASP Dependency-Check の違いは？
+
+**A**: 両方とも依存関係の脆弱性を検出しますが、役割が異なります。
+
+| 項目 | Dependabot | OWASP Dependency-Check |
+|------|-----------|----------------------|
+| 監視頻度 | 継続的 | 週次 |
+| 自動修正 | あり（PR作成） | なし |
+| カバレッジ | GitHub Advisory Database | NVD（National Vulnerability Database） |
+| コスト | 無料 | 無料 |
+
+**推奨**: 両方を併用してください。
+
+---
+
+### Q7: PRセルフレビューリマインダーはAIがいないと機能しませんか？
+
+**A**: いいえ、人間の開発者にも有効です。
+
+リマインダーを見て、手動でチェックリストを確認し、セルフレビューを実施してください。ただし、AIエージェントを使用している場合は、自動的にセルフレビューが実施されるため、より効率的です。
+
+---
+
+### Q8: 実装に問題があった場合の連絡先は？
+
+**A**: 以下に連絡してください：
+- Issue作成: [組織標準リポジトリ]
+- Slack: #dev-standards チャンネル
+- メール: dev-standards@example.com
+
+---
+
 ## 言語別のCI設定との関係
 
 このディレクトリのCI品質ゲートは**言語非依存**です。
@@ -260,48 +722,22 @@ CI品質ゲートが失敗した場合、以下の手順で対応してくださ
    - 例: Java Spring Boot プロジェクト
    - `.github/workflows/ci.yaml`（Java用）
    
-2. **言語非依存CI設定**（PR言語チェック等）
+2. **言語非依存CI設定**（PR言語チェック、セキュリティスキャン等）
    - `.github/workflows/pr-language-check.yaml`
+   - `.github/workflows/security-scan.yaml`
+   - `.github/workflows/pr-self-review-reminder.yml`
+   - `.github/workflows/code-quality.yaml`
+   - `.github/workflows/integration-test.yaml`
 
 ```
 <project-root>/.github/workflows/
-├── ci.yaml                      # 言語別CI（Java/TypeScript/Python）
-└── pr-language-check.yaml       # 言語非依存CI（すべてのプロジェクト共通）
+├── ci.yaml                        # 言語別CI（Java/TypeScript/Python）
+├── pr-language-check.yaml         # 言語非依存CI（すべてのプロジェクト共通）
+├── security-scan.yaml             # 言語非依存CI（すべてのプロジェクト共通）
+├── pr-self-review-reminder.yml    # 言語非依存CI（すべてのプロジェクト共通）
+├── code-quality.yaml              # 言語非依存CI（すべてのプロジェクト共通）
+└── integration-test.yaml          # 言語非依存CI（すべてのプロジェクト共通）
 ```
-
----
-
-## よくある質問（FAQ）
-
-### Q1: GitHub Actions以外のCIプラットフォームは？
-**A**: このディレクトリはGitHub Actions専用です。GitLab CI、Circle CI等への移植は可能ですが、構文を変更する必要があります。
-
----
-
-### Q2: プロジェクト固有のカスタマイズは可能ですか？
-**A**: 最小限のカスタマイズのみ推奨します。大幅なカスタマイズが必要な場合は、組織標準チームに相談してください。
-
----
-
-### Q3: CI品質ゲートを追加したいのですが？
-**A**: 以下の手順で提案してください：
-1. Issueを作成（組織標準リポジトリ）
-2. 提案内容を記載（目的、実装案、効果）
-3. 組織標準チームがレビュー
-4. 承認後、テンプレートを追加
-
----
-
-### Q4: このディレクトリのテンプレートは必須ですか？
-**A**: はい、組織標準として必須です。すべてのプロジェクトに導入してください。
-
----
-
-### Q5: 実装に問題があった場合の連絡先は？
-**A**: 以下に連絡してください：
-- Issue作成: [組織標準リポジトリ]
-- Slack: #dev-standards チャンネル
-- メール: dev-standards@example.com
 
 ---
 
@@ -311,6 +747,8 @@ CI品質ゲートが失敗した場合、以下の手順で対応してくださ
 - [PR言語問題の解決策](../../00-guides/PR-LANGUAGE-ISSUE-SOLUTION.md)
 - [CI設定チェックリスト](../../00-guides/CI-SETUP-CHECKLIST.md)
 - [Phase 4レビューガイド](../../00-guides/phase-guides/phase-4-review-qa-guide.md)
+- [CI/CDギャップ分析](../../ci-gap-analysis.md)
+- [Java CI構成ガイド](../../java-project-ci-structure.md)
 
 ### 言語別CI設定
 - [Java CI設定](../java-spring-boot/)
@@ -326,6 +764,8 @@ CI品質ゲートが失敗した場合、以下の手順で対応してくださ
 
 | 日付 | バージョン | 変更内容 | 作成者 |
 |------|-----------|---------|--------|
+| 2025-11-10 | 2.0.0 | セキュリティスキャン、コード品質分析、統合テストを追加 | Organization Standards Team |
+| 2025-11-10 | 1.1.0 | PRセルフレビューリマインダー追加 | Organization Standards Team |
 | 2025-11-07 | 1.0.0 | 初版作成（PR言語チェック追加） | Organization Standards Team |
 
 ---
