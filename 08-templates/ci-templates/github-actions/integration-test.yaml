@@ -330,19 +330,19 @@ jobs:
             summary += '|-----------|------|\n';
             
             if (javaResult !== 'skipped') {
-              summary += `| Java統合テスト | ${javaResult === 'success' ? '✅ 合格' : '❌ 失敗'} |\n`;
+              summary += '| Java統合テスト | ' + (javaResult === 'success' ? '✅ 合格' : '❌ 失敗') + ' |\n';
             }
             if (testcontainersResult !== 'skipped') {
-              summary += `| TestContainers | ${testcontainersResult === 'success' ? '✅ 合格' : '❌ 失敗'} |\n`;
+              summary += '| TestContainers | ' + (testcontainersResult === 'success' ? '✅ 合格' : '❌ 失敗') + ' |\n';
             }
             if (apiTestResult !== 'skipped') {
-              summary += `| APIテスト | ${apiTestResult === 'success' ? '✅ 合格' : '❌ 失敗'} |\n`;
+              summary += '| APIテスト | ' + (apiTestResult === 'success' ? '✅ 合格' : '❌ 失敗') + ' |\n';
             }
             if (nodejsResult !== 'skipped') {
-              summary += `| Node.js統合テスト | ${nodejsResult === 'success' ? '✅ 合格' : '❌ 失敗'} |\n`;
+              summary += '| Node.js統合テスト | ' + (nodejsResult === 'success' ? '✅ 合格' : '❌ 失敗') + ' |\n';
             }
             if (pythonResult !== 'skipped') {
-              summary += `| Python統合テスト | ${pythonResult === 'success' ? '✅ 合格' : '❌ 失敗'} |\n`;
+              summary += '| Python統合テスト | ' + (pythonResult === 'success' ? '✅ 合格' : '❌ 失敗') + ' |\n';
             }
             
             summary += '\n';
