@@ -10,10 +10,14 @@ on:
     - cron: '0 0 * * 1'
   workflow_dispatch:
 
+# GitHub API 呼び出しに必要な権限
 permissions:
-  contents: read
-  security-events: write
-  pull-requests: write
+  contents: read           # リポジトリの読み取り
+  pull-requests: write     # PRへのコメント、ラベル操作
+  issues: write            # Issueコメント、ラベル操作（PRもIssueとして扱われる）
+  checks: write            # CIステータスの更新
+  statuses: write          # コミットステータスの更新
+  security-events: write   # セキュリティアラートの更新
 
 jobs:
   dependency-check:
