@@ -2,7 +2,7 @@
 title: "CI-SETUP-CHECKLIST - SQL品質ゲート追加セクション"
 version: "1.1.0"
 created_date: "2025-11-07"
-last_updated: "2025-11-07"
+last_updated: "2025-11-14"
 status: "Active"
 purpose: "CI-SETUP-CHECKLISTにSQLマイグレーションコメント品質ゲートを追加"
 ---

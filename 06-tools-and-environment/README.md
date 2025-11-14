@@ -1,4 +1,17 @@
-# ツール・環境標準 (Tools and Environment)
+# ツール・環境標準 / Tools and Environment
+
+---
+
+**メタデータ / Metadata**
+```yaml
+version: 1.0.0
+last_updated: 2025-10-27
+status: active
+owner: DevOps Team
+category: tools-environment
+```
+
+---
 
 ## 📋 概要
 
@@ -15,6 +28,14 @@
 このディレクトリには以下の5つの外部文書が含まれています：
 
 ### 🛠️ 1. development-tools.md
+
+**概要**: 承認済み開発ツールとその使用標準
+
+**主要トピック**:
+- **IDE（統合開発環境）**:
+  - Visual Studio Code: 推奨拡張機能、設定
+  - IntelliJ IDEA: プロジェクト設定、プラグイン
+  - PyCharm: Python開発専用設定
 
 **概要**: 承認済み開発ツールとその使用標準
 

@@ -1,6 +1,6 @@
 ---
-version: "2.0.0"
-last_updated: "2025-01-15"
+version: "2.1.0"
+last_updated: "2025-11-12"
 status: "active"
 owner: "QA Team"
 category: "quality"
@@ -14,7 +14,73 @@ category: "quality"
 
 This directory contains quality standards and testing standards applied across the organization.
 
+
+
+### 🆕 最新の更新 (2025-11-12)
+
+**統合テスト要件の明確化**
+- **PBIタイプ別テスト要件マトリックス追加**
+  - 7分類のPBIタイプ別判断基準
+    1. 新規プロジェクト: 全テスト必須
+    2. 大規模機能追加: 統合テスト必須、E2E推奨
+    3. 小規模機能追加: 統合テスト推奨
+    4. バグ修正（API影響）: 統合テスト必須
+    5. バグ修正（内部のみ）: ユニットテスト必須
+    6. リファクタリング: 既存テスト維持必須
+    7. 設定変更・ドキュメント更新: テスト任意
+  - 参照: `../00-guides/testing-standards-pbi-matrix-addition.md`
+
+**コンテナ化判断基準の明確化**
+- データベース依存 → TestContainers必須
+- 外部サービス依存 → TestContainers必須
+
+## 📁 サブディレクトリ / Subdirectories
+
+このディレクトリには、特定の品質トピックに関する詳細標準を含むサブディレクトリがあります：
+
+### defect-management/
+欠陥管理のプロセスとライフサイクル
+- 01-principles-lifecycle.md
+- 02-classification-reporting.md
+- 03-triage-resolution.md
+- README.md, AI-QUICK-REFERENCE.md
+
+### e2e-testing/
+エンドツーエンドテストの原則と実装
+- 01-principles-scope.md
+- 02-test-design-userflow.md
+- 03-implementation-testdata.md
+- README.md, AI-QUICK-REFERENCE.md
+
+### load-testing/
+負荷テストの戦略と実行
+- 01-overview-objectives-types.md
+- 02-strategy-scenarios-modeling.md
+- 03-implementation-execution-evaluation.md
+- README.md, AI-QUICK-REFERENCE.md
+
+### test-data-management/
+テストデータ管理とプライバシー保護
+- 01-principles-strategy.md
+- 02-privacy-generation.md
+- 03-preparation-masking.md
+- README.md, AI-QUICK-REFERENCE.md
+
 ---
+- 環境差異が大きい → Docker Compose推奨
+- 参照: `../00-guides/phase-4-integration-test-addition.md`
+
+**マルチリポジトリ対応**
+- 単一リポジトリ内テスト: 必須（Phase 4で完結）
+- 複数リポジトリ間テスト: 別PBI（専用e2e-tests/）
+- 参照: `../00-guides/MULTI-REPOSITORY-TESTING-GUIDELINES.md`
+
+**testing-standards.mdの更新**
+- PBIタイプ別判断フローチャートの追加
+- TestContainersとDocker Composeの使い分け基準
+- マルチリポジトリ環境でのテスト範囲の明確化
+
+------
 
 ## 📁 ディレクトリ構造 / Directory Structure
 

@@ -31,6 +31,29 @@ document_type: "Lightweight Navigation Guide"
 
 ---
 
+## ⚠️ 禁止事項チェック
+
+### このフェーズ特有の禁止事項
+- **設計無視**: API設計書やアーキテクチャ設計を無視して独自実装してはいけない
+- **テスト省略**: 実装コードに対応するテストコードを書かずに進めてはいけない
+- **コーディング規約違反**: 組織のコーディングスタイルを無視してはいけない
+- **セキュリティ考慮不足**: 入力検証、認証・認可、暗号化を省略してはいけない
+- **本番でのデバッグ**: 本番環境でconsole.logやprintを使ってデバッグしてはいけない
+
+### 全フェーズ共通禁止事項
+- **CI/CD設定の無断変更**: 明示的な指示がない限り、GitHub Actions、CircleCI、Jenkins等のCI/CD設定ファイルを変更してはいけない
+- **本番環境への直接変更**: 本番データベース、本番サーバー、本番設定ファイルを直接変更してはいけない
+- **セキュリティ設定の独断変更**: 認証・認可・暗号化等のセキュリティ設定を独自判断で変更してはいけない
+- **組織標準外技術の無断導入**: プロジェクトで使用していない新しいライブラリ・フレームワーク・言語を独断で導入してはいけない
+- **プロジェクト構造の大幅変更**: ディレクトリ構造、命名規則、アーキテクチャパターンを独断で大きく変更してはいけない
+
+### 📚 詳細確認
+禁止事項の詳細、具体例、例外ケースについては以下のドキュメントを参照してください：
+- [AI開発タスクの禁止事項](../01-organization-standards/ai-task-prohibitions.md)
+- [禁止事項チェックリスト](../01-organization-standards/ai-task-prohibitions-checklist.md)
+
+---
+
 ## 1. タスク粒度別ガイド
 
 実装タスクの規模に応じて参照すべきドキュメントが異なります。
@@ -2159,5 +2182,24 @@ total = sum(x.value for x in active_data)
 #### 言語非依存
 - 🔴 必須: `/03-development-process/documentation-standards.md` - セクション7
 - 🟡 推奨: `/09-reference/best-practices.md` - ドキュメントコメントセクション
+
+---
+
+---
+
+## 📋 関連チェックリスト
+
+Phase 3を開始・完了する際は、以下のチェックリストを使用してください：
+
+### Phase 3開始前
+- [Phase開始前チェックリスト](../../09-reference/checklists/phase-pre-work-checklist.md)
+
+### Phase 3実施中
+- [PBIタイプ別テスト要件チェックリスト](../../09-reference/checklists/pbi-type-test-requirements-checklist.md)
+- [AIドキュメントコメントチェックリスト](../../09-reference/checklists/ai-documentation-comment-checklist.md)
+- [CI/CD設定チェックリスト](../../09-reference/checklists/ci-setup-checklist.md)
+
+### Phase 3完了時
+- [Phase 3 完了チェックリスト](../../09-reference/checklists/phase-3-completion-checklist.md)
 
 ---

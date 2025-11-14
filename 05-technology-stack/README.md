@@ -2,7 +2,7 @@
 
 ```yaml
 version: "2.0.0"
-last_updated: "2025-01-15"
+last_updated: "2025-10-29"
 status: "active"
 owner: "Architecture Team"
 category: "technology-stack"

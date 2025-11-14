@@ -2,7 +2,7 @@
 title: "Devin初期設定ガイド - 組織標準セットアップ手順書"
 version: "1.0.0"
 created_date: "2025-11-07"
-last_updated: "2025-11-07"
+last_updated: "2025-11-14"
 status: "Active"
 owner: "Engineering Leadership Team"
 category: "Setup & Configuration"

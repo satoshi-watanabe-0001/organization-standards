@@ -4,8 +4,8 @@
 
 **メタデータ / Metadata**
 ```yaml
-version: 2.0.0
-last_updated: 2025-01-15
+version: 2.2.0
+last_updated: 2025-11-12
 status: active
 owner: Engineering Team
 category: development-process
@@ -29,6 +29,51 @@ category: development-process
 ### 目的 / Purpose
 
 このディレクトリは、ソフトウェア開発の全プロセスを統括する標準とガイドラインを提供します。計画、実装、テスト、デプロイ、運用、そしてインシデント管理まで、開発ライフサイクル全体をカバーします。
+
+### 🆕 最新の更新 (2025-10-29)
+
+**Phase 3実装ガイドの強化**
+- Section 3.8: SQLマイグレーションファイルの品質基準
+  - 組織標準準拠の必須化
+  - CI品質ゲートの自動チェック
+  - 詳細は`../00-guides/phase-guides/phase-3-implementation-guide.md`参照
+
+
+## 📁 サブディレクトリ / Subdirectories
+
+このディレクトリには、特定トピックの詳細標準を含むサブディレクトリがあります：
+
+### code-generation-standards/
+AI駆動のコード生成に関する標準とベストプラクティス
+- 01-overview-types-bestpractices.md
+- 02-generator-patterns-quality.md
+- 03-workflow-devin-performance.md
+- README.md, AI-QUICK-REFERENCE.md
+
+### feature-flag-management/
+機能フラグの管理戦略と実装ガイドライン
+- 01-overview-types-architecture.md
+- 02-implementation-lifecycle.md
+- 03-advanced-patterns-devin.md
+- README.md, AI-QUICK-REFERENCE.md
+
+### testing-standards/
+テスト戦略とPBIタイプ別のテスト要件
+- 01-strategy-pbi-matrix.md
+- 02-test-pyramid-unit.md
+- 03-integration-e2e-performance.md
+- README.md, AI-QUICK-REFERENCE.md
+
+---
+**Phase 4レビュー・QAガイドの強化**
+- Section 4.4.1-4.4.9: 統合テスト詳細要件
+  - PBIタイプ別実施判断基準（7分類）
+  - コンテナ化判断基準（TestContainers vs Docker Compose）
+  - マルチリポジトリ対応方針
+  - 詳細は以下参照:
+    - `../00-guides/phase-guides/phase-4-review-qa-guide.md` (Step 4.4: 統合テスト)
+    - `testing-standards.md` (Section: PBIタイプ別テスト要件マトリックス)
+    - `../00-guides/MULTI-REPOSITORY-TESTING-GUIDELINES.md`
 
 ### 適用範囲 / Scope
 
@@ -379,6 +424,50 @@ process_documents:
       - ../06-operations/deployment-strategy.md
       - ../10-governance/exception-approval-process.md
   
+  design_artifacts_management:
+    file: "design-artifacts-management-guide.md"
+    version: "2.0.0"
+    description: "Phase 2 設計成果物の格納場所、命名規則、管理方法を定義"
+    status: "🆕 v2.0.0更新 (2025-11-12)"
+    key_topics:
+      - 専用リポジトリ構造（成果物種類ベース）
+      - 24種類の成果物カタログ
+      - ファイル命名規則
+      - バージョン管理戦略
+      - As-Built ドキュメント管理
+      - ADR管理
+      - 実践例（2種類）
+    audience:
+      - 🤖 自律型AIエージェント
+      - アーキテクト
+      - すべてのエンジニア
+      - プロジェクトマネージャー
+    related:
+      - api-specification-management-guide.md
+      - ../00-guides/phase-guides/phase-2.1-pre-implementation-design-guide.md
+      - ../00-guides/phase-guides/phase-2.2-post-implementation-design-guide.md
+    supplementary:
+      - design-artifacts-v2-update-report.md (更新完了レポート)
+      - structure-comparison-visualization.md (構造比較)
+  
+  api_specification_management:
+    file: "api-specification-management-guide.md"
+    version: "1.0.0"
+    description: "Swagger/OpenAPI形式でのAPI仕様管理とマイクロサービス統合戦略"
+    status: "作成済み (2025-11-12)"
+    key_topics:
+      - 3層アーキテクチャ（統合Swagger、各リポジトリSwagger、共通コンポーネント）
+      - OpenAPI $ref による参照統合
+      - 実装パターン（Git Submodule、Monorepo、公開リポジトリ）
+      - ツール統合（Swagger UI、Redoc、OpenAPI Generator、Spectral）
+      - CI/CD統合
+    audience:
+      - 🤖 自律型AIエージェント
+      - バックエンドエンジニア
+      - アーキテクト
+    related:
+      - design-artifacts-management-guide.md
+      - ../00-guides/phase-guides/phase-2.1-pre-implementation-design-guide.md
   git_workflow:
     file: "git-workflow.md"
     version: "2.0.0"
@@ -1010,6 +1099,22 @@ faq:
 
 ```yaml
 changelog:
+  v2.1.0:
+    date: "2025-10-29"
+    changes:
+      - Phase 3実装ガイドの大幅拡張
+        - Section 3.8: SQLマイグレーション品質基準追加 (2,163行)
+        - CI品質ゲートの自動チェック統合
+      - Phase 4レビュー・QAガイドの大幅拡張
+        - Section 4.4.1-4.4.9: 統合テスト詳細要件追加
+        - PBIタイプ別判断基準（7分類）
+        - マルチリポジトリテスト方針明確化
+      - 統合テスト関連ガイドの追加
+        - phase-4-review-qa-guide.md に統合完了（Step 4.4）
+        - testing-standards.md に統合完了（Section: PBIタイプ別テスト要件マトリックス）
+        - MULTI-REPOSITORY-TESTING-GUIDELINES.md (19.5KB)
+    author: "Engineering Team"
+  
   v2.0.0:
     date: "2025-01-15"
     changes:

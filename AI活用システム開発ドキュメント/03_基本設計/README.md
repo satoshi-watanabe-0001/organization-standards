@@ -197,6 +197,20 @@ flowchart TD
 - [02_要件定義フェーズ](../02_要件定義/README.md) - 前工程
 - [04_詳細設計フェーズ](../04_詳細設計/README.md) - 次工程
 
+### 🆕 Phase 2.1/2.2 分離に関する重要情報
+
+**Phase 2.1（実装前・軽量版）用テンプレート**
+- [lightweight-templates/](./lightweight-templates/) - Phase 2.1専用の軽量版テンプレート（6ファイル）
+  - 実装可否判断に必要な最小限の設計情報のみ記載
+  - Phase 3（実装）完了後、Phase 2.2で完全版に更新
+
+**Phase 2.2（実装後・完全版）用テンプレート**
+- 本フォルダの作成ルール.md（6ファイル） - 実装結果を反映した詳細な設計書
+
+**参考ガイド**
+- [AI-DELIVERABLE-REFERENCE-GUIDE.md](../../../00-guides/AI-DELIVERABLE-REFERENCE-GUIDE.md) - Phase 2.1/2.2の詳細な違いと参照手順
+- [AI-MASTER-WORKFLOW-GUIDE.md](../../../00-guides/AI-MASTER-WORKFLOW-GUIDE.md) - Phase 2の全体プロセス
+
 ---
 
 **最終更新日:** 2025年10月30日  

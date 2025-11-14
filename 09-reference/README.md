@@ -1,6 +1,6 @@
 ---
-version: 1.0.0
-last_updated: 2025-11-05
+version: 1.1.0
+last_updated: 2025-11-12
 status: active
 owner: Engineering Team
 category: reference

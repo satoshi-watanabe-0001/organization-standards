@@ -1,8 +1,8 @@
 ---
 title: "AI向けプロンプト・ガイド - ai-guides"
-version: "1.0.0"
+version: "1.1.0"
 created_date: "2025-11-05"
-last_updated: "2025-11-05"
+last_updated: "2025-11-12"
 status: "Active"
 owner: "AI Development Team"
 ---
@@ -463,6 +463,11 @@ AI利用ガイド（人間向け）
 **Contributors**: AIエンジニア、プロセス改善チーム
 
 ### バージョン履歴
+- **v1.1.0** (2025-11-12): SQLマイグレーション・統合テスト関連の強化
+  - AI-CODING-INSTRUCTIONS.mdの強化
+  - SQLマイグレーション標準への対応
+  - 統合テスト判断基準の明確化
+  - マルチリポジトリ対応の追加
 - **v1.0.0** (2025-11-05): 初版リリース
   - 7つのAIガイド集約
 
@@ -485,6 +490,6 @@ AI利用ガイド（人間向け）
 
 ---
 
-**Last Updated**: 2025-11-05  
-**Version**: 1.0.0  
+**Last Updated**: 2025-11-12  
+**Version**: 1.1.0  
 **Status**: ✅ Active

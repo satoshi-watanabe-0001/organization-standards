@@ -1,8 +1,8 @@
 ---
 title: "統合ガイド - 00-guides"
-version: "1.0.0"
+version: "2.2.0"
 created_date: "2025-11-05"
-last_updated: "2025-11-05"
+last_updated: "2025-11-14 (AI-DOCUMENTATION-COMMENT-CHECKLIST追加、code-templates追加)"
 status: "Active"
 owner: "Engineering Leadership Team"
 ---
@@ -45,21 +45,25 @@ owner: "Engineering Leadership Team"
 ├── AI-MASTER-WORKFLOW-GUIDE.md (40KB)
 ├── DOCUMENT-USAGE-MANUAL.md (29KB)
 │
+├── 【品質・コメント標準】⭐NEW v2.2.0
+├── AI-DOCUMENTATION-COMMENT-CHECKLIST.md (7.3KB) - ドキュメントコメント品質チェックリスト
+│
 ├── 【開発フェーズ別ガイド】
 ├── phase-guides/
 │   ├── README.md
 │   ├── phase-0-requirements-planning-guide.md (15KB)
 │   ├── phase-1-project-initialization-guide.md (15KB)
-│   ├── phase-2-design-guide.md (18KB)
+│   ├── phase-2.1-pre-implementation-design-guide.md (16KB) ⭐NEW
+│   ├── phase-2.2-post-implementation-design-guide.md (19KB) ⭐NEW
+│   ├── (phase-2-design-guide.md - 旧版、参照非推奨)
 │   ├── phase-3-implementation-guide.md (28KB)
-│   ├── phase-4-review-qa-guide.md (17KB)
+│   ├── phase-4-review-qa-guide.md (39KB)
 │   ├── phase-5-deployment-guide.md (14KB)
 │   └── phase-6-operations-maintenance-guide.md (15KB)
 │
 └── 【AI向けプロンプト・ガイド】
     └── ai-guides/
         ├── README.md
-        ├── AI-CHECKLISTS.md (13KB)
         ├── AI-CODING-INSTRUCTIONS.md (15KB)
         ├── AI-PROMPT-TEMPLATES.md (13KB)
         ├── AI-PROMPTS.md (23KB)
@@ -67,14 +71,24 @@ owner: "Engineering Leadership Team"
         ├── AI-USAGE-GUIDE.md (26KB)
         └── AI-WORKFLOWS.md (18KB)
 
-合計: 2マスターガイド + 7フェーズガイド + 7AIガイド = 16ファイル (約270KB)
+├── 【統合テスト・マルチリポジトリガイド】
+├── (統合済み) Phase 4統合テスト追加完了
+├── (統合済み) PBIタイプ別マトリックス追加完了
+├── MULTI-REPOSITORY-TESTING-GUIDELINES.md (19.5KB)
+│
+├── 【SQLマイグレーション標準統合】
+├── phase-3-sql-migration-addition.md (18.6KB) - 参考用
+├── ci-setup-sql-quality-gate.md (25.8KB) - 参考用
+│
+合計: 2マスターガイド + 7フェーズガイド + 7AIガイド + 1品質チェックリスト + 1統合テストガイド + 2SQLガイド(参考) = 20ファイル (約397KB)
 ```
 
----
+**注**: 08-templates/code-templates/ にコードテンプレートが別途存在（詳細は[08-templates/README.md](../08-templates/README.md)参照）
 
+---
 ## 📚 主要ドキュメント詳細
 
-### 🎯 マスターガイド（2ファイル）
+### 🎯 マスターガイド（3ファイル）
 
 #### 1. AI-MASTER-WORKFLOW-GUIDE.md (40KB)
 **対象**: 🤖 AIエージェント、👨‍💻 開発者、📊 プロジェクトマネージャー
@@ -132,10 +146,66 @@ owner: "Engineering Leadership Team"
 
 ---
 
-### 📋 開発フェーズ別ガイド（7ファイル、124KB）
+#### 3. AI-DELIVERABLE-REFERENCE-GUIDE.md (23KB) 🆕 NEW
+**対象**: 🤖 AIエージェント、👨‍💻 開発者
+
+**内容**:
+- Phase別成果物参照ガイド（Phase 0-6の8フェーズ）
+- Phase-Deliverable Matrix（フェーズ×成果物対応表）
+- PBIタイプ別参照ガイド（新規機能、バグ修正等）
+- Phase 2.1（軽量版）vs Phase 2.2（完全版）の区別
+- 参照タイミング決定フローチャート
+
+**いつ使う**:
+- ✅ 各Phase開始時に「AI活用システム開発ドキュメント」を参照する前
+- ✅ 成果物作成時にどのテンプレートを参照すべきか迷った時
+- ✅ Phase 2.1（実装前）とPhase 2.2（実装後）の違いを確認したい時
+- ✅ PBIタイプに応じたフェーズスキップ判断が必要な時
+
+**重要度**: ⭐⭐⭐⭐⭐ **最重要** - 成果物作成のナビゲーター
+
+**Quick Start**: 
+```
+1. 現在のPhase番号を確認（Phase 0-6）
+2. 該当Phaseのセクションを開く
+3. 参照すべき成果物リストを確認
+4. AI活用システム開発ドキュメント配下のテンプレートを参照
+```
+
+**関連ガイド**:
+- → AI-MASTER-WORKFLOW-GUIDE.md（全体プロセス）
+- → AI-PRE-WORK-CHECKLIST.md（作業前チェック）
+- → AI活用システム開発ドキュメント/README_成果物重要度定義.md（成果物一覧）
+
+---
+
+### 📋 開発フェーズ別ガイド（8ファイル ⭐、約150KB）
 
 **ディレクトリ**: `phase-guides/`  
 **詳細**: [phase-guides/README.md](./phase-guides/README.md) を参照
+
+#### ⚠️ Phase 2 の改訂について
+Phase 2（設計）は Phase 2.1（実装前設計）と Phase 2.2（実装後設計）に分割されました：
+
+- **phase-2.1-pre-implementation-design-guide.md** (16KB) ⭐NEW
+  - 実行タイミング: Phase 1 の後、Phase 3 の前
+  - 期間: 1-2日
+  - 目的: 実装の方向性を定める最小限の設計
+  - 成果物: ADR、API契約書、制約条件文書
+  - 📂 成果物管理: [design-artifacts-management-guide.md v2.0.0](../../03-development-process/design-artifacts-management-guide.md)
+
+- **phase-2.2-post-implementation-design-guide.md** (19KB) ⭐NEW
+  - 実行タイミング: Phase 4 の後、Phase 5 の前（または並行）
+  - 期間: 2-3日
+  - 目的: 実装内容の詳細な文書化
+  - 成果物: 設計書、完全版API仕様書、アーキテクチャ図、データモデル文書
+  - 📂 成果物管理: [design-artifacts-management-guide.md v2.0.0](../../03-development-process/design-artifacts-management-guide.md)
+
+- **phase-2-design-guide.md** (21KB) ⚠️ 旧版
+  - 参照非推奨。phase-2.1 と phase-2.2 を参照してください。
+
+詳細は `/03-development-process/revised-development-process-overview.md` を参照。
+
 
 各フェーズガイドの概要:
 
@@ -145,7 +215,7 @@ owner: "Engineering Leadership Team"
 | **Phase 1** | プロジェクト初期化 | 15KB | 環境確認、リポジトリ初期化、プロジェクト構造作成 |
 | **Phase 2** | 設計 | 18KB | アーキテクチャ、データモデル、API、セキュリティ設計 |
 | **Phase 3** | 実装 | 28KB | タスク粒度別・タイプ別・レイヤー別実装ガイド |
-| **Phase 4** | レビュー・QA | 17KB | コードレビュー、テスト戦略、各種テスト実施 |
+| **Phase 4** | レビュー・QA | 39KB | コードレビュー、テスト戦略、各種テスト実施、ドキュメントコメントレビュー |
 | **Phase 5** | デプロイメント | 14KB | デプロイ前チェック、実行、検証、リリースノート |
 | **Phase 6** | 運用・保守 | 15KB | モニタリング、ログ管理、インシデント対応 |
 
@@ -178,7 +248,6 @@ AIエージェントの実行精度を高めるためのプロンプトとガイ
 
 | ファイル名 | サイズ | 用途 |
 |-----------|--------|------|
-| AI-CHECKLISTS.md | 13KB | フェーズ別チェックリスト |
 | AI-CODING-INSTRUCTIONS.md | 15KB | コーディング時の詳細指示 |
 | AI-PROMPT-TEMPLATES.md | 13KB | 再利用可能なプロンプトテンプレート |
 | AI-PROMPTS.md | 23KB | 各種タスク向けプロンプト集 |
@@ -227,9 +296,9 @@ AIエージェントの実行精度を高めるためのプロンプトとガイ
 
 ### 🏗️ アーキテクト / シニアエンジニア
 
-**推奨読書順序**:
-1. **AI-MASTER-WORKFLOW-GUIDE.md** (40KB) - ワークフロー全体を確認
-2. **phase-guides/phase-2-design-guide.md** (18KB) - 設計フェーズの詳細
+2. **phase-guides/phase-2.1-pre-implementation-design-guide.md** (16KB) ⭐NEW - 実装前設計
+3. **phase-guides/phase-2.2-post-implementation-design-guide.md** (19KB) ⭐NEW - 実装後設計
+4. **phase-guides/phase-4-review-qa-guide.md** (39KB) - レビュー基準、ドキュメントコメントレビュー
 3. **phase-guides/phase-4-review-qa-guide.md** (17KB) - レビュー基準
 
 **推定時間**: 30-60分
@@ -340,6 +409,8 @@ Step 5: スキップしない場合、該当フェーズの phase-guides/ を参
 | コーディング標準 | `../01-coding-standards/` | Phase 3実装時に参照 |
 | アーキテクチャ標準 | `../02-architecture-standards/` | Phase 2設計時に参照 |
 | 開発プロセス | `../03-development-process/` | 全Phaseで参照 |
+| 設計成果物管理 | `../03-development-process/design-artifacts-management-guide.md` | Phase 2成果物の格納・管理 ⭐v2.0.0 |
+| API仕様管理 | `../03-development-process/api-specification-management-guide.md` | API仕様（Swagger）の管理・統合 ⭐NEW |
 | 品質標準 | `../04-quality-standards/` | Phase 4レビュー・QA時に参照 |
 | 技術スタック | `../05-technology-stack/` | Phase 0, 1で参照 |
 | ツールと環境 | `../06-tools-and-environment/` | Phase 1初期化時に参照 |
@@ -424,7 +495,27 @@ Step 5: スキップしない場合、該当フェーズの phase-guides/ を参
 3. **使いやすさ**: 初見でも理解できるか
 4. **一貫性**: 他のガイドと矛盾していないか
 
+
 ### バージョン履歴
+- **v2.2.0** (2025-11-14): ドキュメントコメント品質標準追加 ⭐NEW
+  - AI-DOCUMENTATION-COMMENT-CHECKLIST.md 追加（全言語対応チェックリスト）
+  - 08-templates/code-templates/ 追加（TypeScript/Python/Java用テンプレート）
+  - ドキュメントコメント必須化の明確化
+  - パブリックAPI: 100%カバレッジ必須
+  - 複雑なロジック: 80%以上推奨
+  - Why重視(70%)のコメント方針
+- **v1.2.0** (2025-11-12): Phase 2.1/2.2対応
+  - phase-2.1-pre-implementation-design-guide.md 追加
+  - phase-2.2-post-implementation-design-guide.md 追加
+  - Design Phase の実装前後分割対応
+- **v1.1.0** (2025-11-12): 統合テスト・SQLマイグレーション標準統合
+  - Phase 4統合テスト詳細ガイド追加 (phase-4-integration-test-addition.md)
+  - PBIタイプ別テスト要件マトリックス追加 (testing-standards-pbi-matrix-addition.md)
+  - マルチリポジトリテストガイドライン追加 (MULTI-REPOSITORY-TESTING-GUIDELINES.md)
+  - SQLマイグレーション標準の統合完了
+    - Phase 3実装ガイド Section 3.8追加 (2,163行)
+    - CI-SETUP-CHECKLIST Section 5.3追加 (2,600行)
+  - レポートファイルを_archive/reports/に整理
 - **v1.0.0** (2025-11-05): 初版リリース
   - AI-MASTER-WORKFLOW-GUIDE.md 作成
   - DOCUMENT-USAGE-MANUAL.md 作成
@@ -502,6 +593,6 @@ Step 5: スキップしない場合、該当フェーズの phase-guides/ を参
 
 ---
 
-**Last Updated**: 2025-11-05  
-**Version**: 1.0.0  
+**Last Updated**: 2025-11-12  
+**Version**: 1.1.0  
 **Status**: ✅ Active

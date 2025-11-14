@@ -2,7 +2,7 @@
 title: "Document Usage Manual - ドキュメント利用マニュアル"
 version: "1.0.0"
 created_date: "2025-11-05"
-last_updated: "2025-11-05"
+last_updated: "2025-11-14"
 status: "Active"
 audience: "AI Agents and Human Developers"
 ---
@@ -42,11 +42,11 @@ audience: "AI Agents and Human Developers"
 │  🎯 AI-MASTER-WORKFLOW-GUIDE.md                          │
 │     └─ PBIから全フェーズの統合ワークフロー                 │
 │                                                           │
-│  🧭 AI-DOCUMENT-NAVIGATOR.md                             │
-│     └─ ドキュメント選択の意思決定ツリー                    │
+│  📖 DOCUMENT-USAGE-MANUAL.md (本書)                      │
+│     └─ ドキュメント選択・フェーズ別マップ                  │
 │                                                           │
-│  ⚖️ AI-DECISION-FRAMEWORK.md                             │
-│     └─ 複雑な判断のフレームワーク                          │
+│  🚦 ESCALATION-CRITERIA-GUIDE.md                         │
+│     └─ エスカレーション判断・意思決定支援                  │
 │                                                           │
 ├─────────────────────────────────────────────────────────┤
 │  Layer 2: フェーズ別 & AI活用ガイド (実行手順)             │
@@ -119,8 +119,8 @@ audience: "AI Agents and Human Developers"
    - 数値基準を記憶
 
 4. **ドキュメント検索方法の習得**
-   - AI-DOCUMENT-NAVIGATOR.md を読む
-   - 意思決定ツリーの使い方を理解
+   - 本マニュアルの第3章「フェーズ別ドキュメントマップ」を読む
+   - フェーズとタスクに応じたドキュメント選択方法を理解
 
 5. **準備完了**
    - PBIを受け取る準備ができた
@@ -307,28 +307,28 @@ audience: "AI Agents and Human Developers"
 
 ### ケース1: どのドキュメントを見るべきか分からない
 
-1. **AI-DOCUMENT-NAVIGATOR.md を開く**
+1. **本マニュアルの第3章「フェーズ別ドキュメントマップ」を開く**
 2. 現在のフェーズを確認
 3. 実行中のタスクタイプを確認
-4. 意思決定ツリーをたどる
+4. フェーズ別の推奨ドキュメントリストを参照
 5. 推奨されたドキュメントを読む
 
 ### ケース2: ドキュメント間で矛盾がある
 
-1. **AI-DECISION-FRAMEWORK.md を開く**
-2. 「ドキュメント間の矛盾解決ルール」セクションを読む
-3. ルールに従って判断
-   - より具体的なドキュメントを優先
-   - 新しいドキュメントを優先
-   - ドメイン固有ドキュメントを優先
-4. 判断根拠を記録
+1. **本マニュアルの「問題2: ドキュメント間で矛盾がある」セクションを参照**
+2. 矛盾解決の4つのルールを適用:
+   - ルール1: 具体的 > 抽象的
+   - ルール2: 新しい > 古い
+   - ルール3: ドメイン固有 > 一般
+   - ルール4: Tier 1 > Tier 2 > Tier 3 > Tier 4
+3. 判断根拠を記録
 
 ### ケース3: 技術選定で悩んでいる
 
-1. **AI-DECISION-FRAMEWORK.md を開く**
-2. 「技術選定の意思決定フレームワーク」セクション
-3. 評価マトリクスを使用
-4. 10-governance/technology-radar.md で組織方針確認
+1. **ESCALATION-CRITERIA-GUIDE.md を開く**
+2. エスカレーション基準で影響度を評価
+3. 10-governance/technology-radar.md で組織方針確認
+4. 10-governance/standards-hierarchy-and-precedence.md で優先順位確認
 5. 判断を技術選定書に記録
 
 ### ケース4: エスカレーションすべきか判断できない
@@ -384,18 +384,29 @@ audience: "AI Agents and Human Developers"
 **Phase 1: プロジェクト初期化**
 - 05-technology-stack/approved-technologies.md
 - 08-templates/project-templates/
+- 08-templates/code-templates/ (コードテンプレート)
 
 **Phase 2: 設計**
 - 02-architecture-standards/ (該当するファイル)
+- 02-architecture-standards/api/ (API設計標準)
+- 02-architecture-standards/frontend/ (フロントエンド設計標準)
 - 07-security-compliance/ (該当するファイル)
 
 **Phase 3: 実装**
 - 01-coding-standards/ (使用言語のファイル)
+- 03-development-process/code-generation-standards/ (コード生成標準)
+- 03-development-process/testing-standards/ (テスト標準)
+- 03-development-process/feature-flag-management/ (機能フラグ管理)
+- 08-templates/code-templates/ (コードテンプレート)
 - implementation-phase-document-reference-guide.md
 - AI-CODING-INSTRUCTIONS.md
 
 **Phase 4: レビュー**
 - 04-quality-standards/code-quality-standards.md
+- 04-quality-standards/e2e-testing/ (E2Eテスト)
+- 04-quality-standards/load-testing/ (負荷テスト)
+- 04-quality-standards/test-data-management/ (テストデータ管理)
+- 04-quality-standards/defect-management/ (不具合管理)
 - 03-development-process/code-review-standards.md
 
 **Phase 5: デプロイ**
@@ -403,12 +414,12 @@ audience: "AI Agents and Human Developers"
 - 06-tools-and-environment/ (該当するファイル)
 
 **Phase 6: 運用**
-- 06-tools-and-environment/monitoring-logging.md
 - 03-development-process/incident-management.md
+- 09-operations/ (該当するファイル)
 
 ### 困った時に見るドキュメント
-- AI-DOCUMENT-NAVIGATOR.md - ドキュメント選択に迷った時
-- AI-DECISION-FRAMEWORK.md - 判断に迷った時
+- 本マニュアルの第3章 - ドキュメント選択に迷った時
+- ESCALATION-CRITERIA-GUIDE.md - エスカレーション判断に迷った時
 - AI-PROMPTS.md - 具体的なプロンプト例が欲しい時
 - AI-QUICK-REFERENCE.md - 数値基準を確認したい時
 ```
@@ -532,7 +543,7 @@ audience: "AI Agents and Human Developers"
 
 ### 問題発生時
 - 03-development-process/incident-management.md
-- AI-DECISION-FRAMEWORK.md - 判断基準確認
+- ESCALATION-CRITERIA-GUIDE.md - エスカレーション判断基準確認
 ```
 
 ---
@@ -640,9 +651,9 @@ audience: "AI Agents and Human Developers"
    - 05-technology-stack/ の該当ファイル
    - 承認済み技術リストを確認
 
-3. **意思決定フレームワーク準備**
-   - AI-DECISION-FRAMEWORK.md の評価マトリクス
-   - 評価軸とスコアリング方法を確認
+3. **エスカレーション基準の確認**
+   - ESCALATION-CRITERIA-GUIDE.md の影響度×緊急度マトリクス
+   - 評価基準と判断フローを確認
 
 4. **事例確認**
    - 09-reference/case-studies.md
@@ -663,7 +674,7 @@ audience: "AI Agents and Human Developers"
 ```markdown
 1. **まずは Layer 1 (マスタードキュメント) だけ読む**
    - AI-MASTER-WORKFLOW-GUIDE.md
-   - AI-DOCUMENT-NAVIGATOR.md
+   - 本マニュアル (DOCUMENT-USAGE-MANUAL.md)
    
 2. **現在のフェーズに集中**
    - Phase 0 なら Phase 0 のセクションだけ
@@ -684,12 +695,12 @@ audience: "AI Agents and Human Developers"
 **解決策**:
 
 ```markdown
-1. **AI-DECISION-FRAMEWORK.md を開く**
-2. 矛盾解決ルールを適用:
+1. **本マニュアルの矛盾解決ルールを適用**:
    - ルール1: 具体的 > 抽象的
    - ルール2: 新しい > 古い
    - ルール3: ドメイン固有 > 一般
    - ルール4: Tier 1 > Tier 2 > Tier 3 > Tier 4
+2. 以下のセクションを確認
 
 3. **それでも解決しない場合**
    - エスカレーション
@@ -711,8 +722,8 @@ audience: "AI Agents and Human Developers"
    - 02-architecture-standards/README.md
    - など
 
-3. **AI-DOCUMENT-NAVIGATOR.md で検索**
-   - キーワードで探す
+3. **本マニュアルの第3章で検索**
+   - フェーズ別ドキュメントマップで探す
 
 4. **見つからない場合**
    - ドキュメントが存在しない可能性
@@ -930,8 +941,7 @@ audience: "AI Agents and Human Developers"
 - [メインREADME](./README.md)
 - [AI使用ガイド](./AI-USAGE-GUIDE.md)
 - [マスターワークフロー](./AI-MASTER-WORKFLOW-GUIDE.md)
-- [ドキュメントナビゲーター](./AI-DOCUMENT-NAVIGATOR.md)
-- [意思決定フレームワーク](./AI-DECISION-FRAMEWORK.md)
+- [エスカレーション基準ガイド](./ESCALATION-CRITERIA-GUIDE.md)
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 version: "2.0.0"
-last_updated: "2025-01-15"
+last_updated: "2025-10-30"
 status: "active"
 owner: "Architecture Team"
 category: "architecture"
@@ -22,13 +22,36 @@ This directory contains architecture standards and guidelines used across the or
 02-architecture-standards/
 ├── README.md                      # このファイル / This file
 ├── cloud-architecture.md          # クラウドアーキテクチャ標準
-├── frontend-architecture.md       # フロントエンドアーキテクチャ標準
-├── backend-architecture.md        # バックエンドアーキテクチャ標準(Phase 2予定)
-├── microservices-architecture.md  # マイクロサービスアーキテクチャ標準(Phase 2予定)
-├── data-architecture.md           # データアーキテクチャ標準(Phase 2予定)
-└── security-architecture.md       # セキュリティアーキテクチャ標準
+├── database-design.md             # データベース設計標準
+├── design-principles.md           # アーキテクチャ設計原則
+├── microservices-guidelines.md    # マイクロサービスガイドライン
+├── security-architecture.md       # セキュリティアーキテクチャ標準
+│
+├── api/                           # API設計標準（Phase完了）
+│   ├── README.md
+│   ├── 01-design-principles.md
+│   ├── 02-restful-design-part1.md
+│   ├── 03a-rest-resource-design.md
+│   ├── 03b-rest-http-methods.md
+│   ├── 03c-rest-status-codes.md
+│   ├── 03d-rest-query-params.md
+│   ├── 03e-rest-response-format.md
+│   ├── 04-authentication-authorization.md
+│   ├── 05-api-documentation.md
+│   └── AI-QUICK-REFERENCE.md
+│
+└── frontend/                      # フロントエンドアーキテクチャ標準（Phase 5完了）
+    ├── README.md
+    ├── 01-introduction-principles.md
+    ├── 02-application-structure-routing.md
+    ├── 03-state-management.md
+    ├── 04-component-design-data-fetching.md
+    ├── 05-performance-seo.md
+    ├── 06-accessibility-security.md
+    ├── 07-testing-i18n.md
+    ├── 08-build-monitoring-best-practices.md
+    └── AI-QUICK-REFERENCE.md
 ```
-
 ---
 
 ## 📄 ドキュメント一覧 / Document List

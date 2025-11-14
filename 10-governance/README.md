@@ -172,7 +172,36 @@ CI/CD設定変更に特化した詳細なポリシードキュメント。
 
 ---
 
-#### 7. Exception Approval Process (例外承認プロセス)
+---
+
+#### 7. Standards Hierarchy and Precedence (標準の階層と優先度)
+**ファイル**: [standards-hierarchy-and-precedence.md](./standards-hierarchy-and-precedence.md)
+
+組織標準・プロジェクト標準・チーム標準の3層構造と、領域別の優先度を定義。
+
+**内容**:
+- 3層の標準構造（組織/プロジェクト/チーム）
+- ハイブリッド優先度アプローチ
+- 統制必須領域・バランス領域・柔軟性領域の定義
+- 矛盾解決の実践フロー
+- 5つの実践例とケーススタディ
+
+**使い方**:
+- 標準間の矛盾発生時の判断基準
+- プロジェクト標準・チーム標準の設定判断
+- 領域別の優先度の理解
+- 例外承認プロセスとの連携
+
+**重要性**: 複数の標準が共存する環境での一貫性と柔軟性のバランス
+
+**対象**: 
+- エンジニアリングマネージャー
+- アーキテクト
+- プロジェクトリーダー
+- すべての開発者
+
+---
+#### 8. Exception Approval Process (例外承認プロセス)
 **ファイル**: [exception-approval-process.md](./exception-approval-process.md)
 
 標準から逸脱する必要がある場合の例外承認プロセス。
@@ -194,7 +223,7 @@ CI/CD設定変更に特化した詳細なポリシードキュメント。
 
 ---
 
-#### 8. Architecture Decision Records (ADR)
+#### 9. Architecture Decision Records (ADR)
 **ファイル**: [architecture-decision-records.md](./architecture-decision-records.md)
 
 重要なアーキテクチャ決定を記録・管理するためのフレームワーク。
