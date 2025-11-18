@@ -2,7 +2,7 @@
 
 **目的**: AIエージェント（Devin等）が3分で確認できる、Java開発の必須チェック項目TOP30  
 **対象**: Java 17+、Spring Boot 3.0+  
-**最終更新**: 2025-11-13
+**最終更新**: 2025-11-15
 
 ---
 
@@ -315,6 +315,54 @@ ENTRYPOINT ["java", "-jar", "/app.jar"]
 
 ---
 
+## 💬 7. コメント規約（2025-11-15追加）✨
+
+### ✅ 31. 日本語コメントの記述
+- **必須**: すべてのコメントを日本語で記述（技術用語を除く）
+- **例外**: 公開APIのJavadoc（英語推奨）
+- **参照**: [java-inline-comment-examples.md](java-inline-comment-examples.md)
+
+### ✅ 32. WHY原則の遵守
+- **必須**: 「WHAT」ではなく「WHY」を説明
+- **悪い例**: `// ユーザーIDを取得する`
+- **良い例**: `// キャッシュ無効化のため最新のユーザーIDを直接取得`
+- **参照**: [java-inline-comment-examples.md](java-inline-comment-examples.md)
+
+### ✅ 33. 複雑度基準の適用
+- **必須**: 循環的複雑度10以上のメソッドに詳細コメント
+- **推奨**: ビジネスロジックを含むメソッドすべて
+- **参照**: [java-inline-comment-examples.md](java-inline-comment-examples.md)
+
+### ✅ 34. テストコメント4要素
+```java
+/**
+ * 【テスト対象】ユーザー作成メソッド
+ * 【テストケース】有効なユーザーデータで作成
+ * 【期待結果】ユーザーIDが生成され、DBに保存される
+ * 【ビジネス要件】ユーザー登録時のバリデーション（REQ-001）
+ */
+@Test
+void testCreateUser_WithValidData_ReturnsUserId() {
+    // Given: 有効なユーザーデータ
+    // When: ユーザー作成を実行
+    // Then: ユーザーIDが返される
+}
+```
+- **必須**: 【テスト対象】【テストケース】【期待結果】【ビジネス要件】を明記
+- **推奨**: Given-When-Then構造の詳細コメント
+- **参照**: [java-test-comment-examples.md](java-test-comment-examples.md)
+
+### ✅ 35. TODO/FIXME/HACKの書式
+```java
+// TODO: [担当者名] [期限: YYYY-MM-DD] 理由: キャッシュ機能を追加する（パフォーマンス向上のため）
+// FIXME: [担当者名] [期限: YYYY-MM-DD] 理由: nullチェックが不足している（NPE対策）
+// HACK: [担当者名] 理由: ライブラリのバグ回避のための暫定対応（issue #123参照）
+```
+- **必須**: 担当者、期限、理由を記載
+- **参照**: [java-inline-comment-examples.md](java-inline-comment-examples.md)
+
+---
+
 ## 🔍 チェックリスト使用方法
 
 ### コード実装前（5分）
@@ -325,21 +373,24 @@ ENTRYPOINT ["java", "-jar", "/app.jar"]
 ### コード実装中（随時）
 1. ✅ 16-20: エラーハンドリング、セキュリティ
 2. ✅ 21-25: テスト実装
+3. ✅ 31-35: コメント規約遵守
 
 ### コードレビュー前（5分）
-1. ✅ 1-30: 全項目再確認
+1. ✅ 1-35: 全項目再確認
 2. ✅ 26-30: パフォーマンス、運用面の確認
+3. ✅ 31-35: コメント品質チェック
 
 ---
 
 ## 🤖 Devinへの指示例
 
 ```
-以下の必須チェック項目TOP30に厳密に従って実装してください：
+以下の必須チェック項目TOP35に厳密に従って実装してください:
 - 規約: /devin-organization-standards/01-coding-standards/java/AI-QUICK-REFERENCE.md
-- 重点項目: ✅11-15（クラス設計）、✅16-20（エラーハンドリング）、✅21-25（テスト）
+- 重点項目: ✅11-15（クラス設計）、✅16-20（エラーハンドリング）、✅21-25（テスト）、✅31-35（コメント規約）
 - テストカバレッジ: 80%以上（✅23）
-- 実装完了後、✅1-30の全項目を確認し、違反がないことを報告してください
+- コメント: 日本語、WHY原則、テスト4要素を遵守（✅31-35）
+- 実装完了後、✅1-35の全項目を確認し、違反がないことを報告してください
 ```
 
 ---
@@ -354,6 +405,8 @@ ENTRYPOINT ["java", "-jar", "/app.jar"]
 | ✅18 バリデーション | 手動検証 | Bean Validation | 04 |
 | ✅23 カバレッジ | 70% | 80%まで追加 | 05 |
 | ✅26 N+1問題 | 遅延ロード | JOIN FETCH | 06 |
+| ✅32 WHY原則 | 「何を」のコメント | 「なぜ」に変更 | Comment |
+| ✅34 テスト4要素 | 要素不足 | 4要素追加 | Comment |
 
 ---
 
@@ -367,7 +420,9 @@ ENTRYPOINT ["java", "-jar", "/app.jar"]
 - **[04-error-handling-validation.md](04-error-handling-validation.md)**: ✅16-20
 - **[05-testing-quality.md](05-testing-quality.md)**: ✅21-25
 - **[06-performance-security-operations.md](06-performance-security-operations.md)**: ✅26-30
+- **[java-inline-comment-examples.md](java-inline-comment-examples.md)**: ✅31-33, 35
+- **[java-test-comment-examples.md](java-test-comment-examples.md)**: ✅34
 
 ---
 
-**最終確認**: 実装完了後、✅1-30の全項目をチェックし、違反ゼロを確認してください。
+**最終確認**: 実装完了後、✅1-35の全項目をチェックし、違反ゼロを確認してください。

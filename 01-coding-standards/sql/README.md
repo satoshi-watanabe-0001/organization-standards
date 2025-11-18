@@ -64,6 +64,14 @@ SQL開発における組織標準をまとめたドキュメント群です。�
 | [08-documentation-generation.md](./08-documentation-generation.md) | 25.2 KB | **ドキュメント・ナレッジ管理**<br>• データベース設計書の自動生成<br>• 運用手順書・ナレッジベース管理<br>• 継続的ドキュメント更新の自動化 |
 | [09-documentation-standards.md](./09-documentation-standards.md) | 16.6 KB | **ドキュメンテーション標準**<br>• SQLコメント必須要件<br>• SQLコメント標準形式<br>• コメントスタイルガイド<br>• コードレビューチェックリスト |
 
+### コメント規約編（2025-11-14追加）✨
+
+| ファイル | サイズ | 内容 |
+|---------|--------|------|
+| [sql-inline-comment-examples.md](./sql-inline-comment-examples.md) | 6.9 KB | **SQL固有のインラインコメント実装例**<br>• DDL（テーブル定義、インデックス）<br>• 複雑なクエリ（JOIN、サブクエリ）<br>• ウィンドウ関数、再帰クエリ<br>• パフォーマンス最適化 |
+
+**共通原則も参照**: [00-inline-comment-standards.md](../00-inline-comment-standards.md)
+
 ### AI活用向けサマリー
 
 | ファイル | サイズ | 内容 |

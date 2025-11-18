@@ -1261,8 +1261,8 @@ npm run build
 
 ### 内部リソース
 
-- [AI-MASTER-WORKFLOW-GUIDE.md](./00-guides/AI-MASTER-WORKFLOW-GUIDE.md) - AIワークフロー統合ガイド
-- [DOCUMENT-USAGE-MANUAL.md](./00-guides/DOCUMENT-USAGE-MANUAL.md) - ドキュメント利用マニュアル
+- [AI-MASTER-WORKFLOW-GUIDE.md](./02-ai-guides/AI-MASTER-WORKFLOW-GUIDE.md) - AIワークフロー統合ガイド
+- [DOCUMENT-USAGE-MANUAL.md](./DOCUMENT-USAGE-MANUAL.md) - ドキュメント利用マニュアル
 - [Git Workflow](./03-development-process/git-workflow.md) - Gitフロー標準
 - [Security Standards](./07-security-compliance/security-standards.md) - セキュリティ標準
 

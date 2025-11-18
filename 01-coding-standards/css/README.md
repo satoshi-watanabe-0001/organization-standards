@@ -71,6 +71,14 @@ CSS/SCSS開発における組織標準をまとめたドキュメント群です
 |---------|--------|------|
 | [AI-QUICK-REFERENCE.md](./AI-QUICK-REFERENCE.md) | 作成予定 | **AI向けクイックリファレンス**<br>• 必須チェック項目<br>• よくある間違い<br>• パフォーマンスチェックリスト |
 
+### コメント規約編（2025-11-14追加）✨
+
+| ファイル | サイズ | 内容 |
+|---------|--------|------|
+| [css-inline-comment-examples.md](./css-inline-comment-examples.md) | 6.5 KB | **CSS/SCSS固有のインラインコメント実装例**<br>• マジックナンバー、!important、z-index<br>• レスポンシブブレークポイント<br>• アニメーション最適化<br>• SCSS Mixin、変数定義 |
+
+**共通原則も参照**: [00-inline-comment-standards.md](../00-inline-comment-standards.md)
+
 ---
 
 ## 🎯 状況別ガイド

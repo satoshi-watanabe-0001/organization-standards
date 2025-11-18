@@ -27,11 +27,15 @@
 01-coding-standards/
 ├── README.md                           # このファイル
 ├── 00-general-principles.md            # 言語横断的な基本原則（29.2 KB）
+├── 00-inline-comment-standards.md      # 【NEW】インラインコメント共通規約（6.3 KB）✨
+├── 00-test-comment-standards.md        # 【NEW】テストコメント共通規約（29.5 KB）✨
 │
 ├── python/                             # Python規約（Phase 10完了）✅
 │   ├── 01-introduction-purpose.md
 │   ├── 02-setup-tools.md
 │   ├── ... (14ファイル)
+│   ├── python-inline-comment-examples.md  # 【NEW】インラインコメント実装例✨
+│   ├── python-test-comment-examples.md    # 【NEW】テストコメント実装例✨
 │   ├── README.md
 │   └── AI-QUICK-REFERENCE.md          # TOP 30チェック項目
 │
@@ -39,29 +43,35 @@
 │   ├── 01-introduction-setup.md
 │   ├── 02-language-syntax.md
 │   ├── ... (7ファイル)
+│   ├── typescript-inline-comment-examples.md  # 【NEW】インラインコメント実装例✨
+│   ├── typescript-test-comment-examples.md    # 【NEW】テストコメント実装例✨
 │   ├── README.md
 │   └── AI-QUICK-REFERENCE.md          # TOP 25チェック項目
 │
 ├── java/                               # Java規約（Phase 4完了）✅
 │   ├── 01-introduction-setup.md
 │   ├── ... (8ファイル)
+│   ├── java-inline-comment-examples.md  # 【NEW】インラインコメント実装例✨
+│   ├── java-test-comment-examples.md    # 【NEW】テストコメント実装例✨
 │   ├── README.md
 │   └── AI-QUICK-REFERENCE.md
 │
 ├── sql/                                # SQL規約（Phase 2完了）✅
 │   ├── 01-overview-principles.md
 │   ├── ... (8ファイル)
+│   ├── sql-inline-comment-examples.md   # 【NEW】インラインコメント実装例✨
 │   ├── README.md
 │   └── AI-QUICK-REFERENCE.md
 │
 └── css/                                # CSS規約（Phase 3完了）✅
     ├── 01-overview-principles.md
     ├── ... (15ファイル)
+    ├── css-inline-comment-examples.md   # 【NEW】インラインコメント実装例✨
     ├── README.md
     └── AI-QUICK-REFERENCE.md
 ```
 
-**合計**: 63+ファイル（元: 5大型ファイル、合計564.3 KB）
+**合計**: 73+ファイル（コメント規約10ファイル追加）
 
 ---
 
@@ -69,11 +79,26 @@
 
 | 言語 | ディレクトリ | ファイル数 | 元サイズ | Phase | Status |
 |------|-------------|----------|---------|-------|--------|
-| **Python** | [python/](python/) | 16 | 466.5 KB | 10 | ✅ 完了 |
-| **TypeScript/JavaScript** | [typescript/](typescript/) | 10 | 60.2 KB | 6 | ✅ 完了 |
-| **Java** | [java/](java/) | 10 | 107.2 KB | 4 | ✅ 完了 |
-| **SQL** | [sql/](sql/) | 10 | 150.6 KB | 2 | ✅ 完了 |
-| **CSS** | [css/](css/) | 17 | 138.2 KB | 3 | ✅ 完了 |
+| **Python** | [python/](python/) | 18 (+2) | 466.5 KB | 10 | ✅ 完了 |
+| **TypeScript/JavaScript** | [typescript/](typescript/) | 12 (+2) | 60.2 KB | 6 | ✅ 完了 |
+| **Java** | [java/](java/) | 12 (+2) | 107.2 KB | 4 | ✅ 完了 |
+| **SQL** | [sql/](sql/) | 11 (+1) | 150.6 KB | 2 | ✅ 完了 |
+| **CSS** | [css/](css/) | 18 (+1) | 138.2 KB | 3 | ✅ 完了 |
+
+### 🆕 NEW: コメント規約ドキュメント（2025-11-14追加）✨
+
+**共通規約**:
+- **[00-inline-comment-standards.md](00-inline-comment-standards.md)** - インラインコメント共通原則
+  - 日本語必須要件、WHY原則、複雑度基準、TODO/FIXME/HACK書式
+- **[00-test-comment-standards.md](00-test-comment-standards.md)** - テストコメント共通原則
+  - Given-When-Then構造、4要素（対象・ケース・期待結果・要件）
+
+**言語別実装例**:
+- **Python**: [inline-comment-examples.md](python/python-inline-comment-examples.md) | [test-comment-examples.md](python/python-test-comment-examples.md)
+- **Java**: [inline-comment-examples.md](java/java-inline-comment-examples.md) | [test-comment-examples.md](java/java-test-comment-examples.md)
+- **TypeScript**: [inline-comment-examples.md](typescript/typescript-inline-comment-examples.md) | [test-comment-examples.md](typescript/typescript-test-comment-examples.md)
+- **SQL**: [inline-comment-examples.md](sql/sql-inline-comment-examples.md)
+- **CSS/SCSS**: [inline-comment-examples.md](css/css-inline-comment-examples.md)
 
 ### 各言語ディレクトリの共通構成
 
@@ -84,13 +109,18 @@
    - 各ファイル10-40 KB（AI処理最適サイズ）
    - 独立して理解可能
 
-2. **README.md**
+2. **コメント規約ドキュメント**（2025-11-14追加）✨
+   - **inline-comment-examples.md** - インラインコメント実装例
+   - **test-comment-examples.md** - テストコメント実装例（Python, Java, TypeScriptのみ）
+   - 言語固有のコメント記法・ベストプラクティス
+
+3. **README.md**
    - ディレクトリ概要
    - ファイル一覧と説明
    - ロール別学習パス
    - 使用方法
 
-3. **AI-QUICK-REFERENCE.md**
+4. **AI-QUICK-REFERENCE.md**
    - TOPチェック項目（15-30項目）
    - 具体的なコード例
    - AI/Devinが即座に参照可能
@@ -106,27 +136,41 @@
 ```
 1. [言語]/README.md を参照して全体構造を理解
 2. [言語]/AI-QUICK-REFERENCE.md でTOPチェック項目を確認
-3. 番号順にファイル参照（01→02→03...）
-4. 必要な標準を組み合わせてコード生成
+3. コメント規約を確認：
+   - 00-inline-comment-standards.md（共通原則）
+   - 00-test-comment-standards.md（テスト共通原則）
+   - [言語]/inline-comment-examples.md（言語固有例）
+4. 番号順にファイル参照（01→02→03...）
+5. 必要な標準を組み合わせてコード生成
 ```
 
 **例: Python新規プロジェクト**
 ```
 「/01-coding-standards/python/README.md の学習パスに従って、
 ユーザー管理APIのPythonコードを生成してください。
+
 特に以下を重視:
 - python/02-setup-tools.md（基本設定）
 - python/03-naming-style.md（命名規則）
 - python/05-error-handling.md（エラー処理）
 - python/09-security.md（セキュリティ）
+
+コメント規約を厳守:
+- 00-inline-comment-standards.md（日本語必須、WHY原則）
+- python/python-inline-comment-examples.md（Python固有のコメント例）
+- python/python-test-comment-examples.md（テストコメント例）
 」
 ```
 
 #### パターン2: コードレビュー時
 ```
 1. [言語]/AI-QUICK-REFERENCE.md を使用
-2. チェック項目を順次確認
-3. 違反項目を具体的に指摘
+2. コメント規約チェック:
+   - すべてのコメントが日本語で記述されているか
+   - WHY原則（「WHAT」ではなく「WHY」）が守られているか
+   - 複雑度10以上のコードに詳細コメントがあるか
+3. チェック項目を順次確認
+4. 違反項目を具体的に指摘
 ```
 
 **例: Pythonコードレビュー**
@@ -154,6 +198,9 @@ TOP 30チェック項目に基づいてこのコードをレビューしてく�
 **ステップ1: 全体理解**
 1. この README.md で言語別標準を確認
 2. [00-general-principles.md](00-general-principles.md) で共通原則を学習
+3. コメント規約を理解：
+   - [00-inline-comment-standards.md](00-inline-comment-standards.md)
+   - [00-test-comment-standards.md](00-test-comment-standards.md)
 
 **ステップ2: 言語習得**
 1. 担当言語のディレクトリに移動
@@ -396,6 +443,11 @@ css/AI-QUICK-REFERENCE.md            # TOP 20項目
 - **[02-architecture-standards/](../02-architecture-standards/)** - アーキテクチャ設計
 - **[04-quality-standards/](../04-quality-standards/)** - 品質・テスト標準
 
+### ✨ コメント規約ドキュメント（2025-11-14追加）
+- **[00-inline-comment-standards.md](00-inline-comment-standards.md)** - インラインコメント共通原則
+- **[00-test-comment-standards.md](00-test-comment-standards.md)** - テストコメント共通原則
+- 言語別実装例：[python/](python/) | [java/](java/) | [typescript/](typescript/) | [sql/](sql/) | [css/](css/)
+
 ### 🔗 外部リファレンス
 - [Clean Code principles](https://clean-code-developer.com/)
 - [SOLID principles](https://en.wikipedia.org/wiki/SOLID)
@@ -410,6 +462,17 @@ css/AI-QUICK-REFERENCE.md            # TOP 20項目
 ---
 
 ## 🏆 バージョン履歴
+
+### v2.1 (2025-11-14) - コメント規約追加版 ✨
+- ✅ コメント規約ドキュメント追加（10ファイル）
+  - 共通規約：00-inline-comment-standards.md, 00-test-comment-standards.md
+  - Python: inline/test-comment-examples.md
+  - Java: inline/test-comment-examples.md
+  - TypeScript: inline/test-comment-examples.md
+  - SQL: inline-comment-examples.md
+  - CSS/SCSS: inline-comment-examples.md
+- ✅ 日本語コメント必須化を明文化
+- ✅ WHY原則・複雑度基準・Given-When-Then構造を標準化
 
 ### v2.0 (2025-11-13) - Phase 1-11完了版 ✨
 - ✅ 全言語ディレクトリ化完了
@@ -437,8 +500,8 @@ css/AI-QUICK-REFERENCE.md            # TOP 20項目
 
 ---
 
-**最終更新**: 2025-11-13  
-**Version**: 2.0（Phase 1-11完了版）  
+**最終更新**: 2025-11-14  
+**Version**: 2.1（コメント規約追加版）  
 **次回メンテナンス**: 2026-02-13（四半期レビュー）
 
 **© 2024 組織名. All rights reserved.**  

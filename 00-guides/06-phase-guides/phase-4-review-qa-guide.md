@@ -630,7 +630,7 @@ CIコメントには以下の情報が表示されます：
 **📖 参照**:
 - [PRテンプレート](../../08-templates/pr-templates/PULL_REQUEST_TEMPLATE.md)
 - [PR記載レベル自動チェック実装ガイド](../../08-templates/ci-templates/github-actions/pr-description-quality-gate.md)
-- [AI-PRE-WORK-CHECKLIST v1.3.0](../AI-PRE-WORK-CHECKLIST.md) - Stage 3参照
+- [AI-PRE-WORK-CHECKLIST v1.3.0](.../02-ai-guides/AI-PRE-WORK-CHECKLIST.md) - Stage 3参照
 
 ---
 

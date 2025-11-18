@@ -18,7 +18,11 @@
 | **[05-nodejs-backend.md](05-nodejs-backend.md)** | 7.3 KB | Node.js固有規約、Express、非同期処理 | バックエンド |
 | **[06-testing.md](06-testing.md)** | 8.2 KB | テスト規約、Jest、React Testing Library | 全員 |
 | **[07-performance-devin-docs.md](07-performance-devin-docs.md)** | 21.3 KB | パフォーマンス最適化、Devinガイド、ドキュメンテーション | 全員 |
+| **[typescript-inline-comment-examples.md](typescript-inline-comment-examples.md)** | 9.8 KB | TypeScript固有のインラインコメント実装例 | 全員 |
+| **[typescript-test-comment-examples.md](typescript-test-comment-examples.md)** | 14.5 KB | Jestスタイルのテストコメント実装例 | 全員 |
 | **[AI-QUICK-REFERENCE.md](AI-QUICK-REFERENCE.md)** | - | 必須チェック項目TOP25 | AI/人間 |
+
+**共通原則も参照**: [00-inline-comment-standards.md](../00-inline-comment-standards.md) | [00-test-comment-standards.md](../00-test-comment-standards.md)
 
 **合計**: 60.6 KB（7ファイル + README + AI-QUICK-REFERENCE）
 
@@ -64,8 +68,9 @@
 
 #### **AI開発アシスタント（Devin等）**
 1. AI-QUICK-REFERENCE.md（最優先）
-2. 07-performance-devin-docs.md の「Devin向け実行ガイドライン」
-3. タスクに応じた該当ファイル
+2. typescript-inline-comment-examples.md + typescript-test-comment-examples.md（コメント規約）
+3. 07-performance-devin-docs.md の「Devin向け実行ガイドライン」
+4. タスクに応じた該当ファイル
 
 ## 🎯 主要トピック
 

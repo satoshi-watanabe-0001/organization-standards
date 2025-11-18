@@ -90,7 +90,7 @@ PBIの種類・対象プロジェクトの状態に応じて、適切なフェ�
 
 ### PBIタイプ別の推奨フロー
 
-> **📘 詳細ガイド**: PBIタイプの判定方法、境界ケースの対応については、**[PBI-TYPE-JUDGMENT-GUIDE.md](./PBI-TYPE-JUDGMENT-GUIDE.md)** を参照してください。
+> **📘 詳細ガイド**: PBIタイプの判定方法、境界ケースの対応については、**[PBI-TYPE-JUDGMENT-GUIDE.md](../03-pbi-management/core/PBI-TYPE-JUDGMENT-GUIDE.md)** を参照してください。
 
 #### タイプ1: 新規プロジェクト立ち上げ (NPI - New Project Initialization)
 **特徴**: ゼロからプロジェクトを開始

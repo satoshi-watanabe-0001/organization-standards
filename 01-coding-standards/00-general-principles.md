@@ -9,6 +9,11 @@
 
 このドキュメントは、プログラミング言語に依存しない普遍的なコーディング原則を定義し、自律型AI Devinおよび開発チームの判断基準として機能します。言語固有の実装詳細は各言語別規約ファイルを参照してください。
 
+**🆕 コメント規約ドキュメント（2025-11-14追加）**: 詳細なコメント記述規約は以下を参照:
+- [00-inline-comment-standards.md](00-inline-comment-standards.md) - インラインコメント共通原則
+- [00-test-comment-standards.md](00-test-comment-standards.md) - テストコメント共通原則
+- 言語別実装例: [python/](python/) | [java/](java/) | [typescript/](typescript/) | [sql/](sql/) | [css/](css/)
+
 ---
 
 ## 1. 基本設計原則
@@ -572,6 +577,11 @@ function createUser(params: UserParams) { }
 - [ ] 自己説明的な変数名・関数名
 
 **Devin指示**: すべてのファイル・クラス・パブリックAPIにドキュメントを必ず付与せよ。内部実装のコメントは、複雑度10以上またはビジネスロジックの場合のみ記載せよ。
+
+**📚 詳細なコメント規約**: 
+- **[00-inline-comment-standards.md](00-inline-comment-standards.md)** - インラインコメントの共通原則（日本語必須、WHY原則、複雑度基準）
+- **[00-test-comment-standards.md](00-test-comment-standards.md)** - テストコメントの共通原則（Given-When-Then、4要素）
+- 言語別実装例: [python/](python/) | [java/](java/) | [typescript/](typescript/) | [sql/](sql/) | [css/](css/)
 
 ### 5.4 ファイル/クラスレベルドキュメンテーション標準
 

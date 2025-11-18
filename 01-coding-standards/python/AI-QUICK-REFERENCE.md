@@ -42,7 +42,15 @@
 - ✅ 動詞+名詞パターン (例: `get_user`, `validate_email`)
 - ❌ 単一文字変数は避ける（ループカウンタ以外）
 
-**C6. Import順序**
+**C6. コメント規約の遵守（2025-11-14追加）** ✨
+- ✅ **すべてのコメントを日本語で記述**（技術用語を除く）
+- ✅ **WHY原則**：「WHAT」ではなく「WHY」を説明
+- ✅ **複雑度10以上の関数**に詳細コメントを追加
+- ✅ **テストコメント**：【テスト対象】【テストケース】【期待結果】【ビジネス要件】を明記
+- ✅ TODO/FIXME/HACKに担当者・期限・理由を記載
+- ❓ 詳細: [python-inline-comment-examples.md](python-inline-comment-examples.md) | [python-test-comment-examples.md](python-test-comment-examples.md)
+
+**C7. Import順序**
 ```python
 # 1. 標準ライブラリ
 import os

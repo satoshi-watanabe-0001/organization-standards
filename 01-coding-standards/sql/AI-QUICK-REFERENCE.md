@@ -2,8 +2,8 @@
 
 **目的**: AIがSQLコード生成・レビュー時に参照すべき重要ポイントをまとめたサマリー
 
-**バージョン**: 1.0.0  
-**最終更新**: 2025-11-13
+**バージョン**: 1.1.0  
+**最終更新**: 2025-11-15
 
 ---
 
@@ -20,7 +20,7 @@
 
 ---
 
-## ✅ 必須チェック項目 TOP 25
+## ✅ 必須チェック項目 TOP 30
 
 ### A. セキュリティ (1-8)
 
@@ -553,6 +553,132 @@ except psycopg2.IntegrityError as e:
 
 ---
 
+### E. コメント規約 (26-30) ✨ 2025-11-15追加
+
+#### 26. ✓ 日本語コメントの記述
+
+```sql
+-- ✅ OK: 日本語で「なぜ」を説明
+-- NOTE: パフォーマンス改善のため、UNION ALLを使用（重複排除不要）
+SELECT user_id, user_name FROM active_users
+UNION ALL
+SELECT user_id, user_name FROM pending_users;
+
+-- ❌ NG: 英語または「何を」の説明
+-- Get users from two tables
+SELECT user_id, user_name FROM active_users
+UNION ALL
+SELECT user_id, user_name FROM pending_users;
+```
+- **必須**: すべてのコメントを日本語で記述（SQL文、技術用語を除く）
+- **参照**: [sql-inline-comment-examples.md](sql-inline-comment-examples.md)
+
+#### 27. ✓ WHY原則の遵守
+
+```sql
+-- ✅ OK: なぜその実装をしているか説明
+-- NOTE: レガシーシステムとの互換性維持のため、文字列型で保存
+CREATE TABLE legacy_data (
+    id INT PRIMARY KEY,
+    status_code VARCHAR(10)  -- 数値ではなく文字列
+);
+
+-- ❌ NG: 何をしているか説明
+-- テーブル作成
+CREATE TABLE legacy_data (
+    id INT PRIMARY KEY,
+    status_code VARCHAR(10)
+);
+```
+- **必須**: 「WHAT」ではなく「WHY」を説明
+- **参照**: [sql-inline-comment-examples.md](sql-inline-comment-examples.md)
+
+#### 28. ✓ 複雑クエリへの詳細コメント
+
+```sql
+-- ✅ OK: 複雑なクエリには段階的にコメント
+/*
+ * ユーザーの月別購入統計を計算
+ * 
+ * ビジネスロジック:
+ * - アクティブユーザーのみ対象（status = 'active'）
+ * - 過去12ヶ月のデータを集計
+ * - 返品注文は除外（order_status <> 'returned'）
+ * 
+ * パフォーマンス考慮:
+ * - idx_orders_user_created インデックスを使用
+ * - CTEで中間結果を明確化
+ */
+WITH monthly_orders AS (
+    SELECT 
+        user_id,
+        DATE_TRUNC('month', order_date) AS month,
+        SUM(total_amount) AS monthly_total
+    FROM orders
+    WHERE order_date >= CURRENT_DATE - INTERVAL '12 months'
+      AND order_status <> 'returned'
+    GROUP BY user_id, DATE_TRUNC('month', order_date)
+)
+SELECT 
+    u.user_id,
+    u.user_name,
+    COUNT(mo.month) AS active_months,
+    AVG(mo.monthly_total) AS avg_monthly_spending
+FROM users u
+INNER JOIN monthly_orders mo ON u.user_id = mo.user_id
+WHERE u.status = 'active'
+GROUP BY u.user_id, u.user_name
+HAVING COUNT(mo.month) >= 3;  -- 3ヶ月以上購入しているユーザー
+```
+- **必須**: 複雑なクエリ（3テーブル以上のJOIN、サブクエリ、複雑な条件）に詳細コメント
+- **参照**: [sql-inline-comment-examples.md](sql-inline-comment-examples.md)
+
+#### 29. ✓ テストコメント4要素
+
+```python
+"""
+【テスト対象】ユーザー登録クエリ
+【テストケース】重複メールアドレスでの登録試行
+【期待結果】IntegrityErrorが発生し、登録されない
+【ビジネス要件】ユーザー登録機能（REQ-USER-002: メール一意性）
+"""
+def test_user_registration_duplicate_email():
+    # Given: 既存ユーザーと同じメールアドレス
+    existing_email = 'test@example.com'
+    cursor.execute(
+        "INSERT INTO users (email, name) VALUES (%s, %s)",
+        (existing_email, 'Existing User')
+    )
+    
+    # When: 同じメールで新規登録を試行
+    with pytest.raises(psycopg2.IntegrityError):
+        cursor.execute(
+            "INSERT INTO users (email, name) VALUES (%s, %s)",
+            (existing_email, 'New User')
+        )
+    
+    # Then: ユーザーは1件のみ存在
+    cursor.execute("SELECT COUNT(*) FROM users WHERE email = %s", (existing_email,))
+    assert cursor.fetchone()[0] == 1
+```
+- **必須**: 【テスト対象】【テストケース】【期待結果】【ビジネス要件】を明記
+- **推奨**: Given-When-Then構造の詳細コメント
+- **参照**: [sql-inline-comment-examples.md](sql-inline-comment-examples.md)
+
+#### 30. ✓ TODO/FIXME/HACKの書式
+
+```sql
+-- TODO: [山田太郎] [期限: 2025-12-31] 理由: インデックスを追加してクエリ性能を改善
+-- FIXME: [佐藤花子] [期限: 2025-11-30] 理由: NULLチェックが不足（データ整合性対策）
+-- HACK: [鈴木一郎] 理由: PostgreSQL 12のバグ回避のための暫定対応（issue #789参照）
+
+CREATE INDEX idx_orders_user_created ON orders(user_id, created_at DESC);
+```
+- **必須**: 担当者、期限、理由を記載
+- **参照**: [sql-inline-comment-examples.md](sql-inline-comment-examples.md)
+
+---
+
 ## 🚫 よくある間違いと修正方法
 
 ### 間違い1: WHERE句での関数使用によるインデックス無効化
@@ -678,6 +804,16 @@ CREATE TABLE orders (
 
 ---
 
+## 💬 コメントチェックリスト（2025-11-15追加）✨
+
+- [ ] **すべてのコメントが日本語で記述されている**
+- [ ] **コメントがWHY原則に従っている（「何を」ではなく「なぜ」）**
+- [ ] **複雑なクエリに詳細コメントがある**
+- [ ] **テストに4要素コメントがある**
+- [ ] **TODO/FIXME/HACKに担当者・期限・理由がある**
+
+---
+
 ## 🔗 詳細ドキュメントへのリンク
 
 - [01-syntax-and-style.md](./01-syntax-and-style.md) - 構文とスタイル
@@ -688,6 +824,7 @@ CREATE TABLE orders (
 - [06-testing-qa.md](./06-testing-qa.md) - テスト
 - [07-operations-monitoring.md](./07-operations-monitoring.md) - 運用
 - [09-documentation-standards.md](./09-documentation-standards.md) - ドキュメント
+- **[sql-inline-comment-examples.md](./sql-inline-comment-examples.md)** - コメント規約 ✨
 
 ---
 

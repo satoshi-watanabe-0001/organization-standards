@@ -44,6 +44,17 @@
 | [13-devin-guidelines.md](13-devin-guidelines.md) | 38.1 KB | Devin実行ガイドライン |
 | [14-documentation-conclusion.md](14-documentation-conclusion.md) | 13.9 KB | ドキュメンテーション標準、結語 |
 
+### コメント規約（2025-11-14追加）✨
+
+| ファイル | サイズ | 内容 |
+|---------|-------|------|
+| [python-inline-comment-examples.md](python-inline-comment-examples.md) | 15.6 KB | Python固有のインラインコメント実装例 |
+| [python-test-comment-examples.md](python-test-comment-examples.md) | 20.4 KB | pytestスタイルのテストコメント実装例 |
+
+**共通原則も参照**:
+- [00-inline-comment-standards.md](../00-inline-comment-standards.md) - インラインコメント共通原則
+- [00-test-comment-standards.md](../00-test-comment-standards.md) - テストコメント共通原則
+
 ### クイックリファレンス
 
 | ファイル | 内容 |
@@ -58,13 +69,15 @@
 1. 📖 [01-introduction-purpose.md](01-introduction-purpose.md) - 標準の目的を理解
 2. ⚙️ [02-setup-tools.md](02-setup-tools.md) - 開発環境構築
 3. 📝 [03-naming-style.md](03-naming-style.md) - コーディングスタイル習得
-4. 🏗️ [04-project-structure.md](04-project-structure.md) - プロジェクト構造
-5. ❌ [05-error-handling.md](05-error-handling.md) - エラー処理の基本
+4. 💬 [python-inline-comment-examples.md](python-inline-comment-examples.md) - コメント記述方法
+5. 🏗️ [04-project-structure.md](04-project-structure.md) - プロジェクト構造
+6. ❌ [05-error-handling.md](05-error-handling.md) - エラー処理の基本
 
 ### 🧪 テスト・品質担当者
 1. 🎯 [06-testing-qa.md](06-testing-qa.md) - テスト戦略全体
-2. 📊 [10-monitoring-logging.md](10-monitoring-logging.md) - 監視とログ
-3. 🚀 [11-deployment-cicd.md](11-deployment-cicd.md) - CI/CDパイプライン
+2. 💬 [python-test-comment-examples.md](python-test-comment-examples.md) - テストコメント規約
+3. 📊 [10-monitoring-logging.md](10-monitoring-logging.md) - 監視とログ
+4. 🚀 [11-deployment-cicd.md](11-deployment-cicd.md) - CI/CDパイプライン
 
 ### ⚡ パフォーマンスエンジニア
 1. 🔧 [07-performance-part1.md](07-performance-part1.md) - 最適化基礎
@@ -84,7 +97,8 @@
 ### 🤖 Devinユーザー
 1. 📘 [13-devin-guidelines.md](13-devin-guidelines.md) - Devin実行ガイド
 2. 📖 [AI-QUICK-REFERENCE.md](AI-QUICK-REFERENCE.md) - クイックリファレンス
-3. 📝 [14-documentation-conclusion.md](14-documentation-conclusion.md) - ドキュメント標準
+3. 💬 [python-inline-comment-examples.md](python-inline-comment-examples.md) + [python-test-comment-examples.md](python-test-comment-examples.md) - コメント規約
+4. 📝 [14-documentation-conclusion.md](14-documentation-conclusion.md) - ドキュメント標準
 
 ---
 

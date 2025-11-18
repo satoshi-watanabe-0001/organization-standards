@@ -98,6 +98,21 @@
 - 非同期処理・並行処理（`@Async`、`CompletableFuture`）
 - JWT実装のベストプラクティス
 - データ保護・暗号化
+
+---
+
+### 💬 コメント規約（2025-11-14追加）✨
+
+| ファイル | サイズ | 内容 |
+|---------|-------|------|
+| [java-inline-comment-examples.md](java-inline-comment-examples.md) | 16.6 KB | Java固有のインラインコメント実装例（Stream API、アノテーション、Optional等） |
+| [java-test-comment-examples.md](java-test-comment-examples.md) | 23.6 KB | JUnit 5/Mockitoスタイルのテストコメント実装例 |
+
+**共通原則も参照**:
+- [00-inline-comment-standards.md](../00-inline-comment-standards.md) - インラインコメント共通原則
+- [00-test-comment-standards.md](../00-test-comment-standards.md) - テストコメント共通原則
+
+**いつ読む**: コード記述時、コードレビュー時、テスト実装時
 - 構造化ロギング（Logback）
 - Docker化・コンテナ運用（Dockerfile、docker-compose.yml）
 - CI/CD設定（GitHub Actions）

@@ -293,7 +293,7 @@ AI活用システム開発ドキュメント/07_運用保守/
 
 ## 🔀 PBIタイプ別参照ガイド
 
-> **📘 詳細ガイド**: PBIタイプの判定方法、境界ケースの対応については、**[PBI-TYPE-JUDGMENT-GUIDE.md](./PBI-TYPE-JUDGMENT-GUIDE.md)** を参照してください。
+> **📘 詳細ガイド**: PBIタイプの判定方法、境界ケースの対応については、**[PBI-TYPE-JUDGMENT-GUIDE.md](../03-pbi-management/core/PBI-TYPE-JUDGMENT-GUIDE.md)** を参照してください。
 
 ### 1. 新規プロジェクト立ち上げ (NPI - New Project Initialization)
 

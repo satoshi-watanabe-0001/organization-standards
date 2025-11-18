@@ -939,8 +939,8 @@ audience: "AI Agents and Human Developers"
 ### 関連リンク
 
 - [メインREADME](./README.md)
-- [AI使用ガイド](./AI-USAGE-GUIDE.md)
-- [マスターワークフロー](./AI-MASTER-WORKFLOW-GUIDE.md)
+- [AI使用ガイド](../02-ai-guides/AI-USAGE-GUIDE.md)
+- [マスターワークフロー](../02-ai-guides/AI-MASTER-WORKFLOW-GUIDE.md)
 - [エスカレーション基準ガイド](./ESCALATION-CRITERIA-GUIDE.md)
 
 ---

@@ -543,7 +543,7 @@ audience: "AI Agents"
 
 **🆕 v1.2.0 追加 - CI/CD初期設定**:
 - [ ] **CI/CDの初期設定を完了したか**
-  - 📖 参照: [CI-SETUP-CHECKLIST.md](./CI-SETUP-CHECKLIST.md)
+  - 📖 参照: [CI-SETUP-CHECKLIST.md](../04-ci-cd/CI-SETUP-CHECKLIST.md)
   - [ ] CI/CDパイプラインの基本設定を完了したか
   - [ ] 品質ゲート（Linter, Tests）を設定したか
   - [ ] 自動テストが実行されるよう設定したか
@@ -598,7 +598,7 @@ audience: "AI Agents"
 - [ ] 既存コードとの整合性を確認したか
 
 - [ ] **ドキュメントコメント要件を確認したか** ⭐NEW
-  - 📖 参照: [Phase 3実装ガイド - Section 10](./phase-guides/phase-3-implementation-guide.md#10-ドキュメントコメント必須化ガイド全言語共通-new)
+  - 📖 参照: [Phase 3実装ガイド - Section 10](../06-phase-guides/phase-3-implementation-guide.md#10-ドキュメントコメント必須化ガイド全言語共通-new)
   - 📖 詳細: [DOCUMENTATION-COMMENT-ISSUE-SOLUTION.md](./DOCUMENTATION-COMMENT-ISSUE-SOLUTION.md)
   - パブリックAPI（クラス/関数/メソッド）には必須
   - 言語別フォーマット（Javadoc/JSDoc/Docstring）に従う

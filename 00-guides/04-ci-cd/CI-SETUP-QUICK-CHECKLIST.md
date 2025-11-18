@@ -163,7 +163,7 @@ grep "run:" .github/workflows/*.yml
 
 - [CI-SETUP-CHECKLIST.md](./CI-SETUP-CHECKLIST.md) - CI設定の共通チェックリスト
 - [CI-SETUP-LANGUAGE-MATRIX.md](./CI-SETUP-LANGUAGE-MATRIX.md) - 言語別詳細設定マトリクス
-- [AI-MASTER-WORKFLOW-GUIDE.md](./AI-MASTER-WORKFLOW-GUIDE.md) - 開発プロセス全体ガイド
+- [AI-MASTER-WORKFLOW-GUIDE.md](../02-ai-guides/AI-MASTER-WORKFLOW-GUIDE.md) - 開発プロセス全体ガイド
 
 ---
 
