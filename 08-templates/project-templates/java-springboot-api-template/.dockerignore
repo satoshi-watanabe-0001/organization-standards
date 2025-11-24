@@ -1,0 +1,61 @@
+# Git関連
+.git
+.gitignore
+.gitattributes
+
+# ビルド成果物（Dockerイメージ内で再ビルド）
+build/
+target/
+*.jar
+*.war
+
+# Gradle関連（キャッシュは除外、wrapperは含める）
+.gradle/
+!gradle/wrapper/
+
+# IDE設定
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS固有ファイル
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# ログファイル
+*.log
+logs/
+
+# テスト結果
+test-results/
+test-output/
+
+# ドキュメント（本番イメージに不要）
+README.md
+*.md
+docs/
+
+# CI/CD設定
+.github/
+.gitlab-ci.yml
+Jenkinsfile
+
+# Docker関連
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# 環境変数ファイル
+.env
+.env.local
+.env.*.local
+
+# 一時ファイル
+*.tmp
+*.temp
+tmp/
+temp/

@@ -444,8 +444,8 @@ process_documents:
       - プロジェクトマネージャー
     related:
       - api-specification-management-guide.md
-      - ../00-guides/phase-guides/phase-2.1-pre-implementation-design-guide.md
-      - ../00-guides/phase-guides/phase-2.2-post-implementation-design-guide.md
+      - ../00-guides/phase-guides/phase-2A-pre-implementation-design-guide.md
+      - ../00-guides/phase-guides/phase-2B-post-implementation-design-guide.md
     supplementary:
       - design-artifacts-v2-update-report.md (更新完了レポート)
       - structure-comparison-visualization.md (構造比較)
@@ -467,7 +467,7 @@ process_documents:
       - アーキテクト
     related:
       - design-artifacts-management-guide.md
-      - ../00-guides/phase-guides/phase-2.1-pre-implementation-design-guide.md
+      - ../00-guides/phase-guides/phase-2A-pre-implementation-design-guide.md
   git_workflow:
     file: "git-workflow.md"
     version: "2.0.0"

@@ -1,0 +1,239 @@
+// Organization Standards準拠 Spring Boot Gradle設定
+// 参照: /organization-standards/01-coding-standards/java/01-introduction-setup.md
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.1'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'checkstyle'
+    id 'jacoco'
+    id 'com.github.spotbugs' version '6.0.7'
+    id 'com.diffplug.spotless' version '6.23.3'  // ✅ 必須: コードフォーマットチェック (organization-standards)
+}
+
+group = 'com.organization'
+version = '1.0.0-SNAPSHOT'
+
+// Java 17必須 (organization-standards準拠)
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring Boot Starter Web: REST API開発
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    
+    // Spring Boot Starter Data JPA: データアクセス
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    
+    // Spring Boot Starter Validation: Bean Validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    
+    // Spring Boot Starter Security: セキュリティ
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    
+    // Spring Boot Starter Actuator: ヘルスチェック、メトリクス
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    
+    // JWT (JSON Web Token): JWT認証実装
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+    
+    // H2 Database: 開発・テスト用インメモリDB
+    runtimeOnly 'com.h2database:h2'
+    
+    // PostgreSQL Driver: 本番環境用
+    runtimeOnly 'org.postgresql:postgresql'
+    
+    // Lombok: ボイラープレートコード削減
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    
+    // MapStruct: DTO/Entity変換
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+    
+    // Spring Boot Starter Test: テストフレームワーク
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    
+    // Spring Security Test: セキュリティテスト
+    testImplementation 'org.springframework.security:spring-security-test'
+    
+    // Testcontainers: 統合テスト用
+    testImplementation 'org.testcontainers:junit-jupiter:1.19.3'
+    testImplementation 'org.testcontainers:postgresql:1.19.3'
+    
+    // Mockito: モックテスト
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.8.0'
+}
+
+// Checkstyle設定: Google Java Style準拠 (organization-standards必須)
+checkstyle {
+    toolVersion = '10.12.7'
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+    maxErrors = 0
+    maxWarnings = 10
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+// Spotless設定: コードフォーマット (organization-standards必須)
+spotless {
+    java {
+        // Google Java Style を使用 (organization-standards準拠)
+        googleJavaFormat('1.18.1')
+        
+        // 対象ファイル
+        target 'src/**/*.java'
+        
+        // 除外ファイル
+        targetExclude 'src/generated/**/*.java'
+        
+        // 末尾の空白削除
+        trimTrailingWhitespace()
+        
+        // 改行で終了
+        endWithNewline()
+        
+        // インポート順序の整理
+        importOrder('java', 'javax', 'org', 'com', '')
+        
+        // 未使用インポートの削除
+        removeUnusedImports()
+    }
+}
+
+// SpotBugs設定: 静的解析 (organization-standards必須)
+spotbugs {
+    effort = 'max'
+    reportLevel = 'low'
+    toolVersion = '4.8.3'
+}
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
+    reports {
+        html {
+            required = true
+            outputLocation = file("${buildDir}/reports/spotbugs/spotbugs.html")
+        }
+        xml {
+            required = true
+            outputLocation = file("${buildDir}/reports/spotbugs/spotbugs.xml")
+        }
+    }
+}
+
+// JaCoCo設定: テストカバレッジ80%以上必須 (organization-standards準拠)
+jacoco {
+    toolVersion = '0.8.11'
+}
+
+jacocoTestReport {
+    dependsOn test
+    
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
+    }
+    
+    // 設定クラス、DTOはカバレッジ対象外
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                '**/config/**',
+                '**/dto/**',
+                '**/Application.class'
+            ])
+        }))
+    }
+}
+
+jacocoTestCoverageVerification {
+    dependsOn jacocoTestReport
+    
+    violationRules {
+        rule {
+            // 命令カバレッジ: 80%以上
+            limit {
+                counter = 'INSTRUCTION'
+                value = 'COVEREDRATIO'
+                minimum = 0.80
+            }
+        }
+        rule {
+            // 分岐カバレッジ: 80%以上
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.80
+            }
+        }
+    }
+    
+    // 設定クラス、DTOはカバレッジ対象外
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                '**/config/**',
+                '**/dto/**',
+                '**/Application.class'
+            ])
+        }))
+    }
+}
+
+// テスト実行設定
+test {
+    useJUnitPlatform()
+    
+    // テストログ出力
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+        exceptionFormat 'full'
+        showStandardStreams = false
+    }
+    
+    // テスト後にJaCoCoレポート生成
+    finalizedBy jacocoTestReport
+}
+
+// ビルド時にカバレッジチェック実行
+check {
+    dependsOn jacocoTestCoverageVerification
+}
+
+// Spring Boot実行タスク設定
+bootRun {
+    // 開発環境プロファイル有効化
+    systemProperty 'spring.profiles.active', 'dev'
+}
+
+// コンパイル時の文字エンコーディング設定
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    // コンパイラ警告を有効化
+    options.compilerArgs += ['-Xlint:unchecked', '-Xlint:deprecation']
+}
+
+// Jar生成設定
+bootJar {
+    archiveFileName = "${project.name}-${project.version}.jar"
+}

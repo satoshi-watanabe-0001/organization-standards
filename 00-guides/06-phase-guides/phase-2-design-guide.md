@@ -7,20 +7,20 @@ superseded_by: "phase-2.1-pre-implementation-design-guide.md, phase-2.2-post-imp
 
 # Phase 2: 設計ガイド
 
-> ⚠️ **重要**: このガイドは廃止されました。Phase 2.1/2.2 版を参照してください。
+> ⚠️ **重要**: このガイドは廃止されました。Phase 2A/2.2 版を参照してください。
 > 
 > ## 新しいガイド
 > 
-> Phase 2 は Phase 2.1（実装前設計）と Phase 2.2（実装後設計）に分割されました：
+> Phase 2 は Phase 2A（実装前設計）と Phase 5（実装後設計）に分割されました：
 > 
-> ### Phase 2.1: 実装前設計 (Pre-Implementation Design)
+> ### Phase 2A: 実装前設計 (Pre-Implementation Design)
 > - **ガイド**: [phase-2.1-pre-implementation-design-guide.md](./phase-2.1-pre-implementation-design-guide.md)
 > - **実行タイミング**: Phase 1 の後、Phase 3 の前
 > - **期間**: 1-2日
 > - **目的**: 実装の方向性を定める最小限の設計
 > - **成果物**: ADR、API契約書、制約条件文書
 > 
-> ### Phase 2.2: 実装後設計 (Post-Implementation Design)
+> ### Phase 5: 実装後設計 (Post-Implementation Design)
 > - **ガイド**: [phase-2.2-post-implementation-design-guide.md](./phase-2.2-post-implementation-design-guide.md)
 > - **実行タイミング**: Phase 4 の後、Phase 5 の前（または Phase 3-4 と並行）
 > - **期間**: 2-3日
@@ -28,9 +28,9 @@ superseded_by: "phase-2.1-pre-implementation-design-guide.md, phase-2.2-post-imp
 > - **成果物**: 設計書、完全版API仕様書、アーキテクチャ図、データモデル文書
 > 
 > ### 実行パターン
-> - **パターンA（AI最適化型・推奨）**: Phase 2.1 → Phase 3 → Phase 4 → Phase 2.2（並行）
-> - **パターンB（従来型）**: Phase 2.1 → Phase 2.2（実装前） → Phase 3 → Phase 4
-> - **パターンC（リバースエンジニアリング型）**: Phase 3 → Phase 4 → Phase 2.2（実装後）
+> - **パターンA（AI最適化型・推奨）**: Phase 2A → Phase 3 → Phase 4 → Phase 5（並行）
+> - **パターンB（従来型）**: Phase 2A → Phase 5（実装前） → Phase 3 → Phase 4
+> - **パターンC（リバースエンジニアリング型）**: Phase 3 → Phase 4 → Phase 5（実装後）
 > 
 > ### プロセス詳細
 > - **概要**: [/03-development-process/revised-development-process-overview.md](../../03-development-process/revised-development-process-overview.md)
@@ -100,7 +100,7 @@ Phase 2は以下の条件を満たす場合に実施：
 **📂 重要**: 成果物の格納場所、命名規則、管理方法については以下を参照：
 - 🔴 **必須**: [`../../03-development-process/design-artifacts-management-guide.md`](../../03-development-process/design-artifacts-management-guide.md)
   - **設計成果物の格納場所と命名規則の完全ガイド**
-  - Phase 2.1 vs Phase 2.2 の成果物配置
+  - Phase 2A vs Phase 5 の成果物配置
   - ファイル命名規則・バージョン管理・ライフサイクル管理
 
 ### 必須成果物

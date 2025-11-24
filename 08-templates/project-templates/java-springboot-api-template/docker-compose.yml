@@ -1,0 +1,93 @@
+# Docker Compose設定
+# ローカル開発・テスト用
+
+version: '3.8'
+
+services:
+  # ====================================
+  # Spring Boot アプリケーション
+  # ====================================
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-template
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - DATABASE_URL=jdbc:postgresql://postgres:5432/apidb
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=postgres
+      - JWT_SECRET=dGhpcy1pcy1hLXNlY3VyZS1zZWNyZXQta2V5LWZvci1qd3QtdG9rZW4tZ2VuZXJhdGlvbi1taW5pbXVtLTI1Ni1iaXRz
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # ====================================
+  # PostgreSQL データベース
+  # ====================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=apidb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ====================================
+  # pgAdmin (PostgreSQL管理ツール)
+  # ====================================
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - app-network
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
+# ====================================
+# ボリューム定義
+# ====================================
+volumes:
+  postgres-data:
+    driver: local
+  pgadmin-data:
+    driver: local
+
+# ====================================
+# ネットワーク定義
+# ====================================
+networks:
+  app-network:
+    driver: bridge

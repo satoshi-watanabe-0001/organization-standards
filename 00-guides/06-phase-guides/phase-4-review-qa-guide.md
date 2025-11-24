@@ -825,8 +825,14 @@ sonar-scanner
   - **セキュリティテストの実施方法を確認**
 - [`04-quality-standards/load-testing.md`](../../04-quality-standards/load-testing.md)
   - **負荷テストの実施方法を確認**
-- [`07-security-compliance/security-checklist.md`](../../07-security-compliance/security-checklist.md)
-  - **セキュリティチェックリストを確認**
+
+**🔒 セキュリティレビュー必須参照** ⭐重要:
+- [`07-security-compliance/security-checklist.md`](../../07-security-compliance/security-checklist.md) ⭐必須
+  - **Phase 4セキュリティレビューチェックリスト**
+  - Section 3: テストフェーズチェックリスト（自動テスト、脆弱性スキャン、手動テスト）
+  - Section 5: OWASP Top 10 対策チェックリスト（全10項目完全網羅）
+  - Section 6: コードレビューチェックリスト
+  - 具体的な対策コード例、推奨ツール（SAST、DAST、Snyk等）
 - [`07-security-compliance/vulnerability-management.md`](../../07-security-compliance/vulnerability-management.md)
   - **脆弱性管理の方法を確認**
 

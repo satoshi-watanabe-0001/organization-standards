@@ -1,8 +1,8 @@
 ---
 title: "Design Artifacts Management Guide - 設計成果物管理ガイド"
-version: "2.0.0"
+version: "2.1.0"
 created_date: "2025-11-12"
-last_updated: "2025-11-12"
+last_updated: "2025-11-20"
 status: "Active"
 owner: "Engineering Architecture Team"
 category: "development-process"
@@ -53,7 +53,7 @@ phase: "Phase 2 (Design)"
 - 例: `user-service-design`, `e-commerce-platform-design`
 
 #### 2. **成果物種類ベースの分類**
-- Phase 2.1/2.2 のような時系列分類は**使用しない**
+- Phase 2A/2.2 のような時系列分類は**使用しない**
 - アーキテクチャ、API、データモデル等の**成果物種類で分類**
 - フォルダ名から内容が一目でわかる
 
@@ -497,6 +497,8 @@ phase: "Phase 2 (Design)"
 
 ### 基本ルール
 
+#### プロジェクト共通成果物（汎用設計）
+
 ```
 <category>-<description>.<extension>
 
@@ -512,6 +514,200 @@ phase: "Phase 2 (Design)"
 - **ハイフン区切り**: 単語はハイフン（-）で区切る
 - **説明的**: ファイル名から内容が推測できる
 - **簡潔**: 冗長な表現を避ける
+
+---
+
+#### PBI固有成果物（個別PBIの設計）
+
+PBI個別の設計成果物は、PBI-KEYをプレフィックスとして命名します。
+
+```
+{PBI-KEY}-<document-type>[-v<version>].<extension>
+
+例:
+- PROJ-1234-requirements.md
+- PROJ-1234-adr-001-use-postgresql.md
+- PROJ-1234-api-contract-v0.1.yaml
+- PROJ-1234-api-spec-v1.0.yaml
+- PROJ-1234-detailed-design.md
+- PROJ-1234-sequence-payment-flow.puml
+- PROJ-5678-architecture-changes.md
+```
+
+**命名原則**:
+- **PBI-KEYプレフィックス**: 必須（例: PROJ-1234）
+- **document-type**: 成果物の種類（requirements, api-contract, detailed-design等）
+- **バージョン**: API仕様書、リリースノート等はバージョン付与
+- **小文字**: PBI-KEY以外は小文字
+- **ハイフン区切り**: 単語はハイフンで区切る
+
+**配置場所の原則**:
+
+```yaml
+phase_0_outputs:
+  location: "docs/requirements/"
+  files:
+    - "{PBI-KEY}-requirements.md"
+    - "{PBI-KEY}-acceptance-criteria.md"
+    - "{PBI-KEY}-technical-research.md"
+    - "{PBI-KEY}-risk-analysis.md"
+
+phase_2_1_outputs:
+  location: "docs/design/pre-implementation/"
+  files:
+    - "{PBI-KEY}-adr-{NNN}-{title}.md"
+    - "{PBI-KEY}-constraints.md"
+    - "{PBI-KEY}-data-model-draft.md"
+  api_contracts:
+    location: "docs/api/"
+    files:
+      - "{PBI-KEY}-api-contract-v0.1.yaml"
+
+phase_3_outputs:
+  source_code: "src/"
+  tests: "tests/"
+  migrations: "scripts/migrations/"
+
+phase_2_2_outputs:
+  location: "docs/design/post-implementation/"
+  files:
+    - "{PBI-KEY}-detailed-design.md"
+    - "{PBI-KEY}-as-built-notes.md"
+    - "{PBI-KEY}-tech-debt.md"
+  api_specs:
+    location: "docs/api/"
+    files:
+      - "{PBI-KEY}-api-spec-v1.0.yaml"
+  architecture:
+    location: "docs/architecture/"
+    files:
+      - "{PBI-KEY}-c4-context.puml"
+      - "{PBI-KEY}-c4-container.puml"
+      - "{PBI-KEY}-sequence-{name}.puml"
+      - "{PBI-KEY}-er-diagram.puml"
+
+phase_5_outputs:
+  location: "docs/operations/"
+  files:
+    - "{PBI-KEY}-release-notes-v{version}.md"
+    - "{PBI-KEY}-deployment-record.md"
+    - "{PBI-KEY}-rollback-plan.md"
+    - "{PBI-KEY}-operations-manual.md"
+  scripts:
+    location: "scripts/deployment/"
+    files:
+      - "deploy-staging.sh"
+      - "deploy-production.sh"
+```
+
+---
+
+### プロジェクト統合の原則
+
+#### 個別PBI設計とプロジェクト全体設計の位置づけ
+
+```yaml
+プロジェクト全体設計:
+  目的: プロジェクト全体のアーキテクチャ、基盤設計
+  対象: 汎用的な設計成果物
+  配置: docs/architecture/, docs/api/specifications/, docs/data-model/
+  命名: {category}-{description}.md
+  例:
+    - system-architecture.md
+    - api-versioning-strategy.md
+    - security-architecture.md
+
+個別PBI設計:
+  目的: 特定PBIの設計成果物
+  対象: PBI固有の設計成果物
+  配置: docs/design/{pre|post}-implementation/, docs/api/, docs/architecture/
+  命名: {PBI-KEY}-{document-type}.md
+  例:
+    - PROJ-1234-api-contract-v0.1.yaml
+    - PROJ-1234-detailed-design.md
+    - PROJ-5678-architecture-changes.md
+```
+
+#### 統合ルール
+
+**1. 共通API仕様の統合**
+
+```
+docs/api/
+├── specifications/
+│   ├── api-spec-master-v1.0.yaml        # 統合API仕様
+│   ├── components/
+│   │   ├── schemas-common.yaml          # 共通スキーマ
+│   │   ├── responses-common.yaml        # 共通レスポンス
+│   │   └── parameters-common.yaml       # 共通パラメータ
+│   └── pbi/
+│       ├── PROJ-1234-api-spec-v1.0.yaml # PBI個別仕様
+│       └── PROJ-5678-api-spec-v1.0.yaml # PBI個別仕様
+└── ...
+```
+
+**統合原則**:
+- 個別PBIのAPI仕様は `docs/api/pbi/` に配置
+- 共通コンポーネントは `$ref` で参照
+- マスター仕様で全体を統合
+
+**2. アーキテクチャドキュメントの進化**
+
+```
+docs/architecture/
+├── system-architecture-v1.0.md         # 全体アーキテクチャ
+├── pbi-changes/
+│   ├── PROJ-1234-architecture-changes.md  # PBI個別の変更
+│   └── PROJ-5678-architecture-changes.md  # PBI個別の変更
+└── ...
+```
+
+**更新ルール**:
+- PBI完了時に全体アーキテクチャを更新
+- 個別変更記録は別ファイルで保持
+- 四半期ごとに全体アーキテクチャをレビュー
+
+**3. 複数リポジトリの場合**
+
+```
+service-a/docs/
+service-b/docs/
+shared-docs/                    # 共通ドキュメント専用リポジトリ
+  ├── architecture/            # 全体アーキテクチャ
+  └── api/                     # 統合API仕様
+```
+
+---
+
+### バージョン管理ルール
+
+#### ドキュメントのバージョニング
+
+| ドキュメント種類 | バージョン管理方法 | 例 |
+|----------------|--------------------|-----|
+| **API仕様書** | セマンティックバージョニング | `v0.1`, `v1.0`, `v1.1` |
+| **リリースノート** | リリースバージョンと一致 | `v1.0.0`, `v1.1.0` |
+| **設計書** | Gitコミット履歴で管理 | (ファイル名にバージョン不要) |
+| **ADR** | 番号で管理 (不変) | `adr-001`, `adr-002` |
+
+#### API仕様書のバージョニング
+
+```
+Phase 2A: PROJ-1234-api-contract-v0.1.yaml  (ドラフト版)
+         ↓ 実装開始
+         ↓ 実装完了
+Phase 5: PROJ-1234-api-spec-v1.0.yaml      (正式版)
+         ↓ マイナー変更
+         : PROJ-1234-api-spec-v1.1.yaml
+         ↓ 破壊的変更
+         : PROJ-1234-api-spec-v2.0.yaml
+```
+
+**ルール**:
+- `v0.x`: Phase 2Aのドラフト版
+- `v1.0`: Phase 5の最初の正式版
+- `v1.x`: 後方互換性のある変更
+- `v2.0`: 破壊的変更
 
 ### カテゴリ別命名規則
 
@@ -974,8 +1170,8 @@ ecommerce-platform-design/
 
 ### Phase ガイド
 - [00-guides/phase-guides/phase-2-design-guide.md](../00-guides/phase-guides/phase-2-design-guide.md) - Phase 2 総合ガイド
-- [00-guides/phase-guides/phase-2.1-pre-implementation-design-guide.md](../00-guides/phase-guides/phase-2.1-pre-implementation-design-guide.md) - Phase 2.1 ガイド（実装前設計）
-- [00-guides/phase-guides/phase-2.2-post-implementation-design-guide.md](../00-guides/phase-guides/phase-2.2-post-implementation-design-guide.md) - Phase 2.2 ガイド（実装後設計）
+- [00-guides/phase-guides/phase-2A-pre-implementation-design-guide.md](../00-guides/phase-guides/phase-2A-pre-implementation-design-guide.md) - Phase 2A ガイド（実装前設計）
+- [00-guides/phase-guides/phase-2B-post-implementation-design-guide.md](../00-guides/phase-guides/phase-2B-post-implementation-design-guide.md) - Phase 5 ガイド（実装後設計）
 
 ### テンプレート
 - [08-templates/design-document-template.md](../08-templates/design-document-template.md) - 設計書テンプレート
@@ -990,12 +1186,12 @@ ecommerce-platform-design/
 
 ## ❓ よくある質問（FAQ）
 
-### Q1: なぜ Phase 2.1/2.2 で分けないのですか？
+### Q1: なぜ Phase 2A/2.2 で分けないのですか？
 
 **A**: **成果物の種類で分類する方が直感的で発見しやすい**からです。
 
 **従来の問題点**（Phase別分類）:
-- `phase-2.1/architecture/` と `phase-2.2/as-built/` を行き来する必要がある
+- `phase-2A/architecture/` と `phase-2B/as-built/` を行き来する必要がある
 - 「アーキテクチャ設計を見たい」という単純なニーズに対して複雑
 
 **新構造の利点**（成果物種類別）:

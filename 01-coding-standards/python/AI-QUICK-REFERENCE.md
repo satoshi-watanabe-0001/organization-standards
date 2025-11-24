@@ -203,6 +203,13 @@ cursor.execute(f"SELECT * FROM users WHERE id = {user_id}")
 - ✅ `.env`ファイル使用（`.gitignore`に追加）
 - ❌ コード内にハードコードしない
 
+**🔒 Phase 4セキュリティレビュー時の必須確認** ⭐重要:
+- 📋 [`/07-security-compliance/security-checklist.md`](../../07-security-compliance/security-checklist.md)
+  - Section 3: テストフェーズチェックリスト（自動テスト、脆弱性スキャン）
+  - Section 5: **OWASP Top 10 対策チェックリスト**（全10項目完全網羅）
+  - Section 6: コードレビューチェックリスト
+  - 具体的な対策コード例、推奨ツール（SAST、DAST、Snyk等）
+
 ---
 
 ### 8️⃣ 監視・ログ（10-monitoring-logging.md）

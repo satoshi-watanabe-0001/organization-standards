@@ -1,7 +1,7 @@
 # コーディング規約 / Coding Standards
 
-**最終更新日**: 2025-11-13  
-**バージョン**: 2.0（Phase 1-11完了版）  
+**最終更新日**: 2025-11-19  
+**バージョン**: 2.2（AI禁止事項ガイド追加版）  
 **対象**: 全開発チーム・自律型AI Devin  
 **適用範囲**: 全プロジェクト共通開発規約
 
@@ -10,6 +10,15 @@
 ## 📋 概要
 
 このディレクトリは、組織全体で統一されたコーディング規約を定義し、高品質で保守性の高いコードの作成を支援します。特に自律型AI Devinが一貫した品質でコードを生成できるよう、明確で具体的なガイドラインを提供します。
+
+### 🆕 v2.2更新: AI禁止事項具体例ガイド追加 ✨ (2025-11-19)
+
+**新規追加**:
+- **[ai-task-prohibitions-examples.md](ai-task-prohibitions-examples.md)** - AI作業禁止事項の具体例ガイド
+  - 10カテゴリ × 3-5例 = 計35個の具体例
+  - OK/NG判定マトリックス
+  - 判断フローチャート
+  - グレーゾーン対応ガイドライン
 
 ### 🆕 Phase 1-10完了: 全ファイル最適化済み ✅
 
@@ -27,15 +36,16 @@
 01-coding-standards/
 ├── README.md                           # このファイル
 ├── 00-general-principles.md            # 言語横断的な基本原則（29.2 KB）
-├── 00-inline-comment-standards.md      # 【NEW】インラインコメント共通規約（6.3 KB）✨
-├── 00-test-comment-standards.md        # 【NEW】テストコメント共通規約（29.5 KB）✨
+├── 00-inline-comment-standards.md      # インラインコメント共通規約（6.3 KB）✨
+├── 00-test-comment-standards.md        # テストコメント共通規約（29.5 KB）✨
+├── ai-task-prohibitions-examples.md    # 【NEW】AI禁止事項具体例ガイド（24 KB）🆕
 │
 ├── python/                             # Python規約（Phase 10完了）✅
 │   ├── 01-introduction-purpose.md
 │   ├── 02-setup-tools.md
 │   ├── ... (14ファイル)
-│   ├── python-inline-comment-examples.md  # 【NEW】インラインコメント実装例✨
-│   ├── python-test-comment-examples.md    # 【NEW】テストコメント実装例✨
+│   ├── python-inline-comment-examples.md  # インラインコメント実装例✨
+│   ├── python-test-comment-examples.md    # テストコメント実装例✨
 │   ├── README.md
 │   └── AI-QUICK-REFERENCE.md          # TOP 30チェック項目
 │
@@ -43,35 +53,35 @@
 │   ├── 01-introduction-setup.md
 │   ├── 02-language-syntax.md
 │   ├── ... (7ファイル)
-│   ├── typescript-inline-comment-examples.md  # 【NEW】インラインコメント実装例✨
-│   ├── typescript-test-comment-examples.md    # 【NEW】テストコメント実装例✨
+│   ├── typescript-inline-comment-examples.md  # インラインコメント実装例✨
+│   ├── typescript-test-comment-examples.md    # テストコメント実装例✨
 │   ├── README.md
 │   └── AI-QUICK-REFERENCE.md          # TOP 25チェック項目
 │
 ├── java/                               # Java規約（Phase 4完了）✅
 │   ├── 01-introduction-setup.md
 │   ├── ... (8ファイル)
-│   ├── java-inline-comment-examples.md  # 【NEW】インラインコメント実装例✨
-│   ├── java-test-comment-examples.md    # 【NEW】テストコメント実装例✨
+│   ├── java-inline-comment-examples.md  # インラインコメント実装例✨
+│   ├── java-test-comment-examples.md    # テストコメント実装例✨
 │   ├── README.md
 │   └── AI-QUICK-REFERENCE.md
 │
 ├── sql/                                # SQL規約（Phase 2完了）✅
 │   ├── 01-overview-principles.md
 │   ├── ... (8ファイル)
-│   ├── sql-inline-comment-examples.md   # 【NEW】インラインコメント実装例✨
+│   ├── sql-inline-comment-examples.md   # インラインコメント実装例✨
 │   ├── README.md
 │   └── AI-QUICK-REFERENCE.md
 │
 └── css/                                # CSS規約（Phase 3完了）✅
     ├── 01-overview-principles.md
     ├── ... (15ファイル)
-    ├── css-inline-comment-examples.md   # 【NEW】インラインコメント実装例✨
+    ├── css-inline-comment-examples.md   # インラインコメント実装例✨
     ├── README.md
     └── AI-QUICK-REFERENCE.md
 ```
 
-**合計**: 73+ファイル（コメント規約10ファイル追加）
+**合計**: 74+ファイル（AI禁止事項ガイド追加）
 
 ---
 
@@ -85,9 +95,19 @@
 | **SQL** | [sql/](sql/) | 11 (+1) | 150.6 KB | 2 | ✅ 完了 |
 | **CSS** | [css/](css/) | 18 (+1) | 138.2 KB | 3 | ✅ 完了 |
 
-### 🆕 NEW: コメント規約ドキュメント（2025-11-14追加）✨
+### 🆕 NEW: AI関連ガイドドキュメント
 
-**共通規約**:
+**AI作業制限**:
+- **[ai-task-prohibitions-examples.md](ai-task-prohibitions-examples.md)** 🆕 - AI禁止事項具体例ガイド（2025-11-19追加）
+  - マルチタスク禁止の判定基準
+  - ドキュメント生成禁止の境界線
+  - 大規模リファクタリングの制限
+  - 外部依存追加の判断基準
+  - セキュリティ関連作業の制限
+  - OK/NG判定マトリックス
+  - グレーゾーン判断フローチャート
+
+**コメント規約**:
 - **[00-inline-comment-standards.md](00-inline-comment-standards.md)** - インラインコメント共通原則
   - 日本語必須要件、WHY原則、複雑度基準、TODO/FIXME/HACK書式
 - **[00-test-comment-standards.md](00-test-comment-standards.md)** - テストコメント共通原則
@@ -136,12 +156,14 @@
 ```
 1. [言語]/README.md を参照して全体構造を理解
 2. [言語]/AI-QUICK-REFERENCE.md でTOPチェック項目を確認
-3. コメント規約を確認：
+3. AI作業制限を確認：
+   - ai-task-prohibitions-examples.md（禁止事項具体例）🆕
+4. コメント規約を確認：
    - 00-inline-comment-standards.md（共通原則）
    - 00-test-comment-standards.md（テスト共通原則）
    - [言語]/inline-comment-examples.md（言語固有例）
-4. 番号順にファイル参照（01→02→03...）
-5. 必要な標準を組み合わせてコード生成
+5. 番号順にファイル参照（01→02→03...）
+6. 必要な標準を組み合わせてコード生成
 ```
 
 **例: Python新規プロジェクト**
@@ -155,6 +177,9 @@
 - python/05-error-handling.md（エラー処理）
 - python/09-security.md（セキュリティ）
 
+AI作業制限を厳守:
+- ai-task-prohibitions-examples.md（マルチタスク禁止、ドキュメント生成禁止など）🆕
+
 コメント規約を厳守:
 - 00-inline-comment-standards.md（日本語必須、WHY原則）
 - python/python-inline-comment-examples.md（Python固有のコメント例）
@@ -165,20 +190,27 @@
 #### パターン2: コードレビュー時
 ```
 1. [言語]/AI-QUICK-REFERENCE.md を使用
-2. コメント規約チェック:
+2. AI作業制限チェック:
+   - 単一タスクに集中しているか（マルチタスク禁止）🆕
+   - ドキュメント生成を混在させていないか🆕
+   - 大規模リファクタリングをしていないか🆕
+3. コメント規約チェック:
    - すべてのコメントが日本語で記述されているか
    - WHY原則（「WHAT」ではなく「WHY」）が守られているか
    - 複雑度10以上のコードに詳細コメントがあるか
-3. チェック項目を順次確認
-4. 違反項目を具体的に指摘
+4. チェック項目を順次確認
+5. 違反項目を具体的に指摘
 ```
 
 **例: Pythonコードレビュー**
 ```
 「/01-coding-standards/python/AI-QUICK-REFERENCE.md の
 TOP 30チェック項目に基づいてこのコードをレビューしてください。
-特にC9-C11（エラーハンドリング）とC18-C20（セキュリティ）を
-重点的にチェックしてください。
+
+特に以下を重点チェック:
+1. ai-task-prohibitions-examples.md のマルチタスク禁止ルール🆕
+2. C9-C11（エラーハンドリング）
+3. C18-C20（セキュリティ）
 
 [コードを貼り付け]
 」
@@ -189,6 +221,7 @@ TOP 30チェック項目に基づいてこのコードをレビューしてく�
 1. 該当言語のディレクトリ全体を参照
 2. AI-QUICK-REFERENCE でクイックチェック
 3. 詳細ファイルで具体的な改善方法を確認
+4. ai-task-prohibitions-examples.md で作業範囲を確認🆕
 ```
 
 ### 👥 開発チームの利用パターン
@@ -198,7 +231,9 @@ TOP 30チェック項目に基づいてこのコードをレビューしてく�
 **ステップ1: 全体理解**
 1. この README.md で言語別標準を確認
 2. [00-general-principles.md](00-general-principles.md) で共通原則を学習
-3. コメント規約を理解：
+3. AI作業制限を理解：
+   - [ai-task-prohibitions-examples.md](ai-task-prohibitions-examples.md) 🆕
+4. コメント規約を理解：
    - [00-inline-comment-standards.md](00-inline-comment-standards.md)
    - [00-test-comment-standards.md](00-test-comment-standards.md)
 
@@ -223,6 +258,7 @@ TOP 30チェック項目に基づいてこのコードをレビューしてく�
 **実装前**:
 - 該当言語のREADME.md確認
 - 必要なファイルをピンポイントで参照
+- ai-task-prohibitions-examples.md で作業範囲を確認🆕
 
 **実装中**:
 - コード例を参考に実装
@@ -236,8 +272,9 @@ TOP 30チェック項目に基づいてこのコードをレビューしてく�
 
 **レビュアー向け**:
 1. AI-QUICK-REFERENCEで基本チェック
-2. 特定項目は詳細ファイル参照
-3. 具体的な改善提案
+2. ai-task-prohibitions-examples.md で作業範囲を確認🆕
+3. 特定項目は詳細ファイル参照
+4. 具体的な改善提案
 
 **レビュイー向け**:
 1. レビュー前にAI-QUICK-REFERENCEでセルフチェック
@@ -279,6 +316,12 @@ Phase 1-10の再構成により、以下を実現：
 - **内容**: SOLID、Clean Code、セキュリティ原則
 - **対象**: WHYの部分
 - **サイズ**: 29.2 KB
+
+#### `ai-task-prohibitions-examples.md` - AI作業制限 🆕
+- **役割**: AI作業の明確な禁止事項と判定基準
+- **内容**: 35個の具体例、OK/NG判定マトリックス、フローチャート
+- **対象**: AIの作業範囲制御
+- **サイズ**: 24 KB
 
 #### 言語別ディレクトリ - 具体的実装
 - **役割**: 各言語固有の実装方法
@@ -377,11 +420,12 @@ css/AI-QUICK-REFERENCE.md            # TOP 20項目
 - ✅ コード例網羅性: 90%以上
 - ✅ ファイルサイズ: 全て100 KB以下
 - ✅ AI-QUICK-REFERENCE: 全ディレクトリ完備
+- ✅ AI禁止事項ガイド: 完備🆕
 - ✅ 更新頻度: 四半期レビュー
 
 ### 🔄 継続的改善
 
-1. **定期レビュー**: 四半期ごと（次回: 2026-02-13）
+1. **定期レビュー**: 四半期ごと（次回: 2026-02-19）
 2. **フィードバック収集**: 開発者・AI使用実績分析
 3. **ベストプラクティス更新**: 業界標準への対応
 4. **教育・浸透**: 新規約の周知
@@ -425,13 +469,16 @@ css/AI-QUICK-REFERENCE.md            # TOP 20項目
 **A**: いいえ。README.mdの学習パスに従い、必要なファイルのみ参照できます。
 
 ### Q3: Devinが規約に準拠しないコードを生成した場合は？
-**A**: AI-QUICK-REFERENCE.mdの該当項目を明示的に指示してください。
+**A**: AI-QUICK-REFERENCE.mdの該当項目を明示的に指示してください。また、ai-task-prohibitions-examples.mdで作業範囲を確認してください。🆕
 
 ### Q4: 元の大型ファイルはどこにあるか？
 **A**: `/_archive/[言語名]-standards/` に保管されています。
 
 ### Q5: 複数言語を使うプロジェクトでは？
 **A**: 各言語ディレクトリを個別に参照してください。共通原則は `00-general-principles.md` を参照。
+
+### Q6: AI禁止事項のグレーゾーンはどう判断するか？🆕
+**A**: [ai-task-prohibitions-examples.md](ai-task-prohibitions-examples.md) の判断フローチャートとOK/NG判定マトリックスを参照してください。
 
 ---
 
@@ -441,9 +488,15 @@ css/AI-QUICK-REFERENCE.md            # TOP 20項目
 - **[MASTER-INDEX.md](../MASTER-INDEX.md)** - 全体アクセスマップ
 - **[00-guides/](../00-guides/)** - AI活用ガイド
 - **[02-architecture-standards/](../02-architecture-standards/)** - アーキテクチャ設計
+- **[03-development-process/](../03-development-process/)** - 開発プロセス標準
 - **[04-quality-standards/](../04-quality-standards/)** - 品質・テスト標準
 
-### ✨ コメント規約ドキュメント（2025-11-14追加）
+### ✨ AI関連ガイドドキュメント
+
+**AI作業制限**:
+- **[ai-task-prohibitions-examples.md](ai-task-prohibitions-examples.md)** 🆕 - AI禁止事項具体例ガイド（2025-11-19追加）
+
+**コメント規約**:
 - **[00-inline-comment-standards.md](00-inline-comment-standards.md)** - インラインコメント共通原則
 - **[00-test-comment-standards.md](00-test-comment-standards.md)** - テストコメント共通原則
 - 言語別実装例：[python/](python/) | [java/](java/) | [typescript/](typescript/) | [sql/](sql/) | [css/](css/)
@@ -462,6 +515,18 @@ css/AI-QUICK-REFERENCE.md            # TOP 20項目
 ---
 
 ## 🏆 バージョン履歴
+
+### v2.2 (2025-11-19) - AI禁止事項ガイド追加版 🆕
+- ✅ AI作業禁止事項ガイド追加（ai-task-prohibitions-examples.md、24 KB）
+  - マルチタスク禁止の判定基準
+  - ドキュメント生成禁止の境界線
+  - 大規模リファクタリングの制限
+  - 外部依存追加の判断基準
+  - セキュリティ関連作業の制限
+  - OK/NG判定マトリックス（10カテゴリ × 3-5例 = 計35例）
+  - グレーゾーン判断フローチャート
+- ✅ READMEに新規ガイドへのリンク追加
+- ✅ 利用シーン別ガイドを更新
 
 ### v2.1 (2025-11-14) - コメント規約追加版 ✨
 - ✅ コメント規約ドキュメント追加（10ファイル）
@@ -500,9 +565,9 @@ css/AI-QUICK-REFERENCE.md            # TOP 20項目
 
 ---
 
-**最終更新**: 2025-11-14  
-**Version**: 2.1（コメント規約追加版）  
-**次回メンテナンス**: 2026-02-13（四半期レビュー）
+**最終更新**: 2025-11-19  
+**Version**: 2.2（AI禁止事項ガイド追加版）  
+**次回メンテナンス**: 2026-02-19（四半期レビュー）
 
 **© 2024 組織名. All rights reserved.**  
 **License**: Internal use only - 組織内限定使用

@@ -1,0 +1,153 @@
+# Spring Boot アプリケーション設定
+# Organization Standards準拠設定
+
+spring:
+  application:
+    name: api-template
+  
+  # プロファイル: dev (開発), prod (本番)
+  profiles:
+    active: dev
+
+---
+# 開発環境設定
+spring:
+  config:
+    activate:
+      on-profile: dev
+  
+  # H2インメモリデータベース (開発用)
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  
+  # H2コンソール有効化
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  
+  # JPA設定
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop  # 開発環境: 起動時にスキーマ再作成
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+  
+  # ログレベル
+  logging:
+    level:
+      root: INFO
+      com.organization.api: DEBUG
+      org.springframework.web: DEBUG
+      org.springframework.security: DEBUG
+      org.hibernate.SQL: DEBUG
+      org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# JWT設定 (organization-standards準拠)
+jwt:
+  # 本番環境では環境変数から取得すること (最低256ビット)
+  secret: your-secret-key-change-this-in-production-minimum-256-bits
+  # アクセストークン有効期限: 15分 (organization-standards準拠)
+  access-token-expiration: 900000  # 15分 = 900,000ミリ秒
+  # リフレッシュトークン有効期限: 7日 (organization-standards準拠)
+  refresh-token-expiration: 604800000  # 7日 = 604,800,000ミリ秒
+
+# Actuator設定
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+
+# サーバー設定
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+---
+# 本番環境設定
+spring:
+  config:
+    activate:
+      on-profile: prod
+  
+  # PostgreSQLデータベース (本番用)
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/apidb}
+    driver-class-name: org.postgresql.Driver
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:password}
+    # コネクションプール設定
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  
+  # JPA設定
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate  # 本番環境: スキーマ変更禁止
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+  
+  # ログレベル
+  logging:
+    level:
+      root: WARN
+      com.organization.api: INFO
+      org.springframework.web: WARN
+      org.springframework.security: WARN
+
+# JWT設定 (本番環境: 環境変数から取得必須)
+jwt:
+  secret: ${JWT_SECRET}
+  access-token-expiration: ${JWT_ACCESS_EXPIRATION:900000}
+  refresh-token-expiration: ${JWT_REFRESH_EXPIRATION:604800000}
+
+# Actuator設定
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+
+# サーバー設定
+server:
+  port: ${SERVER_PORT:8080}
+  # HTTPS設定 (organization-standards必須)
+  ssl:
+    enabled: ${SSL_ENABLED:true}
+    key-store: ${SSL_KEYSTORE:classpath:keystore.p12}
+    key-store-password: ${SSL_KEYSTORE_PASSWORD}
+    key-store-type: PKCS12
+    key-alias: ${SSL_KEY_ALIAS:tomcat}
+  error:
+    include-message: never
+    include-binding-errors: never
+    include-stacktrace: never

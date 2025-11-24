@@ -1,0 +1,215 @@
+# GitLab CI/CD Configuration
+# organization-standards準拠: /08-templates/ci-templates/java-spring-boot/
+# 参照: /03-development-process/ci-cd-pipeline.md
+
+# Gradle依存関係キャッシュ設定
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.caching=true"
+  GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+# ステージ定義（organization-standards標準パイプライン構造）
+stages:
+  - build      # コンパイル、リント、セキュリティスキャン
+  - test       # ユニット、統合、セキュリティテスト
+  - quality    # 品質チェック（追加）
+  - package    # コンテナビルド、アーティファクト作成
+  - deploy     # ターゲット環境へのデプロイ
+
+# Dockerイメージ
+image: eclipse-temurin:17-jdk
+
+# ==================================================
+# ステージ1: ビルド（organization-standards準拠）
+# ==================================================
+
+# ✅ 必須: Checkstyle（コーディング規約チェック）
+checkstyle:
+  stage: build
+  script:
+    - chmod +x gradlew
+    - ./gradlew checkstyleMain checkstyleTest --no-daemon
+  artifacts:
+    reports:
+      junit: build/reports/checkstyle/*.xml
+    paths:
+      - build/reports/checkstyle/
+    expire_in: 1 week
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "develop"'
+
+# ✅ 必須: Spotless Check（コードフォーマットチェック）
+spotless:
+  stage: build
+  script:
+    - chmod +x gradlew
+    - ./gradlew spotlessCheck --no-daemon
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "develop"'
+
+# ✅ 必須: ビルド（テスト除外）
+build:
+  stage: build
+  script:
+    - chmod +x gradlew
+    - ./gradlew build -x test --no-daemon
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    expire_in: 1 week
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "develop"'
+
+# ==================================================
+# ステージ2: テスト（organization-standards準拠）
+# ==================================================
+
+# ✅ 必須: ユニットテスト
+test:
+  stage: test
+  script:
+    - chmod +x gradlew
+    - ./gradlew test --no-daemon
+  artifacts:
+    reports:
+      junit: build/test-results/test/**/TEST-*.xml
+    paths:
+      - build/test-results/
+      - build/reports/tests/
+    expire_in: 1 week
+  coverage: '/Total.*?([0-9]{1,3})%/'
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "develop"'
+
+# ✅ 必須: カバレッジ検証（80%以上）
+coverage-verification:
+  stage: test
+  script:
+    - chmod +x gradlew
+    - ./gradlew jacocoTestReport --no-daemon
+    - ./gradlew jacocoTestCoverageVerification --no-daemon
+  artifacts:
+    paths:
+      - build/reports/jacoco/
+    expire_in: 1 week
+  coverage: '/Total.*?([0-9]{1,3})%/'
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "develop"'
+
+# ==================================================
+# ステージ3: 品質チェック（追加 - organization-standardsにはないが有用）
+# ==================================================
+
+# 追加: SpotBugs静的解析
+spotbugs:
+  stage: quality
+  script:
+    - chmod +x gradlew
+    - ./gradlew spotbugsMain spotbugsTest --no-daemon
+  artifacts:
+    paths:
+      - build/reports/spotbugs/
+    expire_in: 1 week
+  allow_failure: false
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "develop"'
+
+# ==================================================
+# ステージ4: セキュリティ（追加 - organization-standardsにはないが推奨）
+# ==================================================
+
+# 追加: OWASP Dependency Check
+security-scan:
+  stage: quality
+  script:
+    - chmod +x gradlew
+    - ./gradlew dependencyCheckAnalyze --no-daemon || true
+    - ./gradlew dependencies --no-daemon > dependencies.txt
+  artifacts:
+    paths:
+      - build/reports/dependency-check/
+      - dependencies.txt
+    expire_in: 1 week
+  allow_failure: true
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "develop"'
+
+# ==================================================
+# ステージ5: パッケージング
+# ==================================================
+
+# Dockerイメージビルド（main/developのみ）
+docker-build:
+  stage: package
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA .
+    - docker build -t $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    - docker push $CI_REGISTRY_IMAGE:latest
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+
+# ==================================================
+# ステージ6: デプロイ
+# ==================================================
+
+# 開発環境へのデプロイ（developブランチ自動）
+deploy-dev:
+  stage: deploy
+  script:
+    - echo "Deploying to development environment..."
+    - echo "Image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+    # ここにKubernetes/ECS/その他のデプロイコマンドを追加
+  environment:
+    name: development
+    url: https://dev.api.example.com
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+
+# ステージング環境へのデプロイ（mainブランチ自動）
+deploy-staging:
+  stage: deploy
+  script:
+    - echo "Deploying to staging environment..."
+    - echo "Image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+    # ここにKubernetes/ECS/その他のデプロイコマンドを追加
+  environment:
+    name: staging
+    url: https://staging.api.example.com
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+# 本番環境へのデプロイ（手動承認必須）
+deploy-production:
+  stage: deploy
+  script:
+    - echo "Deploying to production environment..."
+    - echo "Image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+    # ここにKubernetes/ECS/その他のデプロイコマンドを追加
+  environment:
+    name: production
+    url: https://api.example.com
+  when: manual
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'

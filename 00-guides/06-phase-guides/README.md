@@ -29,13 +29,13 @@
 
 **対象者**: アーキテクト、設計担当エンジニア
 
-#### Phase 2.1: 実装前設計
-**`phase-2.1-pre-implementation-design-guide.md`**
+#### Phase 2A: 実装前設計
+**`phase-2A-pre-implementation-design-guide.md`**
 
 実装開始前の詳細設計のガイドです。
 
-#### Phase 2.2: 実装後設計
-**`phase-2.2-post-implementation-design-guide.md`**
+#### Phase 2B: 実装後設計
+**`phase-2B-post-implementation-design-guide.md`**
 
 実装後の設計レビューと改善のガイドです。
 
