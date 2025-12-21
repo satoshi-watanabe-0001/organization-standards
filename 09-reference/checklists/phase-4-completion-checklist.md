@@ -14,7 +14,7 @@ document_type: "Checklist"
 > コードレビューと品質保証完了確認
 
 **目的**: Phase 4のレビューとQAが完了し、本番デプロイの準備が整っていることを確認  
-**使用タイミング**: Phase 2.2（事後実装設計）またはPhase 5（デプロイ）への移行前  
+**使用タイミング**: Phase 2B（事後実装設計）またはPhase 5（デプロイ）への移行前  
 **参照元**: [phase-4-review-qa-guide.md](../../00-guides/phase-guides/phase-4-review-qa-guide.md)
 
 ---

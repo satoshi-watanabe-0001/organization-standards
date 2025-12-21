@@ -17,7 +17,7 @@ AI開発者は、コード生成前に以下のドキュメントを**必ず参�
 
 ### 1️⃣ 共通原則（全言語必須）
 
-**ファイル**: `/devin-organization-standards/01-coding-standards/00-general-principles.md`
+**ファイル**: `/01-coding-standards/00-general-principles.md`
 
 **参照タイミング**: すべてのコード生成・修正時
 
@@ -77,7 +77,7 @@ Level 3（任意）:
 
 #### TypeScript/JavaScript
 
-**ファイル**: `/devin-organization-standards/01-coding-standards/typescript-javascript-standards.md`
+**ディレクトリ**: `/01-coding-standards/typescript/` (10ファイル、AI-QUICK-REFERENCE.md参照)
 
 **必須セクション**:
 - **X. ドキュメンテーション標準**: JSDoc形式、ESLint設定
@@ -114,7 +114,7 @@ export function myFunction(name: string): void {}
 
 #### Python
 
-**ファイル**: `/devin-organization-standards/01-coding-standards/python-standards.md`
+**ディレクトリ**: `/01-coding-standards/python/` (16ファイル、AI-QUICK-REFERENCE.md参照)
 
 **必須セクション**:
 - **X. ドキュメンテーション標準**: Google Style Docstring、Pylint設定
@@ -161,7 +161,7 @@ def my_function(name: str) -> None:
 
 #### Java
 
-**ファイル**: `/devin-organization-standards/01-coding-standards/java-standards.md`
+**ディレクトリ**: `/01-coding-standards/java/` (10ファイル、AI-QUICK-REFERENCE.md参照)
 
 **必須セクション**:
 - **X. ドキュメンテーション標準**: Javadoc、CheckStyle設定
@@ -199,7 +199,7 @@ public void myMethod(String name) throws ExceptionType {}
 
 #### SQL
 
-**ファイル**: `/devin-organization-standards/01-coding-standards/sql-standards.md`
+**ディレクトリ**: `/01-coding-standards/sql/` (10ファイル)
 
 **必須セクション**:
 - **X. ドキュメンテーション標準**: SQLコメント形式
@@ -237,7 +237,7 @@ CREATE VIEW view_name AS ...
 
 #### CSS/SCSS
 
-**ファイル**: `/devin-organization-standards/01-coding-standards/css-styling-standards.md`
+**ディレクトリ**: `/01-coding-standards/css/` (17ファイル)
 
 **必須セクション**:
 - **X. ドキュメンテーション標準**: CSS/SCSSコメント、Stylelint設定
@@ -573,8 +573,8 @@ AI開発者は、以下の条件に該当する場合、即座にリファクタ
 ### 1. コード生成前の確認
 ```
 質問: 「このコードを生成する際、以下のドキュメントを参照しますか？」
-  - /devin-organization-standards/01-coding-standards/00-general-principles.md
-  - /devin-organization-standards/01-coding-standards/[言語]-standards.md
+  - /01-coding-standards/00-general-principles.md
+  - /01-coding-standards/[言語]/ ディレクトリ内のファイル
 
 確認: 「生成するコードは以下の基準を満たしますか？」
   - 関数50行以内
@@ -598,9 +598,8 @@ AI開発者は、以下の条件に該当する場合、即座にリファクタ
 ## 📞 サポート・質問
 
 規約に関する質問や不明点がある場合：
-1. `/devin-organization-standards/implementation-temp/IMPLEMENTATION_SUMMARY.md` を参照
-2. 各言語規約ファイルの具体例を確認
-3. 開発チームに確認
+1. 各言語規約ファイルの具体例を確認
+2. 開発チームに確認
 
 ---
 

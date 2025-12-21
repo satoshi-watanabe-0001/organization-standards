@@ -2,26 +2,26 @@
 version: "2.0.0"
 last_updated: "2025-11-12"
 status: "Deprecated" ⚠️
-superseded_by: "phase-2.1-pre-implementation-design-guide.md, phase-2.2-post-implementation-design-guide.md"
+superseded_by: "phase-2A-pre-implementation-design-guide.md, phase-2B-post-implementation-design-guide.md"
 ---
 
 # Phase 2: 設計ガイド
 
-> ⚠️ **重要**: このガイドは廃止されました。Phase 2A/2.2 版を参照してください。
+> ⚠️ **重要**: このガイドは廃止されました。Phase 2A/2B 版を参照してください。
 > 
 > ## 新しいガイド
 > 
-> Phase 2 は Phase 2A（実装前設計）と Phase 5（実装後設計）に分割されました：
+> Phase 2 は Phase 2A（実装前設計）と Phase 2B（実装後設計）に分割されました：
 > 
 > ### Phase 2A: 実装前設計 (Pre-Implementation Design)
-> - **ガイド**: [phase-2.1-pre-implementation-design-guide.md](./phase-2.1-pre-implementation-design-guide.md)
+> - **ガイド**: [phase-2A-pre-implementation-design-guide.md](./phase-2A-pre-implementation-design-guide.md)
 > - **実行タイミング**: Phase 1 の後、Phase 3 の前
 > - **期間**: 1-2日
 > - **目的**: 実装の方向性を定める最小限の設計
 > - **成果物**: ADR、API契約書、制約条件文書
 > 
-> ### Phase 5: 実装後設計 (Post-Implementation Design)
-> - **ガイド**: [phase-2.2-post-implementation-design-guide.md](./phase-2.2-post-implementation-design-guide.md)
+> ### Phase 2B: 実装後設計 (Post-Implementation Design)
+> - **ガイド**: [phase-2B-post-implementation-design-guide.md](./phase-2B-post-implementation-design-guide.md)
 > - **実行タイミング**: Phase 4 の後、Phase 5 の前（または Phase 3-4 と並行）
 > - **期間**: 2-3日
 > - **目的**: 実装内容の詳細な文書化

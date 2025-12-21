@@ -51,7 +51,7 @@ document_type: "Checklist"
 ### **Step 0.1: PBI読み込みと構造理解** (5-10分)
 
 - [ ] PBI全体を読み込む（タイトル、説明、受入基準、制約）
-- [ ] PBIタイプを判別（7タイプ）:
+- [ ] PBIタイプを判別（8タイプ: NPI/NFD/ENH/BUG/REF/ARC/HOT/POC）:
 - [ ] PBIの基本情報を把握
 - [ ] PBIタイプを判別
 - [ ] 優先度・期限を確認

@@ -25,8 +25,8 @@ status: "Active"
 │
 ├── phase-0-completion-checklist.md             # Phase 0完了チェック
 ├── phase-1-completion-checklist.md             # Phase 1完了チェック
-├── phase-2.1-completion-checklist.md           # Phase 2.1完了チェック（事前設計）
-├── phase-2.2-completion-checklist.md           # Phase 2.2完了チェック（事後設計）
+├── phase-2A-completion-checklist.md            # Phase 2A完了チェック（事前設計）
+├── phase-2B-completion-checklist.md            # Phase 2B完了チェック（事後設計）
 ├── phase-3-completion-checklist.md             # Phase 3完了チェック
 ├── phase-4-completion-checklist.md             # Phase 4完了チェック
 ├── phase-5-completion-checklist.md             # Phase 5完了チェック
@@ -54,10 +54,10 @@ status: "Active"
 |---|---|---|
 | [phase-0-completion-checklist.md](phase-0-completion-checklist.md) | Phase 0 → Phase 1移行前 | 97項目 |
 | [phase-1-completion-checklist.md](phase-1-completion-checklist.md) | Phase 1 → Phase 2/3移行前 | 92項目 |
-| [phase-2.1-completion-checklist.md](phase-2.1-completion-checklist.md) | Phase 2.1 → Phase 3移行前 | 27項目 |
-| [phase-2.2-completion-checklist.md](phase-2.2-completion-checklist.md) | Phase 2.2 → Phase 5移行前 | 27項目 |
+| [phase-2A-completion-checklist.md](phase-2A-completion-checklist.md) | Phase 2A → Phase 3移行前 | 27項目 |
+| [phase-2B-completion-checklist.md](phase-2B-completion-checklist.md) | Phase 2B → Phase 5移行前 | 27項目 |
 | [phase-3-completion-checklist.md](phase-3-completion-checklist.md) | Phase 3 → Phase 4移行前 | 240項目 |
-| [phase-4-completion-checklist.md](phase-4-completion-checklist.md) | Phase 4 → Phase 2.2/5移行前 | 103項目 |
+| [phase-4-completion-checklist.md](phase-4-completion-checklist.md) | Phase 4 → Phase 2B/5移行前 | 103項目 |
 | [phase-5-completion-checklist.md](phase-5-completion-checklist.md) | Phase 5 → Phase 6移行前 | 49項目 |
 | [phase-6-completion-checklist.md](phase-6-completion-checklist.md) | Phase 6 → PBI完了前 | 45項目 |
 
@@ -90,10 +90,10 @@ status: "Active"
       └─ [ci-setup-checklist.md] ※CI/CD設定時
    └─ [phase-1-completion-checklist.md]
    
-4. Phase 2.1開始（事前実装設計）
-   ├─ [phase-pre-work-checklist.md] (Phase 2.1セクション)
-   └─ Phase 2.1実施
-   └─ [phase-2.1-completion-checklist.md]
+4. Phase 2A開始（事前実装設計）
+   ├─ [phase-pre-work-checklist.md] (Phase 2Aセクション)
+   └─ Phase 2A実施
+   └─ [phase-2A-completion-checklist.md]
    
 5. Phase 3開始
    ├─ [phase-pre-work-checklist.md] (Phase 3セクション)
@@ -108,10 +108,10 @@ status: "Active"
       └─ [ai-documentation-comment-checklist.md] ※レビュー時
    └─ [phase-4-completion-checklist.md]
    
-7. Phase 2.2開始（事後実装設計）
-   ├─ [phase-pre-work-checklist.md] (Phase 2.2セクション)
-   └─ Phase 2.2実施
-   └─ [phase-2.2-completion-checklist.md]
+7. Phase 2B開始（事後実装設計）
+   ├─ [phase-pre-work-checklist.md] (Phase 2Bセクション)
+   └─ Phase 2B実施
+   └─ [phase-2B-completion-checklist.md]
    
 8. Phase 5開始
    ├─ [phase-pre-work-checklist.md] (Phase 5セクション)
@@ -132,19 +132,19 @@ status: "Active"
 
 Phase 2は、以下の2つのサブフェーズに分かれています：
 
-### Phase 2.1: 事前実装設計（Pre-Implementation Design）
+### Phase 2A: 事前実装設計（Pre-Implementation Design）
 - **タイミング**: Phase 1完了後、Phase 3（実装）開始前
 - **目的**: 実装に必要な設計を事前に作成
 - **成果物**: ADR、API契約書、制約条件文書、アーキテクチャ概要図
-- **チェックリスト**: [phase-2.1-completion-checklist.md](phase-2.1-completion-checklist.md)
+- **チェックリスト**: [phase-2A-completion-checklist.md](phase-2A-completion-checklist.md)
 
-### Phase 2.2: 事後実装設計（Post-Implementation Design）
+### Phase 2B: 事後実装設計（Post-Implementation Design）
 - **タイミング**: Phase 4（レビュー・QA）完了後、Phase 5（デプロイ）開始前
 - **目的**: 実装結果を設計に反映し、差分を文書化
 - **成果物**: 完全版設計書、更新されたADR、実装差分レポート
-- **チェックリスト**: [phase-2.2-completion-checklist.md](phase-2.2-completion-checklist.md)
+- **チェックリスト**: [phase-2B-completion-checklist.md](phase-2B-completion-checklist.md)
 
-この分離により、**実装前の設計（Phase 2.1）** と **実装後の設計反映（Phase 2.2）** を明確に区別できます。
+この分離により、**実装前の設計（Phase 2A）** と **実装後の設計反映（Phase 2B）** を明確に区別できます。
 
 ---
 
@@ -180,8 +180,8 @@ Phase 2は、以下の2つのサブフェーズに分かれています：
 ### プロセスガイド
 - [Phase 0 Guide](../../00-guides/phase-guides/phase-0-requirements-planning-guide.md)
 - [Phase 1 Guide](../../00-guides/phase-guides/phase-1-project-initialization-guide.md)
-- [Phase 2.1 Guide](../../00-guides/phase-guides/phase-2.1-pre-implementation-design-guide.md)
-- [Phase 2.2 Guide](../../00-guides/phase-guides/phase-2.2-post-implementation-design-guide.md)
+- [Phase 2A Guide](../../00-guides/phase-guides/phase-2A-pre-implementation-design-guide.md)
+- [Phase 2B Guide](../../00-guides/phase-guides/phase-2B-post-implementation-design-guide.md)
 - [Phase 3 Guide](../../00-guides/phase-guides/phase-3-implementation-guide.md)
 - [Phase 4 Guide](../../00-guides/phase-guides/phase-4-review-qa-guide.md)
 - [Phase 5 Guide](../../00-guides/phase-guides/phase-5-deployment-guide.md)
@@ -202,7 +202,7 @@ Phase 2は、以下の2つのサブフェーズに分かれています：
 
 ### v2.0.0 (2025-11-13)
 - チェックリストを14ファイルに再構築
-- Phase 2.1/2.2の明確な分離
+- Phase 2A/2Bの明確な分離
 - フェーズ完了チェックリスト8個を新規作成
 - 既存チェックリストを統合・移動
 - READMEを全面更新

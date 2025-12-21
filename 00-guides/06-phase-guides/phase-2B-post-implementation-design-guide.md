@@ -4,7 +4,7 @@ last_updated: "2025-11-12 (Phase 2B リネーム版)"
 status: "draft"
 owner: "Engineering Team"
 category: "phase-guide"
-phase: "2.2"
+phase: "2B"
 ---
 
 # Phase 2B: 実装後設計ガイド / Post-Implementation Design Guide
