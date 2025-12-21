@@ -72,8 +72,8 @@ Phase 4は以下の条件を満たす場合に実施：
 
 ### 📚 詳細確認
 禁止事項の詳細、具体例、例外ケースについては以下のドキュメントを参照してください：
-- [AI開発タスクの禁止事項](../01-organization-standards/ai-task-prohibitions.md)
-- [禁止事項チェックリスト](../01-organization-standards/ai-task-prohibitions-checklist.md)
+- [AI開発タスクの禁止事項](../../10-governance/ai-task-prohibitions.md)
+- [禁止事項チェックリスト](../../10-governance/ai-task-prohibitions-checklist.md)
 
 ---
 
@@ -145,9 +145,9 @@ Phase 4は以下の条件を満たす場合に実施：
 
 **🟡 推奨参照**:
 - 該当する言語別コーディング標準:
-  - [`01-coding-standards/typescript.md`](../../01-coding-standards/typescript.md) (TypeScript)
-  - [`01-coding-standards/python.md`](../../01-coding-standards/python.md) (Python)
-  - [`01-coding-standards/java.md`](../../01-coding-standards/java.md) (Java)
+  - [`01-coding-standards/typescript/`](../../01-coding-standards/typescript/README.md) (TypeScript)
+  - [`01-coding-standards/python/`](../../01-coding-standards/python/README.md) (Python)
+  - [`01-coding-standards/java/`](../../01-coding-standards/java/README.md) (Java)
 - [`04-quality-standards/code-quality-standards.md`](../../04-quality-standards/code-quality-standards.md)
   - **コード品質の基準を確認**
 
