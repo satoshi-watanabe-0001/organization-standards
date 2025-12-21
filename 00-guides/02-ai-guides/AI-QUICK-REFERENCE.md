@@ -61,16 +61,16 @@
 
 ### 共通原則（全言語必須）
 ```
-/devin-organization-standards/01-coding-standards/00-general-principles.md
+/01-coding-standards/00-general-principles.md
 ```
 
 ### 言語別規約
 ```
-TypeScript/JS: /devin-organization-standards/01-coding-standards/typescript-javascript-standards.md
-Python:        /devin-organization-standards/01-coding-standards/python-standards.md
-Java:          /devin-organization-standards/01-coding-standards/java-standards.md
-SQL:           /devin-organization-standards/01-coding-standards/sql-standards.md
-CSS/SCSS:      /devin-organization-standards/01-coding-standards/css-styling-standards.md
+TypeScript/JS: /01-coding-standards/typescript/  (10ファイル、AI-QUICK-REFERENCE.md参照)
+Python:        /01-coding-standards/python/      (16ファイル、AI-QUICK-REFERENCE.md参照)
+Java:          /01-coding-standards/java/        (10ファイル、AI-QUICK-REFERENCE.md参照)
+SQL:           /01-coding-standards/sql/         (10ファイル)
+CSS/SCSS:      /01-coding-standards/css/         (17ファイル)
 ```
 
 ---
@@ -293,7 +293,6 @@ npx stylelint "src/**/*.{css,scss}"
 
 より詳しい情報は以下を参照：
 - **詳細指示**: `AI-CODING-INSTRUCTIONS.md`
-- **実装サマリー**: `/devin-organization-standards/implementation-temp/IMPLEMENTATION_SUMMARY.md`
 - **各言語規約**: 上記パスの規約ファイル
 
 ---

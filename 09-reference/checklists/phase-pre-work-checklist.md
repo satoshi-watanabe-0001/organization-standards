@@ -59,11 +59,11 @@ document_type: "Checklist"
 **前Phase完了チェックリストへのリンク**:
 - [PBI受領時チェックリスト](pbi-reception-checklist.md) - Phase 0開始前
 - [Phase 0完了チェックリスト](phase-0-completion-checklist.md) - Phase 1開始前
-- [Phase 1完了チェックリスト](phase-1-completion-checklist.md) - Phase 2.1開始前
-- [Phase 2.1完了チェックリスト](phase-2.1-completion-checklist.md) - Phase 3開始前
+- [Phase 1完了チェックリスト](phase-1-completion-checklist.md) - Phase 2A開始前
+- [Phase 2A完了チェックリスト](phase-2A-completion-checklist.md) - Phase 3開始前
 - [Phase 3完了チェックリスト](phase-3-completion-checklist.md) - Phase 4開始前
-- [Phase 4完了チェックリスト](phase-4-completion-checklist.md) - Phase 2.2開始前
-- [Phase 2.2完了チェックリスト](phase-2.2-completion-checklist.md) - Phase 5開始前
+- [Phase 4完了チェックリスト](phase-4-completion-checklist.md) - Phase 2B開始前
+- [Phase 2B完了チェックリスト](phase-2B-completion-checklist.md) - Phase 5開始前
 - [Phase 5完了チェックリスト](phase-5-completion-checklist.md) - Phase 6開始前
 
 ### 環境・アクセス権限
@@ -118,7 +118,7 @@ document_type: "Checklist"
 
 ---
 
-### Phase 2.1 開始前（実装前設計）
+### Phase 2A 開始前（実装前設計）
 
 #### Phase 1完了の確認
 
@@ -126,7 +126,7 @@ document_type: "Checklist"
 
 > プロジェクト初期化（リポジトリ、CI/CD、技術スタック決定）が完了していることを確認
 
-#### Phase 2.1固有の準備
+#### Phase 2A固有の準備
 
 - [ ] 設計に必要な技術情報が揃っている
 - [ ] アーキテクチャ検討に必要な時間が確保できている（**0.5-3日目安**）
@@ -136,9 +136,9 @@ document_type: "Checklist"
 
 ### Phase 3 開始前（実装）
 
-#### Phase 2.1完了の確認
+#### Phase 2A完了の確認
 
-- [ ] [Phase 2.1完了チェックリスト](phase-2.1-completion-checklist.md) がすべて☑️
+- [ ] [Phase 2A完了チェックリスト](phase-2A-completion-checklist.md) がすべて☑️
 
 > 実装前設計（軽量設計書）が完成し、レビュー承認されていることを確認
 
@@ -167,7 +167,7 @@ document_type: "Checklist"
 
 ---
 
-### Phase 2.2 開始前（実装後設計）
+### Phase 2B 開始前（実装後設計）
 
 #### Phase 4完了の確認
 
@@ -175,7 +175,7 @@ document_type: "Checklist"
 
 > レビュー・QAが完了し、承認されていることを確認
 
-#### Phase 2.2固有の準備
+#### Phase 2B固有の準備
 
 - [ ] 実装中の設計変更が整理されている
 - [ ] 設計書最終化に必要な時間が確保できている（**1-3日目安**）
@@ -185,9 +185,9 @@ document_type: "Checklist"
 
 ### Phase 5 開始前（デプロイ）
 
-#### Phase 2.2完了の確認（該当する場合）
+#### Phase 2B完了の確認（該当する場合）
 
-- [ ] [Phase 2.2完了チェックリスト](phase-2.2-completion-checklist.md) がすべて☑️
+- [ ] [Phase 2B完了チェックリスト](phase-2B-completion-checklist.md) がすべて☑️
 
 > 実装後設計（詳細設計書）が最終化されていることを確認（該当する場合）
 
@@ -271,11 +271,11 @@ document_type: "Checklist"
 
 - [PBI受領時チェックリスト](pbi-reception-checklist.md) - Phase 0開始前に完了
 - [Phase 0 完了チェックリスト](phase-0-completion-checklist.md) - Phase 1開始前に完了
-- [Phase 1 完了チェックリスト](phase-1-completion-checklist.md) - Phase 2.1開始前に完了
-- [Phase 2.1 完了チェックリスト](phase-2.1-completion-checklist.md) - Phase 3開始前に完了
+- [Phase 1 完了チェックリスト](phase-1-completion-checklist.md) - Phase 2A開始前に完了
+- [Phase 2A 完了チェックリスト](phase-2A-completion-checklist.md) - Phase 3開始前に完了
 - [Phase 3 完了チェックリスト](phase-3-completion-checklist.md) - Phase 4開始前に完了
-- [Phase 4 完了チェックリスト](phase-4-completion-checklist.md) - Phase 2.2開始前に完了
-- [Phase 2.2 完了チェックリスト](phase-2.2-completion-checklist.md) - Phase 5開始前に完了
+- [Phase 4 完了チェックリスト](phase-4-completion-checklist.md) - Phase 2B開始前に完了
+- [Phase 2B 完了チェックリスト](phase-2B-completion-checklist.md) - Phase 5開始前に完了
 - [Phase 5 完了チェックリスト](phase-5-completion-checklist.md) - Phase 6開始前に完了
 - [Phase 6 完了チェックリスト](phase-6-completion-checklist.md) - PBI完了時に完了
 

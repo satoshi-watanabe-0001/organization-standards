@@ -56,6 +56,56 @@ owner: "Engineering Leadership Team"
   learning: "エスカレーション記録から継続的に学習"
 ```
 
+### ⚙️ エスカレーション先の設定（組織固有）
+
+> **📌 重要**: このガイドで記載されている「Tech Lead」「Security Team」等の役職名は**抽象的な役割**です。
+> 実際のエスカレーション先は、プロジェクト固有の設定ファイルで具体化してください。
+
+**プロジェクトで設定すべき項目**:
+
+| 役割 | 設定すべき具体的情報 |
+|------|---------------------|
+| Tech Lead | GitHub CODEOWNERS、Slackメンション、Jira担当者 |
+| Security Team | セキュリティチームのSlackチャンネル、緊急連絡先 |
+| Database Admin | DBAチームの連絡先、変更申請フロー |
+| Product Manager | PMの連絡先、意思決定エスカレーションパス |
+| Architect | アーキテクトの連絡先、設計レビュー依頼方法 |
+
+**設定ファイルの推奨場所**:
+```
+プロジェクトリポジトリ/
+├── .github/
+│   └── CODEOWNERS          # コードオーナー定義
+├── docs/
+│   └── escalation-contacts.md  # エスカレーション連絡先一覧
+└── .devin/
+    └── escalation-config.yaml  # AI向けエスカレーション設定
+```
+
+**escalation-config.yaml の例**:
+```yaml
+escalation_contacts:
+  tech_lead:
+    github: "@tech-lead-username"
+    slack: "#team-engineering"
+    jira_component: "Engineering"
+  security_team:
+    slack: "#security-alerts"
+    email: "security@example.com"
+    urgent_phone: "+81-XX-XXXX-XXXX"
+  database_admin:
+    slack: "#dba-team"
+    change_request_url: "https://jira.example.com/servicedesk/dba"
+  product_manager:
+    github: "@pm-username"
+    slack: "#product-decisions"
+  architect:
+    github: "@architect-username"
+    slack: "#architecture-review"
+```
+
+> **⚠️ 注意**: 上記の設定がプロジェクトに存在しない場合、AIはエスカレーション時に「連絡先が未設定のため、プロジェクト管理者に確認してください」と報告します。
+
 ---
 
 ## エスカレーション必須の状況 🚨
@@ -334,7 +384,7 @@ AI対応:
 Phase 2AとPhase 5でのAPI仕様書の粒度が矛盾しています。
 
 【矛盾箇所】
-- ドキュメントA: phase-2.1-pre-implementation-design-guide.md (Line 45)
+- ドキュメントA: phase-2A-pre-implementation-design-guide.md (Line 45)
   → "OpenAPI簡易版のみ作成"
 - ドキュメントB: api-specification-management-guide.md (Line 120)
   → "全バリデーション含む完全版が必須"

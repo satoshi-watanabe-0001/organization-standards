@@ -21,8 +21,8 @@ AI開発ツールに対して、組織のコーディング規約を遵守した
 
 【必須遵守事項】
 1. 以下のドキュメントを参照してコーディング規約に従うこと：
-   - /devin-organization-standards/01-coding-standards/00-general-principles.md
-   - /devin-organization-standards/01-coding-standards/[言語]-standards.md
+   - /01-coding-standards/00-general-principles.md
+   - /01-coding-standards/[言語]/ ディレクトリ
 
 2. 数値基準の遵守：
    - 関数: 50行以内（理想20行）
@@ -59,8 +59,8 @@ TypeScript/JavaScriptで[機能の説明]を実装してください。
 
 【必須遵守】
 1. コーディング規約:
-   - /devin-organization-standards/01-coding-standards/00-general-principles.md
-   - /devin-organization-standards/01-coding-standards/typescript-javascript-standards.md
+   - /01-coding-standards/00-general-principles.md
+   - /01-coding-standards/typescript/ ディレクトリ
 
 2. JSDoc必須:
    - ファイルヘッダー: @fileoverview, @module
@@ -97,8 +97,8 @@ Pythonで[機能の説明]を実装してください。
 
 【必須遵守】
 1. コーディング規約:
-   - /devin-organization-standards/01-coding-standards/00-general-principles.md
-   - /devin-organization-standards/01-coding-standards/python-standards.md
+   - /01-coding-standards/00-general-principles.md
+   - /01-coding-standards/python/ ディレクトリ
 
 2. Google Style Docstring必須:
    - モジュールDocstring
@@ -141,8 +141,8 @@ Javaで[機能の説明]を実装してください。
 
 【必須遵守】
 1. コーディング規約:
-   - /devin-organization-standards/01-coding-standards/00-general-principles.md
-   - /devin-organization-standards/01-coding-standards/java-standards.md
+   - /01-coding-standards/00-general-principles.md
+   - /01-coding-standards/java/ ディレクトリ
 
 2. Javadoc必須:
    - パッケージ: package-info.java
@@ -184,8 +184,8 @@ SQLで[機能の説明]を実装してください。
 
 【必須遵守】
 1. コーディング規約:
-   - /devin-organization-standards/01-coding-standards/00-general-principles.md
-   - /devin-organization-standards/01-coding-standards/sql-standards.md
+   - /01-coding-standards/00-general-principles.md
+   - /01-coding-standards/sql/ ディレクトリ
 
 2. SQLコメント必須:
    - スクリプトヘッダー: ファイル名、目的、依存関係
@@ -222,8 +222,8 @@ CSS/SCSSで[コンポーネント/レイアウトの説明]を実装してくだ
 
 【必須遵守】
 1. コーディング規約:
-   - /devin-organization-standards/01-coding-standards/00-general-principles.md
-   - /devin-organization-standards/01-coding-standards/css-styling-standards.md
+   - /01-coding-standards/00-general-principles.md
+   - /01-coding-standards/css/ ディレクトリ
 
 2. CSS/SCSSコメント必須:
    - ファイルヘッダー: @component, @category, @responsive
@@ -269,8 +269,8 @@ CSS/SCSSで[コンポーネント/レイアウトの説明]を実装してくだ
 
 【必須遵守】
 1. コーディング規約の参照:
-   - /devin-organization-standards/01-coding-standards/00-general-principles.md
-   - /devin-organization-standards/01-coding-standards/[言語]-standards.md
+   - /01-coding-standards/00-general-principles.md
+   - /01-coding-standards/[言語]/ ディレクトリ
 
 2. 改善ポイント:
    - [ ] 関数サイズを50行以内に分割
@@ -304,8 +304,8 @@ CSS/SCSSで[コンポーネント/レイアウトの説明]を実装してくだ
 
 【レビュー観点】
 1. コーディング規約準拠:
-   - /devin-organization-standards/01-coding-standards/00-general-principles.md
-   - /devin-organization-standards/01-coding-standards/[言語]-standards.md
+   - /01-coding-standards/00-general-principles.md
+   - /01-coding-standards/[言語]/ ディレクトリ
 
 2. 数値基準チェック:
    - 関数サイズ（50行以内？）
@@ -351,8 +351,8 @@ CSS/SCSSで[コンポーネント/レイアウトの説明]を実装してくだ
    - テストケース名は日本語で目的を明記
 
 2. コーディング規約:
-   - /devin-organization-standards/01-coding-standards/00-general-principles.md
-   - /devin-organization-standards/01-coding-standards/[言語]-standards.md
+   - /01-coding-standards/00-general-principles.md
+   - /01-coding-standards/[言語]/ ディレクトリ
 
 3. ドキュメンテーション:
    - 各テストケースの目的をコメントで説明
@@ -378,8 +378,8 @@ CSS/SCSSで[コンポーネント/レイアウトの説明]を実装してくだ
 
 【必須遵守】
 1. コーディング規約の参照:
-   - /devin-organization-standards/01-coding-standards/00-general-principles.md
-   - /devin-organization-standards/01-coding-standards/[言語]-standards.md
+   - /01-coding-standards/00-general-principles.md
+   - /01-coding-standards/[言語]/ ディレクトリ
 
 2. 自動チェックツールの設定:
    [TypeScript/JS の場合]
@@ -446,8 +446,8 @@ CSS/SCSSで[コンポーネント/レイアウトの説明]を実装してくだ
 Pythonでユーザー認証関数を実装してください。
 
 【必須遵守】
-- /devin-organization-standards/01-coding-standards/00-general-principles.md
-- /devin-organization-standards/01-coding-standards/python-standards.md
+- /01-coding-standards/00-general-principles.md
+- /01-coding-standards/python/ ディレクトリ
 - 関数50行以内、複雑度10以下
 - Google Style Docstring必須
 - 型ヒント必須
@@ -490,7 +490,7 @@ def process(data):
 - リスト内包表記の活用
 
 【必須遵守】
-- /devin-organization-standards/01-coding-standards/python-standards.md
+- /01-coding-standards/python/ ディレクトリ
 - 複雑度5以下、ネスト2階層以内
 ```
 

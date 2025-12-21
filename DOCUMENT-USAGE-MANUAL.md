@@ -42,11 +42,11 @@ audience: "AI Agents and Human Developers"
 │  🎯 AI-MASTER-WORKFLOW-GUIDE.md                          │
 │     └─ PBIから全フェーズの統合ワークフロー                 │
 │                                                           │
-│  🧭 AI-DOCUMENT-NAVIGATOR.md                             │
-│     └─ ドキュメント選択の意思決定ツリー                    │
+│  🧭 AI-USAGE-GUIDE.md                                    │
+│     └─ ドキュメント選択のナビゲーション                    │
 │                                                           │
-│  ⚖️ AI-DECISION-FRAMEWORK.md                             │
-│     └─ 複雑な判断のフレームワーク                          │
+│  ⚖️ AI-ESCALATION-DECISION-GUIDE.md                      │
+│     └─ エスカレーション判断フレームワーク                  │
 │                                                           │
 ├─────────────────────────────────────────────────────────┤
 │  Layer 2: フェーズ別 & AI活用ガイド (実行手順)             │
@@ -352,8 +352,8 @@ audience: "AI Agents and Human Developers"
    - 数値基準を記憶
 
 4. **ドキュメント検索方法の習得**
-   - AI-DOCUMENT-NAVIGATOR.md を読む
-   - 意思決定ツリーの使い方を理解
+   - AI-USAGE-GUIDE.md を読む
+   - タスク別クイックリファレンスの使い方を理解
 
 5. **準備完了**
    - PBIを受け取る準備ができた
@@ -475,7 +475,7 @@ audience: "AI Agents and Human Developers"
 ### 詳細情報
 
 **参照**: AI-MASTER-WORKFLOW-GUIDE.md の「🎯 フェーズ実行の判断ガイド」セクション
-- 7つのPBIタイプ別推奨フロー
+- 8つのPBIタイプ別推奨フロー（NPI/NFD/ENH/BUG/REF/ARC/HOT/POC）
 - フェーズスキップの判断フローチャート
 - 各フェーズのスキップ条件詳細
 ```
@@ -540,16 +540,15 @@ audience: "AI Agents and Human Developers"
 
 ### ケース1: どのドキュメントを見るべきか分からない
 
-1. **AI-DOCUMENT-NAVIGATOR.md を開く**
-2. 現在のフェーズを確認
-3. 実行中のタスクタイプを確認
-4. 意思決定ツリーをたどる
-5. 推奨されたドキュメントを読む
+1. **AI-USAGE-GUIDE.md を開く**
+2. 「タスク別クイックリファレンス」セクションを確認
+3. 現在のフェーズと実行中のタスクタイプを確認
+4. 推奨されたドキュメントを読む
 
 ### ケース2: ドキュメント間で矛盾がある
 
-1. **AI-DECISION-FRAMEWORK.md を開く**
-2. 「ドキュメント間の矛盾解決ルール」セクションを読む
+1. **AI-ESCALATION-DECISION-GUIDE.md を開く**
+2. 「判断基準」セクションを読む
 3. ルールに従って判断
    - より具体的なドキュメントを優先
    - 新しいドキュメントを優先
@@ -558,8 +557,8 @@ audience: "AI Agents and Human Developers"
 
 ### ケース3: 技術選定で悩んでいる
 
-1. **AI-DECISION-FRAMEWORK.md を開く**
-2. 「技術選定の意思決定フレームワーク」セクション
+1. **AI-ESCALATION-DECISION-GUIDE.md を開く**
+2. 技術選定に関する判断基準を確認
 3. 評価マトリクスを使用
 4. 10-governance/technology-radar.md で組織方針確認
 5. 判断を技術選定書に記録
@@ -640,8 +639,8 @@ audience: "AI Agents and Human Developers"
 - 03-development-process/incident-management.md
 
 ### 困った時に見るドキュメント
-- AI-DOCUMENT-NAVIGATOR.md - ドキュメント選択に迷った時
-- AI-DECISION-FRAMEWORK.md - 判断に迷った時
+- AI-USAGE-GUIDE.md - ドキュメント選択に迷った時
+- AI-ESCALATION-DECISION-GUIDE.md - 判断に迷った時
 - AI-PROMPTS.md - 具体的なプロンプト例が欲しい時
 - AI-QUICK-REFERENCE.md - 数値基準を確認したい時
 ```
@@ -765,7 +764,7 @@ audience: "AI Agents and Human Developers"
 
 ### 問題発生時
 - 03-development-process/incident-management.md
-- AI-DECISION-FRAMEWORK.md - 判断基準確認
+- AI-ESCALATION-DECISION-GUIDE.md - 判断基準確認
 ```
 
 ---
@@ -874,7 +873,7 @@ audience: "AI Agents and Human Developers"
    - 承認済み技術リストを確認
 
 3. **意思決定フレームワーク準備**
-   - AI-DECISION-FRAMEWORK.md の評価マトリクス
+   - AI-ESCALATION-DECISION-GUIDE.md の判断基準
    - 評価軸とスコアリング方法を確認
 
 4. **事例確認**
@@ -896,7 +895,7 @@ audience: "AI Agents and Human Developers"
 ```markdown
 1. **まずは Layer 1 (マスタードキュメント) だけ読む**
    - AI-MASTER-WORKFLOW-GUIDE.md
-   - AI-DOCUMENT-NAVIGATOR.md
+   - AI-USAGE-GUIDE.md
    
 2. **現在のフェーズに集中**
    - Phase 0 なら Phase 0 のセクションだけ
@@ -917,7 +916,7 @@ audience: "AI Agents and Human Developers"
 **解決策**:
 
 ```markdown
-1. **AI-DECISION-FRAMEWORK.md を開く**
+1. **AI-ESCALATION-DECISION-GUIDE.md を開く**
 2. 矛盾解決ルールを適用:
    - ルール1: 具体的 > 抽象的
    - ルール2: 新しい > 古い
@@ -944,8 +943,8 @@ audience: "AI Agents and Human Developers"
    - 02-architecture-standards/README.md
    - など
 
-3. **AI-DOCUMENT-NAVIGATOR.md で検索**
-   - キーワードで探す
+3. **AI-USAGE-GUIDE.md で検索**
+   - タスク別クイックリファレンスで探す
 
 4. **見つからない場合**
    - ドキュメントが存在しない可能性
@@ -1163,8 +1162,8 @@ audience: "AI Agents and Human Developers"
 - [メインREADME](./README.md)
 - [AI使用ガイド](./AI-USAGE-GUIDE.md)
 - [マスターワークフロー](./AI-MASTER-WORKFLOW-GUIDE.md)
-- [ドキュメントナビゲーター](./AI-DOCUMENT-NAVIGATOR.md)
-- [意思決定フレームワーク](./AI-DECISION-FRAMEWORK.md)
+- [ドキュメントナビゲーター](./00-guides/02-ai-guides/AI-USAGE-GUIDE.md)
+- [エスカレーション判断ガイド](./00-guides/02-ai-guides/AI-ESCALATION-DECISION-GUIDE.md)
 
 ---
 

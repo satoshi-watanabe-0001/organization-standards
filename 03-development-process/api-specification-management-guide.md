@@ -96,7 +96,7 @@ organization/
 ├── user-service/                         # ユーザーサービス
 │   ├── docs/
 │   │   ├── design/
-│   │   │   └── phase-2.1/
+│   │   │   └── phase-2a/
 │   │   │       └── api/
 │   │   │           └── api-specification.md  # 設計書（人間用）
 │   │   └── api/

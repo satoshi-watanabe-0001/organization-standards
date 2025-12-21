@@ -140,16 +140,16 @@ location: "08-templates/TEMPLATE-INDEX.md"
 
 | # | テンプレート名 | ファイル | 用途 | 作成タイミング |
 |---|--------------|---------|------|--------------|
-| 1 | ADRテンプレート | `01-phase-deliverables/phase-2.1/adr-template.md` | 技術決定の記録 | Step 2.1.1 |
-| 2 | API契約書テンプレート | `phase-2a/api-contract-template.md` | API仕様の基本定義 | Step 2.1.2 |
-| 3 | 制約条件テンプレート | `phase-2a/constraints-template.md` | 非機能要件の明確化 | Step 2.1.3 |
+| 1 | ADRテンプレート | `phase-2a/adr-template.md` | 技術決定の記録 | Step 2A.1 |
+| 2 | API契約書テンプレート | `phase-2a/api-contract-template.md` | API仕様の基本定義 | Step 2A.2 |
+| 3 | 制約条件テンプレート | `phase-2a/constraints-template.md` | 非機能要件の明確化 | Step 2A.3 |
 
 ### 推奨テンプレート
 
 | # | テンプレート名 | ファイル | 用途 | 使用条件 |
 |---|--------------|---------|------|---------|
-| 4 | 技術提案書テンプレート | `01-phase-deliverables/phase-2.1/tech-proposal-template.md` | 技術選定の承認取得 | 承認が必要な場合 |
-| 5 | アーキテクチャ概要図テンプレート | `01-phase-deliverables/phase-2.1/architecture-diagram-template.drawio` | システム構成の可視化 | 新規システム |
+| 4 | 技術提案書テンプレート | `phase-2a/tech-proposal-template.md` | 技術選定の承認取得 | 承認が必要な場合 |
+| 5 | アーキテクチャ概要図テンプレート | `phase-2a/architecture-diagram-template.drawio` | システム構成の可視化 | 新規システム |
 
 ### テンプレート内容例
 
@@ -379,7 +379,7 @@ export class [Resource]Controller {
 ```
 Phase 0 → 01-phase-deliverables/phase-0/
 Phase 1 → 01-phase-deliverables/phase-1/
-Phase 2A → 01-phase-deliverables/phase-2.1/
+Phase 2A → phase-2a/
 Phase 3 → 03-code-templates/, 05-testing/
 Phase 4 → 02-documents/qa-*, 02-documents/code-review-*
 Phase 5 → 01-phase-deliverables/phase-5/
@@ -389,7 +389,7 @@ Phase 5 → 02-documents/deployment-*, 02-documents/release-*
 ### 成果物から探す
 - **要件分析書** → `01-phase-deliverables/phase-0/requirements-analysis-template.md`
 - **ADR** → `01-phase-deliverables/phase-1/adr-template.md`
-- **API仕様書** → `01-phase-deliverables/phase-2.1/api-contract-template.yaml`
+- **API仕様書** → `phase-2a/api-contract-template.yaml`
 - **設計書** → `01-phase-deliverables/phase-5/detailed-design-template.md`
 - **コードテンプレート** → `03-code-templates/[language]/`
 - **テストテンプレート** → `05-testing/`
