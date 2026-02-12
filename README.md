@@ -117,6 +117,18 @@ Feature開発 / Bug修正 / 技術的改善
 2. [00-guides/AI-MASTER-WORKFLOW-GUIDE.md](00-guides/AI-MASTER-WORKFLOW-GUIDE.md)
 3. 各ディレクトリの `AI-QUICK-REFERENCE.md`
 
+#### 🧾 作業ログ（ゲート条件：保存先未確定なら作業開始禁止）
+このリポジトリの標準に従って AI（Devin等）が作業する場合、**AIは作業ログを必ず残す**こと。
+さらに、**作業ログの保存先が未確定の場合、AIは作業を開始してはならない**（ユーザ確認して保存先を確定してから開始する）。
+また、**作業中も、調査結果・意思決定・変更点を作業ログに随時追記し、ログと並走して作業すること。**
+
+- **ログ作成の最小合格条件**: メタ情報／依頼原文／不明点／初期計画 を最低限埋めてから作業を開始すること。
+  （上記が未記入の場合は、作業ではなく *確認・記入* を優先する）
+
+- 入口（運用導線）: [ai-thinking-framework-devin/README.md](ai-thinking-framework-devin/README.md)
+- 手順（ゲート条件の詳細）: [ai-thinking-framework-devin/WORKLOG_GUIDE.md](ai-thinking-framework-devin/WORKLOG_GUIDE.md)
+- テンプレ（AIが埋める）: [ai-thinking-framework-devin/templates/template_worklog.md](ai-thinking-framework-devin/templates/template_worklog.md)
+
 ---
 
 ## 🎯 タスク別クイックリンク
