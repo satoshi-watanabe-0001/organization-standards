@@ -1,0 +1,168 @@
+--- pr-language-check.yaml	2025-11-14 11:11:21.493256320 +0000
++++ pr-language-check-fixed.yaml	2025-11-14 11:11:50.455497598 +0000
+@@ -2,6 +2,7 @@
+ # 
+ # このワークフローは、PRのタイトルと説明文が日本語で記載されているかを自動検証します。
+ # 日本語が含まれていない場合、CIを失敗させてマージを防止します。
++# コメント投稿機能を削除し、CI結果（OK/NG）のみで判定します。
+ 
+ name: PR Language Check
+ 
+@@ -12,9 +13,6 @@
+ # GitHub API 呼び出しに必要な権限
+ permissions:
+   contents: read           # リポジトリの読み取り
+-  pull-requests: write     # PRへのコメント、ラベル操作
+-  issues: write            # Issueコメント、ラベル操作（PRもIssueとして扱われる）
+-  statuses: write          # コミットステータスの更新
+ 
+ jobs:
+   check-pr-language:
+@@ -46,36 +44,7 @@
+             const hasNoDescription = prBody.trim().length === 0;
+             
+             if (hasNoDescription) {
+-              const commentBody = [
+-                '## ❌ PR言語チェック失敗',
+-                '',
+-                '**このPRは組織標準に準拠していません。**',
+-                '',
+-                '### 🚨 問題点',
+-                '- **PR説明文が空です**',
+-                '',
+-                '### ✅ 対処方法',
+-                '1. **「Edit」ボタンをクリックして説明文を追加してください**',
+-                '2. **説明文は日本語で記載してください**',
+-                '   - 変更内容の概要',
+-                '   - 実装した機能',
+-                '   - テスト結果',
+-                '   - レビュアーへの補足',
+-                '',
+-                '### 📖 PRテンプレートを参照',
+-                '- [PRテンプレート](.github/PULL_REQUEST_TEMPLATE.md)',
+-                '- [Phase 4レビューガイド](devin-organization-standards/00-guides/phase-guides/phase-4-review-qa-guide.md)',
+-                '',
+-                '**このCIチェックが通過するまで、PRはマージできません。**'
+-              ].join('\n');
+-              
+-              await github.rest.issues.createComment({
+-                owner: context.repo.owner,
+-                repo: context.repo.repo,
+-                issue_number: context.payload.pull_request.number,
+-                body: commentBody
+-              });
+-              
++              console.error('❌ PR description is empty');
+               core.setFailed('❌ PR description is empty. Please add a description in Japanese.');
+               return;
+             }
+@@ -83,82 +52,10 @@
+             if (!hasTitleJapanese || !hasBodyJapanese) {
+               // 日本語がない場合の詳細判定
+               let missingParts = [];
+-              if (!hasTitleJapanese) missingParts.push('**タイトル**');
+-              if (!hasBodyJapanese) missingParts.push('**説明文**');
+-              
+-              const commentBody = [
+-                '## ❌ PR言語チェック失敗',
+-                '',
+-                '**このPRは組織標準に準拠していません。**',
+-                '',
+-                '### 🚨 問題点',
+-                '以下の項目が日本語で記載されていません：',
+-                ...missingParts.map(part => `- ${part}`),
+-                '',
+-                '### ✅ 対処方法',
+-                '',
+-                '#### オプション1: このPRを修正する（推奨）',
+-                '1. **「Edit」ボタンをクリック**',
+-                '2. **以下を日本語で記載**：',
+-                ...((!hasTitleJapanese) ? ['   - タイトルを日本語に変更'] : []),
+-                ...((!hasBodyJapanese) ? ['   - 説明文を日本語で記載'] : []),
+-                '3. **保存後、CIが自動的に再検証されます**',
+-                '',
+-                '#### オプション2: PRを再作成する',
+-                '1. このPRをクローズ',
+-                '2. 日本語でPRを新規作成',
+-                '3. PRテンプレートに従って記載',
+-                '',
+-                '### 📝 日本語記載の例',
+-                '',
+-                '**良い例（日本語）**:',
+-                '```',
+-                'タイトル: ユーザー認証機能の実装',
+-                '',
+-                '説明文:',
+-                '## 変更内容',
+-                '- ログイン機能を実装しました',
+-                '- JWTトークンによる認証を追加しました',
+-                '- ユーザーセッション管理を実装しました',
+-                '',
+-                '## テスト結果',
+-                '- 単体テスト: すべて合格',
+-                '- 統合テスト: 正常動作を確認',
+-                '```',
+-                '',
+-                '**悪い例（英語）**:',
+-                '```',
+-                'Title: Implement user authentication',
+-                '',
+-                'Description:',
+-                '- Implemented login functionality',
+-                '- Added JWT token authentication',
+-                '- Implemented user session management',
+-                '```',
+-                '',
+-                '### 📖 関連ドキュメント',
+-                '- [PRテンプレート](.github/PULL_REQUEST_TEMPLATE.md)',
+-                '- [Phase 4レビューガイド](devin-organization-standards/00-guides/phase-guides/phase-4-review-qa-guide.md)',
+-                '- [PR言語問題の解決策](devin-organization-standards/00-guides/PR-LANGUAGE-ISSUE-SOLUTION.md)',
+-                '',
+-                '### 💡 よくある質問',
+-                '',
+-                '**Q: 技術用語（API、JWT等）はどうすればいいですか？**',
+-                'A: 技術用語は英語のままで問題ありません。文章全体が日本語であればOKです。',
+-                '',
+-                '**Q: コードブロック内は？**',
+-                'A: コードブロック内は英語で問題ありません。説明文が日本語であればOKです。',
+-                '',
+-                '**このCIチェックが通過するまで、PRはマージできません。**'
+-              ].join('\n');
+-              
+-              await github.rest.issues.createComment({
+-                owner: context.repo.owner,
+-                repo: context.repo.repo,
+-                issue_number: context.payload.pull_request.number,
+-                body: commentBody
+-              });
++              if (!hasTitleJapanese) missingParts.push('タイトル');
++              if (!hasBodyJapanese) missingParts.push('説明文');
+               
++              console.error(`❌ Missing Japanese in: ${missingParts.join(', ')}`);
+               const errorMessage = `❌ PR must be written in Japanese (日本語必須). Missing: ${missingParts.join(', ')}`;
+               core.setFailed(errorMessage);
+               return;
+@@ -166,23 +63,3 @@
+             
+             // 成功メッセージ
+             console.log('✅ PR language check passed - Japanese detected in both title and body');
+-            
+-            const successCommentBody = [
+-              '## ✅ PR言語チェック合格',
+-              '',
+-              'このPRは日本語で正しく記載されています。',
+-              '',
+-              '次のステップ：',
+-              '- [ ] コードレビューの実施',
+-              '- [ ] CI品質ゲートの通過確認',
+-              '- [ ] レビュアーの承認',
+-              '',
+-              '📖 参照: [Phase 4レビューガイド](devin-organization-standards/00-guides/phase-guides/phase-4-review-qa-guide.md)'
+-            ].join('\n');
+-            
+-            await github.rest.issues.createComment({
+-              owner: context.repo.owner,
+-              repo: context.repo.repo,
+-              issue_number: context.payload.pull_request.number,
+-              body: successCommentBody
+-            });

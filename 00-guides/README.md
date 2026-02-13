@@ -71,8 +71,8 @@ AI（Devin等）を効果的に活用するためのワークフロー、チェ�
 - `phase-0-requirements-planning-guide.md` - Phase 0: 要件定義・計画
 - `phase-1-project-initialization-guide.md` - Phase 1: プロジェクト初期化
 - `phase-2-design-guide.md` - Phase 2: 設計
-- `phase-2A-pre-implementation-design-guide.md` - Phase 2A: 実装前設計
-- `phase-2B-post-implementation-design-guide.md` - Phase 2B: 実装後設計
+- `phase-2.1-pre-implementation-design-guide.md` - Phase 2A: 実装前設計
+- `phase-2.2-post-implementation-design-guide.md` - Phase 5: 実装後設計
 - `phase-3-implementation-guide.md` - Phase 3: 実装
 - `phase-4-review-qa-guide.md` - Phase 4: レビュー・QA
 - `phase-5-deployment-guide.md` - Phase 5: デプロイメント

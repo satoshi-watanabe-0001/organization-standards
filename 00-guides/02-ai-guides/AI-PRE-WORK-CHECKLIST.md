@@ -57,7 +57,7 @@ audience: "AI Agents"
 - [ ] 🔴 **AI-MASTER-WORKFLOW-GUIDE.mdを読んだ** (20分)
   - [ ] Phase 0-6の全体フローを理解した
   - [ ] フェーズスキップの判断基準を理解した
-  - [ ] 8つのPBIタイプ別推奨フローを確認した（NPI/NFD/ENH/BUG/REF/ARC/HOT/POC）
+  - [ ] 7つのPBIタイプ別推奨フローを確認した
   - [ ] 各フェーズの入力・出力・所要時間を把握した
 
 - [ ] 🔴 **AI-QUICK-REFERENCE.mdで数値基準を把握した** (5分)
@@ -164,29 +164,13 @@ audience: "AI Agents"
 ### PBIタイプの判別
 
 - [ ] 🔴 **PBIタイプを判別した**（以下のいずれか1つ）
-  - [ ] NPI: 新規プロジェクト立ち上げ
-  - [ ] NFD: 新規機能開発
-  - [ ] ENH: 既存機能追加・改修
-  - [ ] BUG: バグ修正
-  - [ ] REF: リファクタリング
-  - [ ] ARC: 設計変更・アーキテクチャ改善
-  - [ ] HOT: 緊急修正（Hotfix）
-  - [ ] POC: 実験的機能（Spike/POC）
-
-> **📌 PBIタイプ別最短経路（5分クイックガイド）**
-> 
-> | タイプ | Phase経路 | 最小読了ドキュメント（3-5ファイル） |
-> |--------|-----------|-----------------------------------|
-> | **NPI** | 0→1→2→3→4→5→6 | AI-MASTER-WORKFLOW-GUIDE.md, phase-0-guide.md, phase-1-guide.md |
-> | **NFD** | 0→2→3→4→5 | AI-MASTER-WORKFLOW-GUIDE.md, phase-2A-pre-implementation-design-guide.md, 該当言語のAI-QUICK-REFERENCE.md |
-> | **ENH** | 0→2→3→4→5 | AI-MASTER-WORKFLOW-GUIDE.md, phase-2A-pre-implementation-design-guide.md, 該当言語のAI-QUICK-REFERENCE.md |
-> | **BUG** | (0簡易)→3→4 | AI-QUICK-REFERENCE.md, 該当言語のAI-QUICK-REFERENCE.md, ai-task-prohibitions-checklist.md |
-> | **REF** | 0→3→4 | AI-QUICK-REFERENCE.md, 該当言語のAI-QUICK-REFERENCE.md, code-quality-standards.md |
-> | **ARC** | 0→2→3→4→5 | AI-MASTER-WORKFLOW-GUIDE.md, phase-2A-pre-implementation-design-guide.md, architecture-standards/ |
-> | **HOT** | 簡易0→3→簡易4→5 | AI-QUICK-REFERENCE.md, ai-task-prohibitions-checklist.md（緊急時は最小限で進行） |
-> | **POC** | 簡易0→3 | AI-QUICK-REFERENCE.md, 該当技術のドキュメント |
-> 
-> **詳細は**: [PBI-MASTER-INDEX.md](../03-pbi-management/PBI-MASTER-INDEX.md) のシナリオ別ガイドを参照
+  - [ ] タイプ1: 新規プロジェクト立ち上げ
+  - [ ] タイプ2: 既存プロジェクトへの新機能追加
+  - [ ] タイプ3: バグ修正
+  - [ ] タイプ4: リファクタリング
+  - [ ] タイプ5: 設計変更・アーキテクチャ改善
+  - [ ] タイプ6: 緊急修正（Hotfix）
+  - [ ] タイプ7: 実験的機能（Spike/POC）
 
 ### 実行すべきフェーズの判断
 
@@ -232,30 +216,6 @@ audience: "AI Agents"
   - [ ] ブランチ戦略を確認した
   - [ ] 主要ファイル・ディレクトリを確認した
   - [ ] 依存関係（dependencies）を確認した
-
-### 🚨 禁止事項クイックチェック（5分・必須）
-
-> **⚠️ 重要**: タスク開始前に必ず実施してください。禁止事項に該当する操作を行うと、本番障害やセキュリティインシデントにつながる可能性があります。
-
-- [ ] 🔴 **[ai-task-prohibitions-checklist.md](../../10-governance/ai-task-prohibitions-checklist.md) を確認した**
-  - [ ] タスク内容に**明示的な指示**があるか確認した
-  - [ ] 変更範囲が指示内容に限定されているか確認した
-  - [ ] 以下の高リスク領域に該当しないか確認した:
-    - [ ] 本番環境の設定ファイル
-    - [ ] 認証・認可の中核ロジック
-    - [ ] データベーススキーマの既存テーブル
-    - [ ] CI/CD設定ファイル（明示的指示がない場合）
-    - [ ] セキュリティ関連の設定
-
-- [ ] 🔴 **CI/CD設定変更の確認**（該当する場合のみ）
-  - [ ] CI設定変更の明示的指示があるか？
-  - [ ] 変更対象ファイルが明確か？
-  - [ ] 変更内容が具体的か？
-  - [ ] 上記3つ全てYesでなければ → **CI設定は触らない**
-
-> **📌 判断に迷ったら**: [ai-task-prohibitions-checklist.md](../../10-governance/ai-task-prohibitions-checklist.md) の「判断フロー」セクションを参照
-
----
 
 ### 不明点・ブロッカーの特定
 

@@ -72,8 +72,8 @@ Phase 0 → 1 → [2.1 実装前設計] → 3 → 4 → [2.2 実装後設計] �
 ```
 
 詳細は `phase-guides/README.md` および以下のガイドを参照してください:
-- `phase-guides/phase-2A-pre-implementation-design-guide.md`
-- `phase-guides/phase-2B-post-implementation-design-guide.md`
+- `phase-guides/phase-2.1-pre-implementation-design-guide.md`
+- `phase-guides/phase-2.2-post-implementation-design-guide.md`
 
 ⚠️ **注意**: 旧`phase-2-design-guide.md`は非推奨です。
 

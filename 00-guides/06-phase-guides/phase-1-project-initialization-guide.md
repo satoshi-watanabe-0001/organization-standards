@@ -70,8 +70,8 @@ Phase 2: 設計 へ
 
 ### 📚 詳細確認
 禁止事項の詳細、具体例、例外ケースについては以下のドキュメントを参照してください：
-- [AI開発タスクの禁止事項](../../10-governance/ai-task-prohibitions.md)
-- [禁止事項チェックリスト](../../10-governance/ai-task-prohibitions-checklist.md)
+- [AI開発タスクの禁止事項](../01-organization-standards/ai-task-prohibitions.md)
+- [禁止事項チェックリスト](../01-organization-standards/ai-task-prohibitions-checklist.md)
 
 ---
 

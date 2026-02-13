@@ -4,7 +4,7 @@ last_updated: "2025-11-12 (Phase 2A リネーム版)"
 status: "draft"
 owner: "Engineering Team"
 category: "phase-guide"
-phase: "2A"
+phase: "2.1"
 ---
 
 # Phase 2A: 実装前設計ガイド / Pre-Implementation Design Guide
@@ -215,105 +215,326 @@ TypeScript を採用する。
 
 ---
 
-### 2. API契約書 (API Contract)
+### 2. API契約書 (OpenAPI 3.0 軽量版)
 
 #### 概要
-チーム間またはサービス間の契約を定義する軽量ドキュメント。
+チーム間またはサービス間の契約を定義する軽量ドキュメント。**OpenAPI 3.0形式**で記述しますが、Phase 2Aでは**実装の方向性を定めるための最小限の情報**のみを含めます。
+
+#### 形式と粒度の定義
+
+**📋 必須事項**: OpenAPI 3.0形式で記述（YAML または JSON）
+
+```yaml
+形式: OpenAPI 3.0.x
+ファイル名: {PBI-KEY}-api-contract-v0.1.yaml
+配置場所: docs/api/
+目的: 実装の方向性を定める最小限の契約定義
+```
+
+#### Phase 2A で含めるべき内容 ✅
+
+```yaml
+phase_2_1_required_elements:
+  paths_and_methods:
+    description: "パス定義とHTTPメソッド"
+    required: true
+    example: "GET /api/v1/users, POST /api/v1/users"
+  
+  request_body_schema:
+    description: "リクエストボディのスキーマ（主要フィールドのみ、型定義）"
+    required: true
+    detail_level: "主要フィールドの型とrequired指定のみ"
+    example: |
+      type: object
+      required: [email, name]
+      properties:
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+  
+  response_body_schema:
+    description: "レスポンスボディのスキーマ（主要フィールドのみ、型定義）"
+    required: true
+    detail_level: "主要フィールドの型のみ"
+    example: |
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+  
+  major_status_codes:
+    description: "主要なHTTPステータスコード"
+    required: true
+    included: [200, 201, 400, 500]
+    note: "詳細なエラーコード（401, 403, 409等）はPhase 2Bで追加"
+  
+  authentication_scheme:
+    description: "認証方式"
+    required: true
+    detail_level: "BearerAuth, APIKey等の方式名"
+    example: |
+      security:
+        - BearerAuth: []
+      components:
+        securitySchemes:
+          BearerAuth:
+            type: http
+            scheme: bearer
+
+phase_2_1_optional_elements:
+  path_parameters:
+    description: "パスパラメータ（主要なもののみ）"
+    required: false
+    detail_level: "型とdescriptionのみ"
+  
+  query_parameters:
+    description: "クエリパラメータ（主要なもののみ）"
+    required: false
+    detail_level: "型とdescriptionのみ"
+```
+
+#### Phase 2A で省略可能な内容 ⏭️
+
+```yaml
+phase_2_1_omit_ok:
+  validation_details:
+    description: "詳細なバリデーションルール"
+    omit: true
+    examples: [minLength, maxLength, pattern, minimum, maximum, enum詳細]
+    note: "Phase 2Bで実装から抽出して追加"
+  
+  all_status_codes:
+    description: "全HTTPステータスコードとエラー詳細"
+    omit: true
+    examples: [401, 403, 404, 409, 422等]
+    note: "Phase 2Bで全ステータスコードを追加"
+  
+  examples:
+    description: "リクエスト・レスポンスの具体例"
+    omit: true
+    note: "Phase 2Bで正常系・異常系のexampleを追加"
+  
+  header_details:
+    description: "ヘッダーパラメータの詳細"
+    omit: true
+    note: "Phase 2BでContent-Type, Accept, X-Request-ID等を追加"
+  
+  pagination_details:
+    description: "ページネーション詳細"
+    omit: true
+    note: "Phase 2Bでlimit, offset, cursor等を追加"
+  
+  rate_limiting:
+    description: "レート制限仕様"
+    omit: true
+    note: "Phase 2Bで追加"
+  
+  non_functional_requirements:
+    description: "非機能要件"
+    omit: true
+    examples: [タイムアウト, リトライポリシー]
+    note: "Phase 2Bで追加"
+```
 
 #### テンプレート
 `/devin-organization-standards/08-templates/api-contract-template.md` (新規作成)
 
-#### 含めるべき内容
+#### 作成例（OpenAPI 3.0 軽量版）
 
 ```yaml
-minimal_content:
-  endpoints_list:
-    description: "エンドポイント一覧"
-    detail_level: "パスとHTTPメソッドのみ"
-    example: "GET /api/v1/users, POST /api/v1/users"
-  
-  request_structure:
-    description: "リクエストの基本構造"
-    detail_level: "主要フィールドのみ"
-    example: "{ userId: string, name: string }"
-  
-  response_structure:
-    description: "レスポンスの基本構造"
-    detail_level: "主要フィールドのみ"
-    example: "{ id: string, name: string, createdAt: string }"
-  
-  authentication:
-    description: "認証方式"
-    detail_level: "方式名とトークン配置場所"
-    example: "JWT in Authorization header"
+# ファイル名: PROJ-1234-api-contract-v0.1.yaml
+# Phase 2A 軽量版: 実装の方向性を定めるための最小限の定義
 
-optional_content:
-  error_responses:
-    description: "主要なエラーレスポンス"
-    detail_level: "ステータスコードと形式"
-  
-  rate_limiting:
-    description: "レート制限"
-    detail_level: "制限値のみ"
+openapi: 3.0.3
+info:
+  title: User Service API
+  version: 0.1.0
+  description: |
+    Phase 2A API契約書（軽量版）
+    詳細なバリデーション、全ステータスコード、exampleは Phase 2Bで追加予定
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+
+paths:
+  /users:
+    post:
+      summary: Create new user
+      description: 新規ユーザーを作成します。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - name
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: ユーザーのメールアドレス
+                name:
+                  type: string
+                  description: ユーザーの表示名
+                role:
+                  type: string
+                  description: ユーザーのロール（オプション）
+                # Phase 2Bで追加予定:
+                # - minLength, maxLength, pattern等のバリデーション
+                # - example
+      responses:
+        '201':
+          description: ユーザー作成成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: ユーザーID
+                  email:
+                    type: string
+                  name:
+                    type: string
+                  role:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                # Phase 2Bで追加予定: example
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  message:
+                    type: string
+                # Phase 2Bで追加予定:
+                # - 詳細なエラー構造（error_code, details等）
+                # - example
+        '500':
+          description: Internal Server Error
+          # Phase 2Bで追加予定:
+          # - 401 Unauthorized
+          # - 403 Forbidden
+          # - 409 Conflict
+          # - 各エラーの詳細な構造とexample
+      security:
+        - BearerAuth: []
+
+  /users/{id}:
+    get:
+      summary: Get user by ID
+      description: 指定されたIDのユーザー情報を取得します。
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ユーザーID
+      responses:
+        '200':
+          description: ユーザー情報取得成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  email:
+                    type: string
+                  name:
+                    type: string
+                  role:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT認証トークン
+
+  # Phase 2Bで追加予定:
+  # schemas:
+  #   User: 詳細なユーザースキーマ
+  #   Error: 統一エラースキーマ
+  # 
+  # examples:
+  #   正常系・異常系の具体例
 ```
 
-#### 作成例
+#### Phase 2A と Phase 2B の OpenAPI 粒度の違い
 
-```markdown
-# API契約書: ユーザーサービス
+| 要素 | Phase 2A（実装前） | Phase 2B（実装後） |
+|------|-------------------|-------------------|
+| パス・メソッド定義 | ✅ 必須 | ✅ 必須 |
+| 基本スキーマ（型定義） | ✅ 必須（主要フィールドのみ） | ✅ 必須（全フィールド） |
+| required指定 | ✅ 必須 | ✅ 必須 |
+| format指定 | ✅ 必須（email, date-time等） | ✅ 必須 |
+| バリデーション詳細 | ⏭️ 省略可 | ✅ 必須（minLength, pattern等） |
+| HTTPステータス | 200, 400, 500のみ | 全ステータス必須（401, 403, 404, 409等） |
+| エラー詳細 | 簡易記述 | 完全版（error_code, details等） |
+| example | ⏭️ 省略可 | ✅ 必須（正常系・異常系） |
+| ヘッダー詳細 | 主要なもののみ | 全ヘッダー |
+| ページネーション | ⏭️ 省略可 | ✅ 必須（該当する場合） |
+| 非機能要件 | ⏭️ 省略可 | ✅ 必須（タイムアウト等） |
 
-## ベース情報
-- ベースURL: `https://api.example.com/v1`
-- 認証: JWT (Authorization: Bearer {token})
-- Content-Type: application/json
+#### 注意事項
 
-## エンドポイント一覧
-
-### ユーザー管理
-
-| メソッド | パス | 概要 |
-|---------|------|------|
-| GET | /users | ユーザー一覧取得 |
-| GET | /users/{id} | ユーザー詳細取得 |
-| POST | /users | ユーザー作成 |
-| PUT | /users/{id} | ユーザー更新 |
-| DELETE | /users/{id} | ユーザー削除 |
-
-## リクエスト/レスポンス (基本構造)
-
-### POST /users (ユーザー作成)
-
-**Request:**
-```json
-{
-  "email": "string",
-  "name": "string",
-  "role": "string"
-}
-```
-
-**Response (201):**
-```json
-{
-  "id": "string",
-  "email": "string",
-  "name": "string",
-  "role": "string",
-  "createdAt": "string"
-}
-```
-
-**Error (400):**
-```json
-{
-  "error": "string",
-  "message": "string"
-}
-```
-
-## 注意事項
-- 詳細なバリデーションルールは実装時に定義
-- ページネーションの仕様は実装時に決定
+```yaml
+important_notes:
+  format_strict:
+    rule: "OpenAPI 3.0形式以外は認めない"
+    reason: "Phase 2Bでの拡張、ツール統合のため"
+  
+  version_naming:
+    phase_2_1: "v0.1, v0.2等（ドラフト版）"
+    phase_2_2: "v1.0以降（正式版）"
+  
+  migration_rule:
+    description: "Phase 2Aの軽量版をベースに、Phase 2Bで完全版に拡張"
+    steps:
+      - "Phase 2AのYAMLファイルをコピー"
+      - "実装で判明した詳細を追加"
+      - "バリデーションルールを実装から抽出"
+      - "全HTTPステータスコードを追加"
+      - "exampleを正常系・異常系で追加"
+      - "非機能要件を追加"
+  
+  tools_integration:
+    description: "OpenAPI形式により以下のツールが利用可能"
+    tools:
+      - "Swagger UI: API仕様の可視化"
+      - "Redoc: ドキュメント生成"
+      - "OpenAPI Generator: クライアントコード生成"
+      - "Spectral: API仕様のリント"
 ```
 
 #### 作成時間
@@ -625,21 +846,44 @@ no_go_criteria:
 
 ---
 
-### Q3: API契約書と Phase 2-B の API仕様書の違いは?
+### Q3: Phase 2A と Phase 2B の OpenAPI 仕様書の違いは?
 
-**A**:
-- **Phase 2A (API契約書)**: 
-  - エンドポイント一覧
-  - 基本的な入出力
-  - 認証方式
-  - **目的**: チーム間の契約合意
-  
-- **Phase 2-B (API仕様書)**:
-  - 全パラメータの詳細
-  - バリデーションルール
-  - エラーハンドリング
-  - コード例
-  - **目的**: 完全なAPI仕様の文書化
+**A**: 両方とも**OpenAPI 3.0形式**ですが、粒度が異なります:
+
+**Phase 2A (API契約書 - 軽量版)**:
+```yaml
+目的: 実装の方向性を定める最小限の契約定義
+バージョン: v0.1, v0.2等（ドラフト版）
+含む内容:
+  - ✅ パス定義とHTTPメソッド
+  - ✅ リクエスト・レスポンスの基本スキーマ（主要フィールドのみ）
+  - ✅ 主要なHTTPステータスコード（200, 400, 500）
+  - ✅ 認証方式
+省略可能:
+  - ⏭️ 詳細なバリデーションルール
+  - ⏭️ 全HTTPステータスコード
+  - ⏭️ example
+  - ⏭️ ヘッダー・ページネーション詳細
+```
+
+**Phase 2B (API仕様書 - 完全版)**:
+```yaml
+目的: 保守・運用のための完全なドキュメント
+バージョン: v1.0以降（正式版）
+含む内容:
+  - ✅ Phase 2Aの全要素
+  - ✅ 詳細なバリデーションルール（minLength, pattern等）
+  - ✅ 全HTTPステータスコードとエラー詳細
+  - ✅ リクエスト・レスポンスの具体例（example）
+  - ✅ ヘッダー詳細
+  - ✅ ページネーション詳細
+  - ✅ レート制限仕様
+  - ✅ 非機能要件（タイムアウト、リトライポリシー）
+```
+
+**移行方法**:
+1. Phase 2Aの`v0.1.yaml`をベースに、実装完了後にPhase 2Bで`v1.0.yaml`に拡張
+2. ファイル名変更: `{PBI-KEY}-api-contract-v0.1.yaml` → `{PBI-KEY}-api-spec-v1.0.yaml`
 
 ---
 

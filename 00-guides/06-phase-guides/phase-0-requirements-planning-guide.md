@@ -68,8 +68,8 @@ Phase 1 以降へ（状況に応じてスキップ可能）
 
 ### 📚 詳細確認
 禁止事項の詳細、具体例、例外ケースについては以下のドキュメントを参照してください：
-- [AI開発タスクの禁止事項](../../10-governance/ai-task-prohibitions.md)
-- [禁止事項チェックリスト](../../10-governance/ai-task-prohibitions-checklist.md)
+- [AI開発タスクの禁止事項](../01-organization-standards/ai-task-prohibitions.md)
+- [禁止事項チェックリスト](../01-organization-standards/ai-task-prohibitions-checklist.md)
 
 ---
 
@@ -102,9 +102,9 @@ Phase 1 以降へ（状況に応じてスキップ可能）
 
 **実行内容**:
 1. PBI全体を読み込む（タイトル、説明、受入基準、制約）
-2. PBIタイプを判別（8タイプ）:
-   - NPI（新規プロジェクト）/ NFD（新機能開発）/ ENH（機能拡張）/ BUG（バグ修正）
-   - REF（リファクタリング）/ ARC（設計変更）/ HOT（Hotfix）/ POC（実験的機能）
+2. PBIタイプを判別（7タイプ）:
+   - 新規プロジェクト / 既存への機能追加 / バグ修正
+   - リファクタリング / 設計変更 / Hotfix / 実験的機能
 
 **チェックリスト**:
 - [ ] PBIの基本情報を把握
@@ -433,8 +433,8 @@ Phase 0 は主に**要件の理解とタスク分解**が目的。詳細な技�
 
 | 状況 | 参照先 |
 |------|--------|
-| ドキュメントの選び方が分からない | AI-USAGE-GUIDE.md |
-| 判断に迷っている | AI-ESCALATION-DECISION-GUIDE.md |
+| ドキュメントの選び方が分からない | AI-DOCUMENT-NAVIGATOR.md |
+| 判断に迷っている | AI-DECISION-FRAMEWORK.md |
 | 具体的なプロンプト例が欲しい | AI-PROMPTS.md |
 | チェックリストの詳細が欲しい | AI-CHECKLISTS.md |
 | 数値基準を知りたい | AI-QUICK-REFERENCE.md |

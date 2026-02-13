@@ -679,7 +679,7 @@ status: Open
 Phase 2AでAPI仕様書を作成する際に、複数のドキュメント間で指示が矛盾していることを発見しました。
 
 ### 具体的な問題内容
-- **ドキュメントA**: `phase-2A-pre-implementation-design-guide.md` (行45)
+- **ドキュメントA**: `phase-2.1-pre-implementation-design-guide.md` (行45)
   → "OpenAPI簡易版のみ作成"
 - **ドキュメントB**: `api-specification-management-guide.md` (行120)
   → "全バリデーション含む完全版が必須"
@@ -694,7 +694,7 @@ Phase 2AでAPI仕様書を作成する際に、複数のドキュメント間で
 ## 💡 改善提案
 
 ### 提案内容
-`phase-2A-pre-implementation-design-guide.md`に以下を追加:
+`phase-2.1-pre-implementation-design-guide.md`に以下を追加:
 
 ```markdown
 ### API仕様書の粒度
@@ -716,7 +716,7 @@ Phase 2AでAPI仕様書を作成する際に、複数のドキュメント間で
 ## 📄 ドキュメント詳細情報
 
 ### 該当ドキュメント
-- **ドキュメント名**: phase-2A-pre-implementation-design-guide.md
+- **ドキュメント名**: phase-2.1-pre-implementation-design-guide.md
 - **パス**: /organization-standards/00-guides/06-phase-guides/
 - **セクション**: 2.2 API契約書
 - **行番号**: 45-60

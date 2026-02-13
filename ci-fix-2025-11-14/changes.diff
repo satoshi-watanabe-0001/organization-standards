@@ -1,0 +1,41 @@
+--- pr-description-quality-gate.yml	2025-11-14 08:50:00.668277506 +0000
++++ pr-description-quality-gate-fixed.yml	2025-11-14 08:53:22.111865933 +0000
+@@ -36,9 +36,11 @@
+       - name: Validate PR description
+         id: validate
+         uses: actions/github-script@v7
++        env:
++          PR_INFO: ${{ steps['pr-info'].outputs.result }}
+         with:
+           script: |
+-            const prInfo = ${{ fromJSON(steps['pr-info'].outputs.result) }};
++            const prInfo = JSON.parse(process.env.PR_INFO);
+             const prBody = prInfo.body || '';
+             const prTitle = prInfo.title || '';
+             
+@@ -248,9 +250,11 @@
+       - name: Post validation comment
+         if: steps.validate.outputs.passed == 'false'
+         uses: actions/github-script@v7
++        env:
++          VALIDATION_RESULTS: ${{ steps.validate.outputs.results }}
+         with:
+           script: |
+-            const results = ${{ fromJSON(steps.validate.outputs.results) }};
++            const results = JSON.parse(process.env.VALIDATION_RESULTS);
+             
+             // コメント本文の作成
+             let commentBody = '## 🚨 PR記載レベル品質ゲート: 改善が必要です\n\n';
+@@ -351,9 +355,11 @@
+       - name: Post success comment
+         if: steps.validate.outputs.passed == 'true'
+         uses: actions/github-script@v7
++        env:
++          VALIDATION_RESULTS: ${{ steps.validate.outputs.results }}
+         with:
+           script: |
+-            const results = ${{ fromJSON(steps.validate.outputs.results) }};
++            const results = JSON.parse(process.env.VALIDATION_RESULTS);
+             
+             let commentBody = '## ✅ PR記載レベル品質ゲート: 合格\n\n';
+             commentBody += 'このPRの説明は組織標準の記載レベルを満たしています。\n\n';
