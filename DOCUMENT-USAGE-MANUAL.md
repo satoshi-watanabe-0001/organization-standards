@@ -1,8 +1,8 @@
 ---
 title: "Document Usage Manual - ドキュメント利用マニュアル"
-version: "1.0.0"
+version: "1.1.0"
 created_date: "2025-11-05"
-last_updated: "2025-11-05"
+last_updated: "2026-02-19"
 status: "Active"
 audience: "AI Agents and Human Developers"
 ---
@@ -329,6 +329,20 @@ audience: "AI Agents and Human Developers"
 
 ---
 ## 🤖 AIエージェント向け使用ガイド
+
+### 🛡️ v3.0 監査ログ方式（structured_output＋messages）【必須】
+
+自律型AIエージェント（Devin/Cursor 等）を用いる全作業は、**structured_output＋messages を回収して監査ログ化**することが必須です。
+
+**作業開始前（STOP-GATE）**
+1. **保存先を確定**（セッション成果物の格納フォルダ）
+2. **structured_output を初期化**（AICQ スキーマ／Playbook を適用）
+3. **messages＋structured_output の回収計画を確立**（誰が／いつ／どのAPIで回収し、どの命名規則で保存するか）
+
+**参照（必須）**
+- [AI-WORKLOG-ENFORCEMENT-GUIDE.md](00-guides/02-ai-guides/AI-WORKLOG-ENFORCEMENT-GUIDE.md)
+- [AICQ_Devin_reasoning_log.md](00-guides/02-ai-guides/AICQ_Devin_reasoning_log.md)
+- [AI-WORKLOG-IMPLEMENTATION-GUIDE.md](00-guides/02-ai-guides/AI-WORKLOG-IMPLEMENTATION-GUIDE.md)
 
 ### クイックスタート: 5ステップ
 

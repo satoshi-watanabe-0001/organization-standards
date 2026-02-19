@@ -1,13 +1,14 @@
-# AI活用ガイド
+# AI活用ガイド（v3.0監査ログ方式）
 
-> 🚨 **【必須】作業開始前の絶対条件**
+> 🚨 **【必須】作業開始前の絶対条件（v3.0 / structured_output＋messages）**
 > 
 > **すべてのAIエージェントは作業開始前に必ず以下を実行すること:**
-> 1. [AI-WORKLOG-ENFORCEMENT-GUIDE.md](./AI-WORKLOG-ENFORCEMENT-GUIDE.md) を確認
-> 2. 3段階STOP-GATEシステムを完全実行
-> 3. 作業ログファイルの作成と初期記録完了
+> 1. [AI-WORKLOG-ENFORCEMENT-GUIDE.md](./AI-WORKLOG-ENFORCEMENT-GUIDE.md) を確認（v3.0）
+> 2. 3段階STOP-GATEを完全実行（保存先確定 → structured_output初期化 → 回収計画確立）
+> 3. セッション中、structured_output を「関連が起きたら更新」する（Playbook運用）
+> 4. セッション完了後、messages と structured_output をAPIで回収し保存する
 > 
-> **作業ログなしでの作業開始は組織標準違反です。**
+> **structured_output＋messages を取得できない状態での作業開始は組織標準違反です。**
 
 ---
 
@@ -15,62 +16,37 @@
 
 | 優先度 | ドキュメント | 用途 | 参照タイミング |
 |-------|------------|------|-------------|
-| 🔴 **必須** | [AI-WORKLOG-ENFORCEMENT-GUIDE.md](./AI-WORKLOG-ENFORCEMENT-GUIDE.md) | 作業ログ記録徹底ガイド | 作業開始前必須 |
-| 🔴 **必須** | [AI-WORKLOG-GRANULARITY-GUIDE.md](./AI-WORKLOG-GRANULARITY-GUIDE.md) | 作業ログの単位・粒度ガイド | 作業開始前必須 |
+| 🔴 **必須** | [AI-WORKLOG-ENFORCEMENT-GUIDE.md](./AI-WORKLOG-ENFORCEMENT-GUIDE.md) | 監査ログ取得の強制手順（STOP-GATE） | 作業開始前必須 |
+| 🔴 **必須** | [AICQ_Devin_reasoning_log.md](./AICQ_Devin_reasoning_log.md) | structured_outputスキーマ / Playbook / 回収・集計設計 | 作業開始前必須 |
+| 🔴 **必須** | [AI-WORKLOG-IMPLEMENTATION-GUIDE.md](./AI-WORKLOG-IMPLEMENTATION-GUIDE.md) | 監査ログ方式の実装・運用（命名/保存/監査） | 初回導入・運用設計時 |
+| 🔴 **必須** | [AI-WORKLOG-GRANULARITY-GUIDE.md](./AI-WORKLOG-GRANULARITY-GUIDE.md) | 監査ログの単位・粒度ガイド | 作業開始前必須 |
 | 🟠 **高** | [AI-PRE-WORK-CHECKLIST.md](./AI-PRE-WORK-CHECKLIST.md) | 作業前確認事項 | 作業開始前必須 |
 | 🟠 **高** | [AI-MASTER-WORKFLOW-GUIDE.md](./AI-MASTER-WORKFLOW-GUIDE.md) | 全体ワークフローガイド | 定期確認推奨 |
-| 🟡 **中** | [AI-USAGE-GUIDE.md](./AI-USAGE-GUIDE.md) | AI活用の基本ガイド | プロジェクト開始時 |
-| 🟡 **中** | [AI-CODING-INSTRUCTIONS.md](./AI-CODING-INSTRUCTIONS.md) | コーディング標準・指針 | コード作成時 |
-| 🟡 **中** | [AI-TEST-CODE-GENERATION-GUIDE.md](./AI-TEST-CODE-GENERATION-GUIDE.md) | テストコード生成ガイド | テスト作成時 |
 
 ---
 
-## 🚀 クイックスタート
+## 🚀 クイックスタート（v3.0）
 
-### ステップ1: 作業ログの準備（必須）
+### ステップ1: 監査ログの準備（必須）
 1. **[AI-WORKLOG-ENFORCEMENT-GUIDE.md](./AI-WORKLOG-ENFORCEMENT-GUIDE.md) を確認**
-2. **作業の適切な粒度を確認**（[AI-WORKLOG-GRANULARITY-GUIDE.md](./AI-WORKLOG-GRANULARITY-GUIDE.md)を参照）
-3. **保存先を決定**（`/organization-standards/11-worklogs/YYYY/MM/`）
-4. **作業ログファイルを作成**（命名規則に従って）
-5. **3段階GATEを通過**（保存先確認→ファイル作成→初期記録）
-6. **作業開始宣言を実行**
+2. **[AICQ_Devin_reasoning_log.md](./AICQ_Devin_reasoning_log.md) から、structured_outputスキーマとPlaybookを適用**
+3. **保存先を決定**（監査ログエクスポート先。プロジェクト別/機能別/日付別など）
+4. **3段階STOP-GATEを通過**（保存先確定 → structured_output初期化 → 回収計画確立）
+5. **作業開始ゲート突破宣言**を実行
 
-### ステップ2: 作業の実行
+### ステップ2: 作業の実行（監査ログ更新を伴う）
 1. [AI-PRE-WORK-CHECKLIST.md](./AI-PRE-WORK-CHECKLIST.md) で事前確認
 2. [AI-MASTER-WORKFLOW-GUIDE.md](./AI-MASTER-WORKFLOW-GUIDE.md) に従って作業実行
-3. 定期的に作業ログを更新（最低30分ごと）
-4. 重要な決定や問題発生時は即座に記録
+3. イベント発生（事実/仮説/意思決定/逸脱）ごとに structured_output を更新
 
-### ステップ3: 作業の完了
-1. 成果物の確認と品質チェック
-2. 作業ログの最終更新
-3. 振り返りと学習事項の記録
-4. 作業完了の宣言
+### ステップ3: 作業の完了（必須回収）
+1. セッション完了後、**messages と structured_output をAPIで回収**
+2. 命名規則に従って保存（ENFORCEMENTの命名規則参照）
 
 ---
 
 ## 📚 補助ドキュメント
 
-**プロセス関連:**
-- [AI-ESCALATION-DECISION-GUIDE.md](./AI-ESCALATION-DECISION-GUIDE.md) - エスカレーション判断
-- [AI-ISSUE-TRACKING-PROCESS.md](./AI-ISSUE-TRACKING-PROCESS.md) - 課題追跡プロセス
-
-**技術関連:**
-- [AI-DELIVERABLE-REFERENCE-GUIDE.md](./AI-DELIVERABLE-REFERENCE-GUIDE.md) - 成果物リファレンス
-- [AI-DOCUMENTATION-COMMENT-CHECKLIST.md](./AI-DOCUMENTATION-COMMENT-CHECKLIST.md) - ドキュメント品質チェック
-
-**テンプレート・参考資料:**
-- [AI-PROMPT-TEMPLATES.md](./AI-PROMPT-TEMPLATES.md) - プロンプトテンプレート集
-- [AI-QUICK-REFERENCE.md](./AI-QUICK-REFERENCE.md) - クイックリファレンス
-- [WORKLOG-SOLUTION-SUMMARY.md](./WORKLOG-SOLUTION-SUMMARY.md) - 作業ログ解決策概要
-
----
-
-## 📝 作業ログテンプレート
-
-作業ログの作成には以下のテンプレートを使用してください：
-- [template_worklog.md](../../11-worklogs/template_worklog.md) - 標準作業ログテンプレート
-
----
-
-**重要**: このディレクトリ内のすべてのドキュメントは、作業ログ記録を前提として設計されています。作業ログの作成なしに作業を開始することは、組織標準違反となります。不明な点がある場合は、[AI-WORKLOG-ENFORCEMENT-GUIDE.md](./AI-WORKLOG-ENFORCEMENT-GUIDE.md) を必ず参照してください。
+- [AI-USAGE-GUIDE.md](./AI-USAGE-GUIDE.md) - AI活用の基本ガイド
+- [AI-CODING-INSTRUCTIONS.md](./AI-CODING-INSTRUCTIONS.md) - コーディング標準・指針
+- [AI-TEST-CODE-GENERATION-GUIDE.md](./AI-TEST-CODE-GENERATION-GUIDE.md) - テストコード生成ガイド

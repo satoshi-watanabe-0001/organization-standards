@@ -13,6 +13,14 @@
   - タスク別クイックリンク
   - 全ディレクトリ詳細説明
 
+### 🛡️ v3.0 監査ログ方式（structured_output＋messages）【必須】
+
+**AI/Devin を使う全作業は、structured_output＋messages の回収（監査ログ化）が必須**です。作業開始前に必ず以下を確認してください。
+
+- [AI-WORKLOG-ENFORCEMENT-GUIDE.md](00-guides/02-ai-guides/AI-WORKLOG-ENFORCEMENT-GUIDE.md)（必須手順・STOP-GATE）
+- [AICQ_Devin_reasoning_log.md](00-guides/02-ai-guides/AICQ_Devin_reasoning_log.md)（structured_output スキーマ／Playbook）
+- [AI-WORKLOG-IMPLEMENTATION-GUIDE.md](00-guides/02-ai-guides/AI-WORKLOG-IMPLEMENTATION-GUIDE.md)（命名規則・回収運用）
+
 ### 📋 その他重要ドキュメント
 - **[DOCUMENT-USAGE-MANUAL.md](DOCUMENT-USAGE-MANUAL.md)** - 📘 ドキュメント使用方法
 - **[PROJECT-FINAL-SUMMARY.md](PROJECT-FINAL-SUMMARY.md)** - 📊 プロジェクト最終サマリー
@@ -113,21 +121,30 @@ Feature開発 / Bug修正 / 技術的改善
 3. 各言語の `09-security.md`（例: python/09-security.md）
 
 ### 🤖 AI/Devinユーザー
-1. [MASTER-INDEX.md](MASTER-INDEX.md) → 「AI/Devinユーザー」セクション
-2. [00-guides/AI-MASTER-WORKFLOW-GUIDE.md](00-guides/AI-MASTER-WORKFLOW-GUIDE.md)
-3. 各ディレクトリの `AI-QUICK-REFERENCE.md`
 
-#### 🧾 作業ログ（ゲート条件：保存先未確定なら作業開始禁止）
-このリポジトリの標準に従って AI（Devin等）が作業する場合、**AIは作業ログを必ず残す**こと。
-さらに、**作業ログの保存先が未確定の場合、AIは作業を開始してはならない**（ユーザ確認して保存先を確定してから開始する）。
-また、**作業中も、調査結果・意思決定・変更点を作業ログに随時追記し、ログと並走して作業すること。**
+> 迷ったら: [MASTER-INDEX.md](MASTER-INDEX.md) → 「AI/Devinユーザー」セクション（網羅ナビ）
+
+#### ✅ v3.0 最短導線（迷いゼロの5リンク）
+
+以下を **上から順に読む／実施するだけ**で v3.0 監査ログ方式の開始準備が完了します。
+
+1. **ENFORCEMENT（必須手順・STOP-GATE）**: [AI-WORKLOG-ENFORCEMENT-GUIDE.md](00-guides/02-ai-guides/AI-WORKLOG-ENFORCEMENT-GUIDE.md)
+2. **AICQ（structured_output スキーマ／Playbook）**: [AICQ_Devin_reasoning_log.md](00-guides/02-ai-guides/AICQ_Devin_reasoning_log.md)
+3. **IMPLEMENTATION（回収運用・命名規則）**: [AI-WORKLOG-IMPLEMENTATION-GUIDE.md](00-guides/02-ai-guides/AI-WORKLOG-IMPLEMENTATION-GUIDE.md)
+4. **PRE-WORK（開始前チェック）**: [AI-PRE-WORK-CHECKLIST.md](00-guides/02-ai-guides/AI-PRE-WORK-CHECKLIST.md)
+5. **MASTER（全体ワークフロー）**: [AI-MASTER-WORKFLOW-GUIDE.md](00-guides/02-ai-guides/AI-MASTER-WORKFLOW-GUIDE.md)
+
+#### 🛡️ 監査ログ（structured_output＋messages）【必須】
+このリポジトリの標準に従って AI（Devin等）が作業する場合、**structured_output＋messages を回収して監査ログ化することが必須**です。
+さらに、**監査ログ（保存先・structured_output 初期化・回収計画）が未確定の場合、AIは作業を開始してはならない**（ユーザ確認して確定してから開始する）。
+また、**作業中も、重要な調査結果・意思決定・前提変更が発生したタイミングで structured_output を更新**し、セッション終了後に messages と合わせて回収・保存すること。
 
 - **ログ作成の最小合格条件**: メタ情報／依頼原文／不明点／初期計画 を最低限埋めてから作業を開始すること。
   （上記が未記入の場合は、作業ではなく *確認・記入* を優先する）
 
-- 入口（運用導線）: [ai-thinking-framework-devin/README.md](ai-thinking-framework-devin/README.md)
-- 手順（ゲート条件の詳細）: [ai-thinking-framework-devin/WORKLOG_GUIDE.md](ai-thinking-framework-devin/WORKLOG_GUIDE.md)
-- テンプレ（AIが埋める）: [ai-thinking-framework-devin/templates/template_worklog.md](ai-thinking-framework-devin/templates/template_worklog.md)
+- 必須手順（STOP-GATE）: [AI-WORKLOG-ENFORCEMENT-GUIDE.md](00-guides/02-ai-guides/AI-WORKLOG-ENFORCEMENT-GUIDE.md)
+- structured_output スキーマ／Playbook: [AICQ_Devin_reasoning_log.md](00-guides/02-ai-guides/AICQ_Devin_reasoning_log.md)
+- 回収運用・命名規則: [AI-WORKLOG-IMPLEMENTATION-GUIDE.md](00-guides/02-ai-guides/AI-WORKLOG-IMPLEMENTATION-GUIDE.md)
 
 ---
 
@@ -321,7 +338,7 @@ java/AI-QUICK-REFERENCE.md           # TOP 20項目
 ### ドキュメントに関する質問
 - **全体構造**: [MASTER-INDEX.md](MASTER-INDEX.md)
 - **使用方法**: [DOCUMENT-USAGE-MANUAL.md](DOCUMENT-USAGE-MANUAL.md)
-- **AI活用**: [00-guides/AI-MASTER-WORKFLOW-GUIDE.md](00-guides/AI-MASTER-WORKFLOW-GUIDE.md)
+- **AI活用**: [00-guides/02-ai-guides/AI-MASTER-WORKFLOW-GUIDE.md](00-guides/02-ai-guides/AI-MASTER-WORKFLOW-GUIDE.md)
 - **プロジェクト履歴**: [_project-reports/](_project-reports/)
 
 ### フィードバック

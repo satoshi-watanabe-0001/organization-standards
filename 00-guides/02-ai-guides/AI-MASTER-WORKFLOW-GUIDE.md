@@ -1,8 +1,8 @@
 ---
 title: "AI Master Workflow Guide"
-version: "1.0.0"
+version: "1.1.0"
 created_date: "2025-11-05"
-last_updated: "2025-11-14"
+last_updated: "2026-02-19"
 status: "Active"
 owner: "Engineering Leadership Team"
 ---
@@ -16,6 +16,18 @@ owner: "Engineering Leadership Team"
 
 ---
 
+
+## 🚨 作業開始前の必須ゲート（v3.0 / 監査ログ方式）
+
+本ワークフローを実行する前に、必ず以下を完了してください。
+
+1. [AI-WORKLOG-ENFORCEMENT-GUIDE.md](./AI-WORKLOG-ENFORCEMENT-GUIDE.md)（v3.0）の STOP-GATE を完了
+2. [AICQ_Devin_reasoning_log.md](./AICQ_Devin_reasoning_log.md) を参照し、structured_outputスキーマ/Playbook を適用
+3. セッション完了後に messages と structured_output をAPIで回収し、命名規則に従って保存
+
+> 注: 旧来のMarkdown作業ログ（worklog_*.md）は v3.0 では必須ではありません。
+
+---
 ## 📋 このガイドについて
 
 ### 本ガイドの位置づけ

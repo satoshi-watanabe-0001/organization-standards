@@ -1,8 +1,8 @@
 ---
 title: "AI Pre-Work Checklist - AI作業開始前チェックリスト"
-version: "1.3.0"
+version: "1.4.0"
 created_date: "2025-11-06"
-last_updated: "2025-11-14"
+last_updated: "2026-02-19"
 status: "Active"
 audience: "AI Agents"
 ---
@@ -17,6 +17,22 @@ audience: "AI Agents"
 
 ---
 
+
+## 🚨 v3.0 最優先: 監査ログ（structured_output＋messages）チェック（必須）
+
+このリポジトリでは、作業ログの必須成果物を **structured_output＋messages**（監査ログ）に統一しています。
+作業開始前に、以下を必ず完了してください。
+
+- [ ] [AI-WORKLOG-ENFORCEMENT-GUIDE.md](./AI-WORKLOG-ENFORCEMENT-GUIDE.md)（v3.0）の STOP-GATE を完了
+- [ ] [AICQ_Devin_reasoning_log.md](./AICQ_Devin_reasoning_log.md) を参照し、structured_outputスキーマ/Playbook を適用
+- [ ] structured_output を初期化した（GATE 2）
+- [ ] 回収計画（API / 保存先 / 命名規則）を確立した（GATE 3）
+- [ ] セッション中は「関連が起きたら更新」を遵守する
+- [ ] セッション終了時に **messages＋structured_output を回収して保存する担当** を明確化した
+
+> 注: 旧来のMarkdown作業ログ（worklog_*.md）は v3.0 では必須ではありません。
+
+---
 ## 📋 このチェックリストの使い方
 
 ### 3つのチェックリスト

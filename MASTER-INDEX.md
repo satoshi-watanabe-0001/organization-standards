@@ -1,6 +1,6 @@
 # Devin Organization Standards - マスターインデックス 📚
 
-**最終更新**: 2025-11-13  
+**最終更新**: 2026-02-19  
 **プロジェクト**: Document Restructuring Project (Phase 1-10完了)  
 **Status**: ✅ 完全最適化済み
 
@@ -23,7 +23,15 @@
 | 🏗️ **アーキテクト** | [02-architecture-standards/](02-architecture-standards/) |
 | 🧪 **QAエンジニア** | [04-quality-standards/](04-quality-standards/) |
 | 🔒 **セキュリティ** | [07-security-compliance/](07-security-compliance/) |
-| 🤖 **AI/Devinユーザー** | [00-guides/AI-MASTER-WORKFLOW-GUIDE.md](00-guides/AI-MASTER-WORKFLOW-GUIDE.md) |
+| 🤖 **AI/Devinユーザー** | [00-guides/02-ai-guides/AI-MASTER-WORKFLOW-GUIDE.md](00-guides/02-ai-guides/AI-MASTER-WORKFLOW-GUIDE.md) |
+
+### 🛡️ v3.0 監査ログ方式（structured_output＋messages）【必須】
+
+**AI/Devin を使う全作業は、structured_output＋messages の回収（監査ログ化）が必須**です。作業開始前に必ず以下を確認してください。
+
+- [AI-WORKLOG-ENFORCEMENT-GUIDE.md](00-guides/02-ai-guides/AI-WORKLOG-ENFORCEMENT-GUIDE.md)（必須手順・STOP-GATE）
+- [AICQ_Devin_reasoning_log.md](00-guides/02-ai-guides/AICQ_Devin_reasoning_log.md)（structured_output スキーマ／Playbook）
+- [AI-WORKLOG-IMPLEMENTATION-GUIDE.md](00-guides/02-ai-guides/AI-WORKLOG-IMPLEMENTATION-GUIDE.md)（命名規則・回収運用）
 
 ### 🚀 タスク別クイックリンク
 
@@ -45,9 +53,9 @@
 
 | ファイル | サイズ | 内容 |
 |---------|-------|------|
-| [AI-MASTER-WORKFLOW-GUIDE.md](00-guides/AI-MASTER-WORKFLOW-GUIDE.md) | 53.2 KB | AI開発ワークフロー総合ガイド 🆕 |
-| [AI-PRE-WORK-CHECKLIST.md](00-guides/AI-PRE-WORK-CHECKLIST.md) | 38.5 KB | AI作業前チェックリスト 🆕 |
-| [AI-DELIVERABLE-REFERENCE-GUIDE.md](00-guides/AI-DELIVERABLE-REFERENCE-GUIDE.md) | 27.8 KB | 🆕 AI活用システム開発成果物参照ガイド |
+| [AI-MASTER-WORKFLOW-GUIDE.md](00-guides/02-ai-guides/AI-MASTER-WORKFLOW-GUIDE.md) | 53.2 KB | AI開発ワークフロー総合ガイド 🆕 |
+| [AI-PRE-WORK-CHECKLIST.md](00-guides/02-ai-guides/AI-PRE-WORK-CHECKLIST.md) | 38.5 KB | AI作業前チェックリスト 🆕 |
+| [AI-DELIVERABLE-REFERENCE-GUIDE.md](00-guides/02-ai-guides/AI-DELIVERABLE-REFERENCE-GUIDE.md) | 27.8 KB | 🆕 AI活用システム開発成果物参照ガイド |
 | [PBI-TYPE-JUDGMENT-GUIDE.md](00-guides/PBI-TYPE-JUDGMENT-GUIDE.md) | 86.3 KB | 🆕 PBIタイプ判定ガイド |
 | [DEVIN-INITIAL-SETUP-GUIDE.md](00-guides/DEVIN-INITIAL-SETUP-GUIDE.md) | 31.9 KB | Devin初期セットアップ |
 | [CI-SETUP-CHECKLIST.md](00-guides/CI-SETUP-CHECKLIST.md) | 30.6 KB | CI/CDセットアップ手順 |
@@ -480,7 +488,7 @@ find /devin-organization-standards -size +50k -type f
 
 ---
 
-**最終更新**: 2025-11-13  
+**最終更新**: 2026-02-19  
 **Version**: 2.0（Phase 1-10完了版）  
 **Status**: ✅ 完全最適化済み
 
