@@ -1,0 +1,32 @@
+/**
+ * [クラスの目的を1行で記述]
+ * 
+ * [詳細説明:
+ *  - このクラスの責任
+ *  - 主要な機能
+ *  - 設計パターン（該当する場合）
+ *  - 注意事項・制約
+ * ]
+ * 
+ * @class
+ * @example
+ * ```typescript
+ * // 基本的な使用例
+ * const instance = new ClassName(param1, param2);
+ * const result = instance.doSomething();
+ * ```
+ */
+export class ClassName {
+  /** [プロパティの説明] */
+  private propertyName: Type;
+
+  /**
+   * コンストラクタ
+   * 
+   * @param param1 - [パラメータ1の説明]
+   * @param param2 - [パラメータ2の説明]
+   */
+  constructor(param1: Type1, param2: Type2) {
+    // 実装
+  }
+}

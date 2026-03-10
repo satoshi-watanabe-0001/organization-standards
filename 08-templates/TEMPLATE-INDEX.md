@@ -1,0 +1,461 @@
+---
+title: "テンプレート参照インデックス"
+version: "1.2.0"
+date: "2025-11-20"
+status: "active"
+author: "AI Autonomous Development Analysis"
+location: "08-templates/TEMPLATE-INDEX.md"
+---
+
+# テンプレート参照インデックス
+
+## 📋 このドキュメントについて
+
+### 目的
+すべてのテンプレートファイルを一元管理し、**どのフェーズで**、**どのテンプレートを**使用すべきかを明確にする。
+
+### 対象
+- 自律型AIエージェント
+- 開発者
+- プロジェクトマネージャー
+
+---
+
+## 🗂️ テンプレート分類
+
+### 分類体系
+```
+08-templates/
+├── 01-phase-deliverables/    # フェーズ別成果物テンプレート
+├── 02-documents/              # 一般的なドキュメントテンプレート
+├── 03-code-templates/         # コードテンプレート
+├── 04-configuration/          # 設定ファイルテンプレート
+├── 05-testing/                # テストテンプレート
+└── README.md                  # このファイル
+```
+
+---
+
+## 📂 Phase 0: 要件分析・企画 - テンプレート
+
+### 必須テンプレート
+
+| # | テンプレート名 | ファイル | 用途 | 作成タイミング |
+|---|--------------|---------|------|--------------|
+| 1 | 要件分析書テンプレート | `01-phase-deliverables/phase-0/requirements-analysis-template.md` | PBIから要件を抽出・整理 | Step 0.2 |
+| 2 | タスク分解テンプレート | `01-phase-deliverables/phase-0/task-breakdown-template.md` | PBIをFeature/Task/Sub-Taskに分解 | Step 0.3 |
+
+### オプションテンプレート
+
+| # | テンプレート名 | ファイル | 用途 | 使用条件 |
+|---|--------------|---------|------|---------|
+| 3 | 不明点確認リクエスト | `01-phase-deliverables/phase-0/clarification-request-template.md` | ステークホルダーへの質問 | 不明点が多い場合 |
+| 4 | 初期リスク分析テンプレート | `01-phase-deliverables/phase-0/risk-analysis-template.md` | プロジェクトリスクの特定 | 複雑なプロジェクト |
+
+### テンプレート内容例
+
+#### requirements-analysis-template.md
+```markdown
+# 要件分析書: [PBI-KEY]
+
+## 基本情報
+- **PBI ID**: [KEY]
+- **タイトル**: [タイトル]
+- **作成日**: YYYY-MM-DD
+- **作成者**: [名前]
+
+## 1. PBI概要
+[PBIの内容を要約]
+
+## 2. 機能要件
+### 2.1 主要機能
+- [ ] 機能1: [説明]
+- [ ] 機能2: [説明]
+
+### 2.2 ユーザーストーリー
+- As a [ユーザー], I want to [目的], so that [理由]
+
+## 3. 非機能要件
+### 3.1 パフォーマンス
+- [要件]
+
+### 3.2 セキュリティ
+- [要件]
+
+### 3.3 可用性
+- [要件]
+
+## 4. 技術的制約
+- [制約1]
+- [制約2]
+
+## 5. 不明点
+| # | 不明点 | 重要度 | 仮定 | 確認状況 |
+|---|-------|--------|------|---------|
+| 1 | [不明点] | 🔴/🟡/🟢 | [仮定] | 未確認/確認中/確認済 |
+
+## 6. 受入基準
+- [ ] 基準1
+- [ ] 基準2
+```
+
+---
+
+## 📂 Phase 1: プロジェクト初期化 - テンプレート
+
+### 必須テンプレート
+
+| # | テンプレート名 | ファイル | 用途 | 作成タイミング |
+|---|--------------|---------|------|--------------|
+| 1 | READMEテンプレート | `01-phase-deliverables/phase-1/project-readme-template.md` | プロジェクトの基本情報 | Step 1.5 |
+| 2 | DEVELOPMENT.mdテンプレート | `01-phase-deliverables/phase-1/development-guide-template.md` | 開発環境セットアップ手順 | Step 1.5 |
+| 3 | ADRテンプレート | `01-phase-deliverables/phase-1/adr-template.md` | アーキテクチャ決定記録 | Step 1.1 |
+
+### 推奨テンプレート
+
+| # | テンプレート名 | ファイル | 用途 | 使用条件 |
+|---|--------------|---------|------|---------|
+| 4 | .gitignoreテンプレート | `04-configuration/gitignore-[language]-template` | Gitで無視するファイル | 新規リポジトリ |
+| 5 | .editorconfig | `04-configuration/editorconfig-template` | エディタ設定の統一 | 新規リポジトリ |
+| 6 | Docker Composeテンプレート | `04-configuration/docker-compose-template.yml` | ローカル開発環境 | Dockerを使用する場合 |
+
+### プロジェクトテンプレート（スケルトン）
+
+| 言語/FW | テンプレート | 場所 |
+|---------|------------|------|
+| TypeScript + Express | `express-typescript-template/` | `03-code-templates/backend/` |
+| TypeScript + NestJS | `nestjs-template/` | `03-code-templates/backend/` |
+| React + TypeScript | `react-typescript-template/` | `03-code-templates/frontend/` |
+| Python + FastAPI | `fastapi-template/` | `03-code-templates/backend/` |
+| ✨ **TypeScript + Express.js (完全版)** | `typescript-express-api-template/` | `project-templates/` |
+| ✨ **Java + Spring Boot + Gradle (完全版)** | `java-springboot-api-template/` | `project-templates/` |
+
+> **✨ NEW**: 完全版テンプレートには、JWT認証、品質ツール統合、CI/CD設定（GitHub Actions 5ファイル + GitLab CI）が含まれています。詳細は [project-templates/README.md](./project-templates/README.md) を参照してください。
+
+---
+
+## 📂 Phase 2A: 事前設計 - テンプレート
+
+### 必須テンプレート
+
+| # | テンプレート名 | ファイル | 用途 | 作成タイミング |
+|---|--------------|---------|------|--------------|
+| 1 | ADRテンプレート | `01-phase-deliverables/phase-2.1/adr-template.md` | 技術決定の記録 | Step 2.1.1 |
+| 2 | API契約書テンプレート | `phase-2a/api-contract-template.md` | API仕様の基本定義 | Step 2.1.2 |
+| 3 | 制約条件テンプレート | `phase-2a/constraints-template.md` | 非機能要件の明確化 | Step 2.1.3 |
+
+### 推奨テンプレート
+
+| # | テンプレート名 | ファイル | 用途 | 使用条件 |
+|---|--------------|---------|------|---------|
+| 4 | 技術提案書テンプレート | `01-phase-deliverables/phase-2.1/tech-proposal-template.md` | 技術選定の承認取得 | 承認が必要な場合 |
+| 5 | アーキテクチャ概要図テンプレート | `01-phase-deliverables/phase-2.1/architecture-diagram-template.drawio` | システム構成の可視化 | 新規システム |
+
+### テンプレート内容例
+
+#### api-contract-template.yaml
+```yaml
+openapi: 3.0.0
+info:
+  title: [API Name]
+  version: 1.0.0
+  description: [API Description]
+
+servers:
+  - url: http://localhost:3000/api
+    description: Development server
+
+paths:
+  /resource:
+    get:
+      summary: [Summary]
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceList'
+    
+    post:
+      summary: [Summary]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceCreate'
+      responses:
+        '201':
+          description: Created
+
+components:
+  schemas:
+    ResourceList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+    
+    Resource:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    
+    ResourceCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - BearerAuth: []
+```
+
+---
+
+## 📂 Phase 3: 実装 - テンプレート
+
+### コードテンプレート
+
+#### バックエンド（TypeScript/Express）
+
+| # | テンプレート名 | ファイル | 用途 |
+|---|--------------|---------|------|
+| 1 | Controllerテンプレート | `03-code-templates/backend/typescript/controller-template.ts` | Controller層の実装 |
+| 2 | Serviceテンプレート | `03-code-templates/backend/typescript/service-template.ts` | Service層の実装 |
+| 3 | Repositoryテンプレート | `03-code-templates/backend/typescript/repository-template.ts` | Repository層の実装 |
+| 4 | Middlewareテンプレート | `03-code-templates/backend/typescript/middleware-template.ts` | Middleware実装 |
+| 5 | エラークラステンプレート | `03-code-templates/backend/typescript/error-class-template.ts` | カスタムエラー |
+
+#### フロントエンド（React/TypeScript）
+
+| # | テンプレート名 | ファイル | 用途 |
+|---|--------------|---------|------|
+| 1 | Pageコンポーネント | `03-code-templates/frontend/react/page-template.tsx` | ページコンポーネント |
+| 2 | UIコンポーネント | `03-code-templates/frontend/react/component-template.tsx` | 再利用可能コンポーネント |
+| 3 | Hooksテンプレート | `03-code-templates/frontend/react/hook-template.ts` | カスタムHooks |
+| 4 | APIクライアント | `03-code-templates/frontend/react/api-client-template.ts` | API通信 |
+
+### テストテンプレート
+
+| # | テンプレート名 | ファイル | 用途 |
+|---|--------------|---------|------|
+| 1 | ユニットテストテンプレート | `05-testing/unit-test-template.test.ts` | ユニットテスト |
+| 2 | 統合テストテンプレート | `05-testing/integration-test-template.test.ts` | 統合テスト |
+| 3 | E2Eテストテンプレート | `05-testing/e2e-test-template.spec.ts` | E2Eテスト |
+
+### テンプレート内容例
+
+#### controller-template.ts
+```typescript
+import { Request, Response, NextFunction } from 'express';
+import { [Service]Service } from '../services/[service]-service';
+import { ValidationError } from '../utils/errors';
+
+/**
+ * [Resource] Controller
+ * 
+ * [Description]
+ */
+export class [Resource]Controller {
+  constructor(private [service]Service: [Service]Service) {}
+
+  /**
+   * [Action description]
+   * 
+   * @param req - Express request
+   * @param res - Express response
+   * @param next - Express next function
+   */
+  [actionName] = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      // 1. Extract parameters
+      const { param1, param2 } = req.body;
+
+      // 2. Validate input
+      if (!param1) {
+        throw new ValidationError('param1 is required');
+      }
+
+      // 3. Call service
+      const result = await this.[service]Service.[method](param1, param2);
+
+      // 4. Return response
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+}
+```
+
+---
+
+## 📂 Phase 4: レビュー・QA - テンプレート
+
+### 必須テンプレート
+
+| # | テンプレート名 | ファイル | 用途 | 作成タイミング |
+|---|--------------|---------|------|--------------|
+| 1 | コードレビューチェックリスト | `02-documents/code-review-checklist-template.md` | レビュー観点の網羅 | Step 4.1 |
+| 2 | QAテスト計画書 | `02-documents/qa-test-plan-template.md` | テスト計画の作成 | Step 4.2 |
+| 3 | バグレポートテンプレート | `02-documents/bug-report-template.md` | バグの記録 | バグ発見時 |
+
+### 推奨テンプレート
+
+| # | テンプレート名 | ファイル | 用途 | 使用条件 |
+|---|--------------|---------|------|---------|
+| 4 | パフォーマンステストレポート | `02-documents/performance-test-report-template.md` | 性能テスト結果 | 性能要件がある場合 |
+| 5 | セキュリティテストレポート | `02-documents/security-test-report-template.md` | セキュリティテスト結果 | セキュリティレビュー実施時 |
+
+---
+
+## 📂 Phase 5: 詳細設計 - テンプレート
+
+### 必須テンプレート
+
+| # | テンプレート名 | ファイル | 用途 | 作成タイミング |
+|---|--------------|---------|------|--------------|
+| 1 | 詳細設計書テンプレート | `01-phase-deliverables/phase-5/detailed-design-template.md` | 完全な設計文書 | Step 2.2.1 |
+| 2 | 完全版API仕様書テンプレート | `01-phase-deliverables/phase-5/complete-api-spec-template.yaml` | OpenAPI完全版 | Step 2.2.2 |
+| 3 | データモデル文書テンプレート | `phase-5/data-model-template.md` | ER図とスキーマ | Step 5.4 |
+
+### 推奨テンプレート
+
+| # | テンプレート名 | ファイル | 用途 | 使用条件 |
+|---|--------------|---------|------|---------|
+| 4 | 設計レビュー記録 | `design-review-template.md` | レビュー結果の記録 | 正式レビュー実施時 |
+| 5 | As-Built記録テンプレート | `phase-5/as-built-notes-template.md` | 実装差分の記録 | Phase 5最終化時 |
+
+### Phase 5並行作業支援 - テンプレート
+
+| # | テンプレート名 | ファイル | 用途 | 使用条件 |
+|---|--------------|---------|------|---------|
+| 1 | マイルストーン定義テンプレート | `phase-5-parallel/milestone-definition-template.md` | Phase 5並行実施のトリガー定義 | マイルストーン並行型採用時 |
+| 2 | Phase 5作業ブロックチェックリスト | `phase-5-parallel/phase-5-work-block-checklist.md` | 作業漏れ防止チェックリスト | 各Phase 5ブロック実施時 |
+
+**説明**: マイルストーン並行型を採用する場合に使用。Phase 3（実装）とPhase 5（詳細設計）の並行実施を支援。
+
+**参照ドキュメント**:
+- `revised-development-process-overview.md` - マイルストーン並行型の詳細ガイド
+- `revised-design-deliverables-matrix.md` - Phase 5並行実施のタイムライン
+
+---
+
+## 📂 Phase 5: デプロイメント - テンプレート
+
+### 必須テンプレート
+
+| # | テンプレート名 | ファイル | 用途 | 作成タイミング |
+|---|--------------|---------|------|--------------|
+| 1 | デプロイメント手順書 | `02-documents/deployment-procedure-template.md` | デプロイ手順の文書化 | Step 5.1 |
+| 2 | ロールバック手順書 | `02-documents/rollback-procedure-template.md` | ロールバック手順 | Step 5.1 |
+| 3 | リリースノートテンプレート | `02-documents/release-notes-template.md` | リリース内容の記録 | リリース前 |
+
+---
+
+## 🔍 テンプレートの検索
+
+### フェーズから探す
+```
+Phase 0 → 01-phase-deliverables/phase-0/
+Phase 1 → 01-phase-deliverables/phase-1/
+Phase 2A → 01-phase-deliverables/phase-2.1/
+Phase 3 → 03-code-templates/, 05-testing/
+Phase 4 → 02-documents/qa-*, 02-documents/code-review-*
+Phase 5 → 01-phase-deliverables/phase-5/
+Phase 5 → 02-documents/deployment-*, 02-documents/release-*
+```
+
+### 成果物から探す
+- **要件分析書** → `01-phase-deliverables/phase-0/requirements-analysis-template.md`
+- **ADR** → `01-phase-deliverables/phase-1/adr-template.md`
+- **API仕様書** → `01-phase-deliverables/phase-2.1/api-contract-template.yaml`
+- **設計書** → `01-phase-deliverables/phase-5/detailed-design-template.md`
+- **コードテンプレート** → `03-code-templates/[language]/`
+- **テストテンプレート** → `05-testing/`
+
+### 言語/技術スタックから探す
+- **TypeScript** → `03-code-templates/backend/typescript/`
+- **Python** → `03-code-templates/backend/python/`
+- **React** → `03-code-templates/frontend/react/`
+- **Vue** → `03-code-templates/frontend/vue/`
+
+---
+
+## 📝 テンプレートの使い方
+
+### 基本ステップ
+1. **テンプレートをコピー**
+   ```bash
+   cp 08-templates/[template-file] ./docs/[output-file]
+   ```
+
+2. **プレースホルダーを置換**
+   - `[PBI-KEY]` → 実際のPBI番号
+   - `[ProjectName]` → プロジェクト名
+   - `[Resource]` → リソース名（User, Order等）
+
+3. **内容を記入**
+   - すべてのセクションを埋める
+   - 不要なセクションは削除OK
+
+4. **レビュー**
+   - テンプレートの全項目が埋まっているか確認
+   - 組織標準に準拠しているか確認
+
+---
+
+## 🔄 テンプレートの更新
+
+### 更新プロセス
+1. テンプレートの改善提案を作成
+2. テックリードにレビュー依頼
+3. 承認後、テンプレートを更新
+4. 変更履歴を記録
+5. 組織に周知
+
+### バージョン管理
+各テンプレートファイルの先頭に以下を記載：
+```yaml
+---
+version: "1.0.0"
+last_updated: "YYYY-MM-DD"
+author: "[Name]"
+---
+```
+
+---
+
+## 📞 サポート
+
+### 質問・問題がある場合
+1. このインデックスで検索
+2. テンプレートファイル内のコメントを確認
+3. テックリードに質問
+4. Slack #development-standards チャンネル
+
+---
+
+**作成日**: 2025-11-19  
+**メンテナンス**: Engineering Leadership Team  
+**レビューサイクル**: 四半期ごと

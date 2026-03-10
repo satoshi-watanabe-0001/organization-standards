@@ -1,0 +1,189 @@
+# Python Coding Standards
+
+## 📋 概要
+
+このディレクトリには、プロジェクトで使用するPythonコーディング標準が含まれています。PEP 8準拠を基本とし、プロジェクト固有のベストプラクティスを統合した包括的なガイドラインです。
+
+**元ファイルサイズ**: 466.5 KB → **14ファイルに分割** (平均33.3 KB)
+
+---
+
+## 📚 ファイル構成
+
+### 基礎編（01-06）
+
+| ファイル | サイズ | 内容 |
+|---------|-------|------|
+| [01-introduction-purpose.md](01-introduction-purpose.md) | 0.6 KB | Python標準の目的と対象範囲 |
+| [02-setup-tools.md](02-setup-tools.md) | 5.0 KB | 基本設定、仮想環境、ツール設定 |
+| [03-naming-style.md](03-naming-style.md) | 14.6 KB | 命名規則、PEP 8スタイル |
+| [04-project-structure.md](04-project-structure.md) | 14.4 KB | プロジェクト構造、モジュール設計 |
+| [05-error-handling.md](05-error-handling.md) | 19.4 KB | エラーハンドリング、例外処理 |
+| [06-testing-qa.md](06-testing-qa.md) | 32.7 KB | テスト戦略、品質保証 |
+
+### パフォーマンス編（07-08）
+
+| ファイル | サイズ | 内容 |
+|---------|-------|------|
+| [07-performance-part1.md](07-performance-part1.md) | 38.6 KB | パフォーマンス最適化（第1部） |
+| [08-performance-part2.md](08-performance-part2.md) | 31.9 KB | パフォーマンス最適化（第2部） |
+
+### セキュリティ・運用編（09-11）
+
+| ファイル | サイズ | 内容 |
+|---------|-------|------|
+| [09-security.md](09-security.md) | 79.7 KB | セキュリティ、認証、認可 |
+| [10-monitoring-logging.md](10-monitoring-logging.md) | 84.6 KB | 監視、ログ、デバッグ |
+| [11-deployment-cicd.md](11-deployment-cicd.md) | 39.2 KB | デプロイメント、CI/CD |
+
+### 専門領域編（12-14）
+
+| ファイル | サイズ | 内容 |
+|---------|-------|------|
+| [12-ai-ml-standards.md](12-ai-ml-standards.md) | 53.7 KB | AI/ML専用標準とベストプラクティス |
+| [13-devin-guidelines.md](13-devin-guidelines.md) | 38.1 KB | Devin実行ガイドライン |
+| [14-documentation-conclusion.md](14-documentation-conclusion.md) | 13.9 KB | ドキュメンテーション標準、結語 |
+
+### コメント規約（2025-11-14追加）✨
+
+| ファイル | サイズ | 内容 |
+|---------|-------|------|
+| [python-inline-comment-examples.md](python-inline-comment-examples.md) | 15.6 KB | Python固有のインラインコメント実装例 |
+| [python-test-comment-examples.md](python-test-comment-examples.md) | 20.4 KB | pytestスタイルのテストコメント実装例 |
+
+**共通原則も参照**:
+- [00-inline-comment-standards.md](../00-inline-comment-standards.md) - インラインコメント共通原則
+- [00-test-comment-standards.md](../00-test-comment-standards.md) - テストコメント共通原則
+
+### クイックリファレンス
+
+| ファイル | 内容 |
+|---------|------|
+| [AI-QUICK-REFERENCE.md](AI-QUICK-REFERENCE.md) | 🤖 TOP 30 Pythonチェック項目 |
+
+---
+
+## 🎯 ロール別学習パス
+
+### 👨‍💻 Python初学者
+1. 📖 [01-introduction-purpose.md](01-introduction-purpose.md) - 標準の目的を理解
+2. ⚙️ [02-setup-tools.md](02-setup-tools.md) - 開発環境構築
+3. 📝 [03-naming-style.md](03-naming-style.md) - コーディングスタイル習得
+4. 💬 [python-inline-comment-examples.md](python-inline-comment-examples.md) - コメント記述方法
+5. 🏗️ [04-project-structure.md](04-project-structure.md) - プロジェクト構造
+6. ❌ [05-error-handling.md](05-error-handling.md) - エラー処理の基本
+
+### 🧪 テスト・品質担当者
+1. 🎯 [06-testing-qa.md](06-testing-qa.md) - テスト戦略全体
+2. 💬 [python-test-comment-examples.md](python-test-comment-examples.md) - テストコメント規約
+3. 📊 [10-monitoring-logging.md](10-monitoring-logging.md) - 監視とログ
+4. 🚀 [11-deployment-cicd.md](11-deployment-cicd.md) - CI/CDパイプライン
+
+### ⚡ パフォーマンスエンジニア
+1. 🔧 [07-performance-part1.md](07-performance-part1.md) - 最適化基礎
+2. 🚀 [08-performance-part2.md](08-performance-part2.md) - 最適化応用
+3. 📊 [10-monitoring-logging.md](10-monitoring-logging.md) - プロファイリング
+
+### 🔒 セキュリティエンジニア
+1. 🛡️ [09-security.md](09-security.md) - セキュリティ全般
+2. 📝 [10-monitoring-logging.md](10-monitoring-logging.md) - セキュリティログ
+3. 🚀 [11-deployment-cicd.md](11-deployment-cicd.md) - セキュアデプロイ
+
+### 🤖 AI/MLエンジニア
+1. 🧠 [12-ai-ml-standards.md](12-ai-ml-standards.md) - AI/ML専用標準
+2. ⚡ [07-performance-part1.md](07-performance-part1.md) - データ処理最適化
+3. 🎯 [06-testing-qa.md](06-testing-qa.md) - MLモデルテスト
+
+### 🤖 Devinユーザー
+1. 📘 [13-devin-guidelines.md](13-devin-guidelines.md) - Devin実行ガイド
+2. 📖 [AI-QUICK-REFERENCE.md](AI-QUICK-REFERENCE.md) - クイックリファレンス
+3. 💬 [python-inline-comment-examples.md](python-inline-comment-examples.md) + [python-test-comment-examples.md](python-test-comment-examples.md) - コメント規約
+4. 📝 [14-documentation-conclusion.md](14-documentation-conclusion.md) - ドキュメント標準
+
+---
+
+## 🚀 クイックスタート
+
+### 基本的な使い方
+
+```bash
+# 1. 標準の目的を確認
+cat 01-introduction-purpose.md
+
+# 2. 開発環境をセットアップ
+cat 02-setup-tools.md
+
+# 3. コーディングスタイルを学習
+cat 03-naming-style.md
+```
+
+### 特定トピックを検索
+
+```bash
+# エラーハンドリング関連
+grep -r "例外処理" *.md
+
+# テスト関連
+grep -r "pytest" 06-testing-qa.md
+
+# セキュリティ関連
+grep -r "認証" 09-security.md
+```
+
+### AI支援での活用
+
+**Devinに依頼する場合**:
+```
+「13-devin-guidelines.mdに従ってPythonコードをレビューしてください」
+```
+
+**一般的なAIツールの場合**:
+```
+「AI-QUICK-REFERENCE.mdのチェック項目に基づいてコードを検証してください」
+```
+
+---
+
+## 📦 アーカイブ
+
+元の統合ファイルは以下にアーカイブされています：
+
+```
+_archive/python-standards/
+└── python-standards_archived_2025-11-13.md (466.5 KB)
+```
+
+---
+
+## 🔗 関連ドキュメント
+
+- **上位ディレクトリ**: [../../README.md](../../README.md) - プロジェクト全体概要
+- **他の言語標準**:
+  - [../typescript/](../typescript/) - TypeScript/JavaScript Standards
+  - [../java/](../java/) - Java Standards
+  - [../sql/](../sql/) - SQL Standards
+  - [../css/](../css/) - CSS Styling Standards
+
+---
+
+## 📝 ドキュメントの更新
+
+このドキュメントは **2025-11-13** に Phase 10 で作成されました。
+
+**更新方針**:
+- Python標準の変更時は該当ファイルを更新
+- 新しいベストプラクティス追加時は適切なファイルに追記
+- 大規模変更時は新しい番号付きファイルを追加
+
+---
+
+## 💡 Tips
+
+- 🤖 **AI活用**: AI-QUICK-REFERENCE.mdを先に確認すると効率的
+- 📚 **学習順序**: 01から順番に読むのが推奨
+- 🔍 **検索活用**: grep/ripgrepで横断検索が便利
+- 📋 **チェックリスト**: 各ファイル末尾にチェック項目あり
+
+---
+
+**最終更新**: 2025-11-13 | **Phase**: 10 | **Status**: ✅ Complete

@@ -1,0 +1,427 @@
+name: Integration Tests
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+# GitHub API 呼び出しに必要な権限
+permissions:
+  contents: read           # リポジトリの読み取り
+  pull-requests: write     # PRへのコメント、ラベル操作
+  issues: write            # Issueコメント、ラベル操作（PRもIssueとして扱われる）
+  checks: write            # CIステータスの更新
+  statuses: write          # コミットステータスの更新
+
+jobs:
+  integration-test-java:
+    name: 統合テスト (Java)
+    runs-on: ubuntu-latest
+    if: hashFiles('**/pom.xml') != '' || hashFiles('**/*.gradle') != ''
+    
+    services:
+      # PostgreSQL データベース
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: testdb
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      # MySQL データベース（必要に応じて有効化）
+      # mysql:
+      #   image: mysql:8.0
+      #   env:
+      #     MYSQL_ROOT_PASSWORD: rootpass
+      #     MYSQL_DATABASE: testdb
+      #     MYSQL_USER: testuser
+      #     MYSQL_PASSWORD: testpass
+      #   options: >-
+      #     --health-cmd="mysqladmin ping"
+      #     --health-interval=10s
+      #     --health-timeout=5s
+      #     --health-retries=5
+      #   ports:
+      #     - 3306:3306
+
+      # Redis（必要に応じて有効化）
+      # redis:
+      #   image: redis:7-alpine
+      #   options: >-
+      #     --health-cmd "redis-cli ping"
+      #     --health-interval 10s
+      #     --health-timeout 5s
+      #     --health-retries 5
+      #   ports:
+      #     - 6379:6379
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # Maven プロジェクト
+      - name: Run Integration Tests (Maven)
+        if: hashFiles('**/pom.xml') != ''
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/testdb
+          SPRING_DATASOURCE_USERNAME: testuser
+          SPRING_DATASOURCE_PASSWORD: testpass
+        run: mvn verify -P integration-test
+
+      # Gradle プロジェクト
+      - name: Run Integration Tests (Gradle)
+        if: hashFiles('**/*.gradle') != ''
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/testdb
+          SPRING_DATASOURCE_USERNAME: testuser
+          SPRING_DATASOURCE_PASSWORD: testpass
+        run: ./gradlew integrationTest
+
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-test-report-java
+          path: |
+            **/target/surefire-reports/
+            **/target/failsafe-reports/
+            **/build/reports/tests/
+
+  integration-test-testcontainers:
+    name: 統合テスト (TestContainers)
+    runs-on: ubuntu-latest
+    if: hashFiles('**/pom.xml') != '' || hashFiles('**/*.gradle') != ''
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Maven プロジェクト
+      - name: Run TestContainers Tests (Maven)
+        if: hashFiles('**/pom.xml') != ''
+        run: mvn verify -P testcontainers
+
+      # Gradle プロジェクト
+      - name: Run TestContainers Tests (Gradle)
+        if: hashFiles('**/*.gradle') != ''
+        run: ./gradlew testcontainersTest
+
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: testcontainers-report
+          path: |
+            **/target/surefire-reports/
+            **/target/failsafe-reports/
+            **/build/reports/tests/
+
+  api-test:
+    name: API テスト (REST Assured)
+    runs-on: ubuntu-latest
+    if: hashFiles('**/pom.xml') != '' || hashFiles('**/*.gradle') != ''
+    
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: testdb
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # アプリケーションをビルド＆起動
+      - name: Build Application (Maven)
+        if: hashFiles('**/pom.xml') != ''
+        run: mvn clean package -DskipTests
+
+      - name: Build Application (Gradle)
+        if: hashFiles('**/*.gradle') != ''
+        run: ./gradlew build -x test
+
+      - name: Start Application
+        run: |
+          # アプリケーションをバックグラウンドで起動
+          java -jar target/*.jar &
+          # または
+          # java -jar build/libs/*.jar &
+          
+          # アプリケーションが起動するまで待機
+          echo "Waiting for application to start..."
+          for i in {1..30}; do
+            if curl -f http://localhost:8080/actuator/health; then
+              echo "Application is ready!"
+              break
+            fi
+            echo "Waiting... ($i/30)"
+            sleep 2
+          done
+
+      # REST Assured テスト実行
+      - name: Run API Tests (Maven)
+        if: hashFiles('**/pom.xml') != ''
+        run: mvn verify -P api-test
+
+      - name: Run API Tests (Gradle)
+        if: hashFiles('**/*.gradle') != ''
+        run: ./gradlew apiTest
+
+      - name: Upload API Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-report
+          path: |
+            **/target/surefire-reports/
+            **/target/failsafe-reports/
+            **/build/reports/tests/
+
+  integration-test-nodejs:
+    name: 統合テスト (Node.js)
+    runs-on: ubuntu-latest
+    if: hashFiles('**/package.json') != ''
+    
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: testdb
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Integration Tests
+        env:
+          DATABASE_URL: postgresql://testuser:testpass@localhost:5432/testdb
+          NODE_ENV: test
+        run: npm run test:integration
+
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-test-report-nodejs
+          path: |
+            coverage/
+            test-results/
+
+  integration-test-python:
+    name: 統合テスト (Python)
+    runs-on: ubuntu-latest
+    if: hashFiles('**/requirements.txt') != '' || hashFiles('**/pyproject.toml') != ''
+    
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: testdb
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest pytest-cov pytest-asyncio
+
+      - name: Run Integration Tests
+        env:
+          DATABASE_URL: postgresql://testuser:testpass@localhost:5432/testdb
+          ENVIRONMENT: test
+        run: pytest tests/integration/ --cov=. --cov-report=xml
+
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-test-report-python
+          path: |
+            coverage.xml
+            htmlcov/
+
+  integration-summary:
+    name: 統合テスト結果サマリー
+    runs-on: ubuntu-latest
+    needs: [integration-test-java, integration-test-testcontainers, api-test, integration-test-nodejs, integration-test-python]
+    if: always()
+    
+    steps:
+      - name: Create Summary
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const javaResult = '${{ needs.integration-test-java.result }}';
+            const testcontainersResult = '${{ needs.integration-test-testcontainers.result }}';
+            const apiTestResult = '${{ needs.api-test.result }}';
+            const nodejsResult = '${{ needs.integration-test-nodejs.result }}';
+            const pythonResult = '${{ needs.integration-test-python.result }}';
+            
+            let summary = '# 🧪 統合テスト結果\n\n';
+            summary += '| テスト種別 | 結果 |\n';
+            summary += '|-----------|------|\n';
+            
+            if (javaResult !== 'skipped') {
+              summary += '| Java統合テスト | ' + (javaResult === 'success' ? '✅ 合格' : '❌ 失敗') + ' |\n';
+            }
+            if (testcontainersResult !== 'skipped') {
+              summary += '| TestContainers | ' + (testcontainersResult === 'success' ? '✅ 合格' : '❌ 失敗') + ' |\n';
+            }
+            if (apiTestResult !== 'skipped') {
+              summary += '| APIテスト | ' + (apiTestResult === 'success' ? '✅ 合格' : '❌ 失敗') + ' |\n';
+            }
+            if (nodejsResult !== 'skipped') {
+              summary += '| Node.js統合テスト | ' + (nodejsResult === 'success' ? '✅ 合格' : '❌ 失敗') + ' |\n';
+            }
+            if (pythonResult !== 'skipped') {
+              summary += '| Python統合テスト | ' + (pythonResult === 'success' ? '✅ 合格' : '❌ 失敗') + ' |\n';
+            }
+            
+            summary += '\n';
+            
+            const allSuccess = [javaResult, testcontainersResult, apiTestResult, nodejsResult, pythonResult]
+              .filter(r => r !== 'skipped')
+              .every(r => r === 'success');
+            
+            if (allSuccess) {
+              summary += '✅ **すべての統合テストが合格しました！**\n';
+            } else {
+              summary += '⚠️ **一部の統合テストに失敗しました。テストレポートを確認してください。**\n';
+            }
+            
+            core.summary.addRaw(summary);
+            await core.summary.write();
+
+      - name: Comment on PR (失敗時)
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🔴 統合テスト失敗
+
+            **統合テストが失敗しました！**
+
+            ### 確認方法
+            1. GitHub Actions の "Artifacts" セクションから該当するテストレポートをダウンロード
+            2. レポートを確認して、失敗したテストケースを特定
+            3. ローカル環境で再現してデバッグ
+
+            ### よくある失敗原因
+
+            #### 1. データベース接続エラー
+            - **原因**: データベースの初期化に失敗
+            - **対処**: マイグレーションスクリプトやシードデータを確認
+
+            #### 2. API レスポンスの不一致
+            - **原因**: 期待値とレスポンスが異なる
+            - **対処**: API仕様とテストケースの整合性を確認
+
+            #### 3. タイムアウトエラー
+            - **原因**: 処理時間が長すぎる
+            - **対処**: タイムアウト値の調整、または処理の最適化
+
+            #### 4. 依存サービスの起動失敗
+            - **原因**: Docker コンテナの起動に失敗
+            - **対処**: サービス定義（services:）を確認
+
+            ### ローカルでの再現方法
+
+            \`\`\`bash
+            # Docker Compose で依存サービスを起動
+            docker-compose up -d
+
+            # テスト実行
+            # Maven
+            mvn verify -P integration-test
+
+            # Gradle
+            ./gradlew integrationTest
+
+            # Node.js
+            npm run test:integration
+
+            # Python
+            pytest tests/integration/
+            \`\`\`
+
+            ### 参考資料
+            - [TestContainers Documentation](https://www.testcontainers.org/)
+            - [REST Assured Documentation](https://rest-assured.io/)
+            `
+            })

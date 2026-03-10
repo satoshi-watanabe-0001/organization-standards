@@ -1,0 +1,164 @@
+[tool.poetry]
+name = "${PROJECT_NAME}"
+version = "1.0.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^${PYTHON_VERSION}"
+# 依存関係をここに追加
+
+[tool.poetry.group.dev.dependencies]
+# ✅ 必須: CI/CD品質ゲート用依存関係
+pytest = "^7.4.3"
+pytest-cov = "^4.1.0"
+pylint = "^3.0.3"
+black = "^23.12.1"
+mypy = "^1.8.0"
+
+# 🟡 推奨: 追加の開発ツール
+pytest-mock = "^3.12.0"
+pytest-asyncio = "^0.23.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+# ========================================
+# pytest設定
+# ========================================
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+
+# ✅ 必須: カバレッジ設定（組織標準: 80%）
+addopts = """
+  --cov=src
+  --cov-report=html
+  --cov-report=term
+  --cov-report=term-missing
+  --cov-fail-under=80
+  -v
+"""
+
+# テストのタイムアウト
+timeout = 300
+
+# 並列実行（オプション）
+# addopts に追加: -n auto
+
+# ========================================
+# coverage設定
+# ========================================
+
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "*/__pycache__/*",
+    "*/site-packages/*",
+    "*/__init__.py",
+]
+
+[tool.coverage.report]
+# ✅ 必須: カバレッジ閾値（組織標準: 80%）
+fail_under = 80
+
+precision = 2
+show_missing = true
+skip_covered = false
+
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "@abstract",
+]
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+# ========================================
+# black設定
+# ========================================
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # デフォルトの除外に加えて
+  | dist
+  | build
+  | \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+)/
+'''
+
+# ========================================
+# mypy設定
+# ========================================
+
+[tool.mypy]
+python_version = "${PYTHON_VERSION}"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+strict_equality = true
+
+# 除外ディレクトリ
+exclude = [
+    "^build/",
+    "^dist/",
+    "^tests/",
+]
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+# ========================================
+# pylint設定
+# ========================================
+
+[tool.pylint.messages_control]
+max-line-length = 88
+disable = [
+    "C0111",  # missing-docstring（必要に応じて有効化）
+    "R0903",  # too-few-public-methods
+]
+
+[tool.pylint.design]
+max-complexity = 10
+max-args = 5
+max-locals = 15
+
+# ========================================
+# 参照ドキュメント
+# ========================================
+# - /00-guides/CI-SETUP-CHECKLIST.md
+# - /03-development-process/ci-cd-pipeline.md
+# - /04-quality-standards/code-quality-standards.md
+# - /04-quality-standards/testing-standards.md

@@ -1,0 +1,33 @@
+/**
+ * [インターフェースの目的]
+ * 
+ * [詳細説明:
+ *  - このインターフェースが表現するもの
+ *  - 使用される文脈
+ * ]
+ * 
+ * @interface
+ * @example
+ * ```typescript
+ * const data: InterfaceName = {
+ *   property1: value1,
+ *   property2: value2,
+ * };
+ * ```
+ */
+export interface InterfaceName {
+  /** [プロパティ1の説明] */
+  property1: Type1;
+
+  /** 
+   * [プロパティ2の説明]
+   * - [追加の制約・説明]
+   */
+  property2: Type2;
+
+  /** 
+   * [オプショナルプロパティの説明]
+   * - [デフォルト値や省略時の動作]
+   */
+  optionalProperty?: Type3;
+}

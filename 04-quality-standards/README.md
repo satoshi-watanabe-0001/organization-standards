@@ -1,0 +1,697 @@
+---
+version: "2.1.0"
+last_updated: "2025-11-12"
+status: "active"
+owner: "QA Team"
+category: "quality"
+---
+
+# 品質基準 / Quality Standards
+
+## 概要 / Overview
+
+このディレクトリには、組織全体で適用される品質基準とテスト標準が含まれています。
+
+This directory contains quality standards and testing standards applied across the organization.
+
+
+
+### 🆕 最新の更新 (2025-11-12)
+
+**統合テスト要件の明確化**
+- **PBIタイプ別テスト要件マトリックス追加**
+  - 7分類のPBIタイプ別判断基準
+    1. 新規プロジェクト: 全テスト必須
+    2. 大規模機能追加: 統合テスト必須、E2E推奨
+    3. 小規模機能追加: 統合テスト推奨
+    4. バグ修正（API影響）: 統合テスト必須
+    5. バグ修正（内部のみ）: ユニットテスト必須
+    6. リファクタリング: 既存テスト維持必須
+    7. 設定変更・ドキュメント更新: テスト任意
+  - 参照: `../00-guides/testing-standards-pbi-matrix-addition.md`
+
+**コンテナ化判断基準の明確化**
+- データベース依存 → TestContainers必須
+- 外部サービス依存 → TestContainers必須
+
+## 📁 サブディレクトリ / Subdirectories
+
+このディレクトリには、特定の品質トピックに関する詳細標準を含むサブディレクトリがあります：
+
+### defect-management/
+欠陥管理のプロセスとライフサイクル
+- 01-principles-lifecycle.md
+- 02-classification-reporting.md
+- 03-triage-resolution.md
+- README.md, AI-QUICK-REFERENCE.md
+
+### e2e-testing/
+エンドツーエンドテストの原則と実装
+- 01-principles-scope.md
+- 02-test-design-userflow.md
+- 03-implementation-testdata.md
+- README.md, AI-QUICK-REFERENCE.md
+
+### load-testing/
+負荷テストの戦略と実行
+- 01-overview-objectives-types.md
+- 02-strategy-scenarios-modeling.md
+- 03-implementation-execution-evaluation.md
+- README.md, AI-QUICK-REFERENCE.md
+
+### test-data-management/
+テストデータ管理とプライバシー保護
+- 01-principles-strategy.md
+- 02-privacy-generation.md
+- 03-preparation-masking.md
+- README.md, AI-QUICK-REFERENCE.md
+
+---
+- 環境差異が大きい → Docker Compose推奨
+- 参照: `../00-guides/phase-4-integration-test-addition.md`
+
+**マルチリポジトリ対応**
+- 単一リポジトリ内テスト: 必須（Phase 4で完結）
+- 複数リポジトリ間テスト: 別PBI（専用e2e-tests/）
+- 参照: `../00-guides/MULTI-REPOSITORY-TESTING-GUIDELINES.md`
+
+**testing-standards.mdの更新**
+- PBIタイプ別判断フローチャートの追加
+- TestContainersとDocker Composeの使い分け基準
+- マルチリポジトリ環境でのテスト範囲の明確化
+
+------
+
+## 📁 ディレクトリ構造 / Directory Structure
+
+```
+04-quality-standards/
+├── README.md                      # このファイル / This file
+├── code-quality.md                # コード品質基準（既存）
+├── testing-standards.md           # テスト標準（既存）
+├── security-standards.md          # セキュリティ基準（既存）
+├── performance-testing.md         # パフォーマンステスト標準（新規）
+├── load-testing.md                # 負荷テスト標準（新規）
+├── api-testing.md                 # APIテスト標準（Phase 2予定）
+├── e2e-testing.md                 # E2Eテスト標準
+└── accessibility-testing.md       # アクセシビリティテスト標準（Phase 2予定）
+```
+
+---
+
+## 📄 ドキュメント一覧 / Document List
+
+### 完成済み / Completed
+
+#### 1. コード品質基準 / Code Quality Standards
+**ファイル**: `code-quality.md`（既存）
+
+**内容**:
+- コーディング規約
+- コードレビュープロセス
+- 静的解析ツール
+- リファクタリングガイドライン
+
+**対象者**: 全開発者
+
+**更新頻度**: 四半期ごと
+
+---
+
+#### 2. テスト標準 / Testing Standards
+**ファイル**: `testing-standards.md`（既存）
+
+**内容**:
+- テスト戦略
+- テストピラミッド
+- ユニットテスト
+- 統合テスト
+- テストカバレッジ基準
+
+**対象者**: 全開発者、QAエンジニア
+
+**更新頻度**: 半期ごと
+
+---
+
+#### 3. セキュリティ基準 / Security Standards
+**ファイル**: `security-standards.md`（既存）
+
+**内容**:
+- セキュリティテスト
+- 脆弱性スキャン
+- ペネトレーションテスト
+- セキュアコーディング
+
+**対象者**: 全開発者、セキュリティチーム
+
+**更新頻度**: 四半期ごと
+
+---
+
+#### 4. パフォーマンステスト標準 / Performance Testing Standards
+**ファイル**: `performance-testing.md`（新規）
+
+**内容**:
+- パフォーマンステストの種類
+  - ロードテスト
+  - ストレステスト
+  - スパイクテスト
+  - エンデュランステスト
+  - スケーラビリティテスト
+- パフォーマンス目標値
+  - Webアプリケーション目標
+  - API目標
+  - データベース目標
+- テストツール
+  - k6
+  - Apache JMeter
+  - Gatling
+  - Lighthouse
+  - Artillery
+- テスト環境とデータ準備
+- テスト計画と実行手順
+- メトリクスと測定方法
+- 結果分析とレポーティング
+- 継続的改善プロセス
+
+**対象者**: QAエンジニア、パフォーマンスエンジニア、DevOpsエンジニア
+
+**更新頻度**: 四半期ごと
+
+**関連ドキュメント**:
+- 負荷テスト標準
+- フロントエンドアーキテクチャ
+- クラウドアーキテクチャ
+
+---
+
+#### 5. 負荷テスト標準 / Load Testing Standards
+**ファイル**: `load-testing.md`（新規）
+
+**内容**:
+- 負荷テストの目的とスコープ
+- 負荷テストの種類
+  - ベースライン負荷テスト
+  - ピーク負荷テスト
+  - ストレステスト
+  - スパイクテスト
+  - ソークテスト
+- 負荷テスト戦略
+  - テスト計画フレームワーク
+  - リスク管理
+- テストシナリオ設計
+  - シナリオ設計原則
+  - ECサイトシナリオ
+  - SaaSシナリオ
+  - マイクロサービスシナリオ
+- 負荷モデリング
+  - ユーザー行動モデル
+  - 負荷分散パターン
+  - 負荷計算式
+- k6実装ガイド
+  - プロジェクト構造
+  - ヘルパー関数
+  - 認証モジュール
+  - カスタムメトリクス
+  - 実行スクリプト
+- 実行とモニタリング
+  - 実行前チェックリスト
+  - リアルタイムモニタリング
+  - アラート設定
+- 結果評価と比較分析
+- トラブルシューティング
+- ベストプラクティス
+
+**対象者**: QAエンジニア、パフォーマンスエンジニア、開発者
+
+**更新頻度**: 四半期ごと
+
+**関連ドキュメント**:
+- パフォーマンステスト標準
+- クラウドアーキテクチャ
+- 技術スタック
+
+---
+
+### 計画中 / Planned
+
+#### 6. APIテスト標準 / API Testing Standards
+**ファイル**: `api-testing.md`（Phase 2予定）
+
+**予定内容**:
+- REST API テスト
+- GraphQL API テスト
+- コントラクトテスト
+- APIセキュリティテスト
+- API パフォーマンステスト
+- API モックとスタブ
+- テスト自動化
+- ドキュメント生成
+
+**対象者**: バックエンドエンジニア、QAエンジニア
+
+**優先度**: 高
+
+**予定時期**: 2025年Q2
+
+---
+
+#### 7. E2Eテスト標準 / End-to-End Testing Standards
+**ファイル**: `e2e-testing.md`
+
+**予定内容**:
+- E2Eテスト戦略
+- Playwright 使用ガイド
+- テストシナリオ設計
+- ページオブジェクトモデル
+- テストデータ管理
+- 並列実行とCI/CD統合
+- ビジュアルリグレッションテスト
+- クロスブラウザテスト
+
+**対象者**: QAエンジニア、フロントエンドエンジニア
+
+**優先度**: 高
+
+**予定時期**: 2025年Q2
+
+---
+
+#### 8. アクセシビリティテスト標準 / Accessibility Testing Standards
+**ファイル**: `accessibility-testing.md`（Phase 2予定）
+
+**予定内容**:
+- WCAG 2.1/2.2 準拠基準
+- 自動アクセシビリティテスト
+- 手動テストチェックリスト
+- スクリーンリーダーテスト
+- キーボードナビゲーションテスト
+- カラーコントラストチェック
+- アクセシビリティ監査
+- 修正ガイドライン
+
+**対象者**: フロントエンドエンジニア、デザイナー、QAエンジニア
+
+**優先度**: 中
+
+**予定時期**: 2025年Q3
+
+---
+
+## 🎯 品質目標 / Quality Objectives
+
+### 全体目標 / Overall Objectives
+
+```yaml
+quality_objectives:
+  code_coverage:
+    unit_tests: "> 80%"
+    integration_tests: "> 70%"
+    e2e_tests: "Critical paths covered"
+  
+  defect_density:
+    target: "< 1 defect per 1000 LOC"
+    critical_bugs: "0 in production"
+  
+  performance:
+    page_load: "< 2 seconds"
+    api_response_p95: "< 500ms"
+    availability: "> 99.9%"
+  
+  security:
+    vulnerability_scan: "Weekly"
+    critical_vulnerabilities: "0 tolerance"
+    security_patches: "Within 24 hours"
+  
+  accessibility:
+    wcag_level: "AA compliance"
+    automated_score: "> 95%"
+```
+
+### 品質メトリクス / Quality Metrics
+
+```yaml
+quality_metrics:
+  code_quality:
+    - metric: "コードカバレッジ"
+      target: "> 80%"
+      measurement: "自動計測（Jest/Vitest）"
+    
+    - metric: "循環的複雑度"
+      target: "< 10 per function"
+      measurement: "ESLint/SonarQube"
+    
+    - metric: "技術的負債"
+      target: "< 5% of development time"
+      measurement: "SonarQube Technical Debt Ratio"
+  
+  test_effectiveness:
+    - metric: "テスト実行時間"
+      target: "< 10分（CI）"
+      measurement: "CI/CD パイプライン"
+    
+    - metric: "テスト安定性"
+      target: "> 95% pass rate"
+      measurement: "Test flakiness monitoring"
+    
+    - metric: "バグ検出率"
+      target: "> 90% before production"
+      measurement: "Defect tracking system"
+  
+  performance:
+    - metric: "Core Web Vitals"
+      target: "All metrics in 'Good' range"
+      measurement: "Lighthouse CI"
+    
+    - metric: "API レスポンスタイム"
+      target: "P95 < 500ms"
+      measurement: "APM tools"
+    
+    - metric: "エラー率"
+      target: "< 0.1%"
+      measurement: "Error tracking (Sentry)"
+```
+
+---
+
+## 🔄 品質保証プロセス / Quality Assurance Process
+
+### 開発フロー / Development Flow
+
+```yaml
+development_flow:
+  1_planning:
+    activities:
+      - 要件定義
+      - テスト計画作成
+      - 品質目標設定
+    deliverables:
+      - 機能仕様書
+      - テスト計画書
+      - 受け入れ基準
+  
+  2_development:
+    activities:
+      - TDD/BDD実践
+      - ユニットテスト作成
+      - コードレビュー
+      - 静的解析実施
+    quality_gates:
+      - ユニットテストパス率 > 95%
+      - カバレッジ > 80%
+      - Lint エラー = 0
+  
+  3_integration:
+    activities:
+      - 統合テスト実施
+      - APIテスト実施
+      - パフォーマンステスト
+    quality_gates:
+      - 統合テストパス率 > 95%
+      - APIレスポンスタイム達成
+      - セキュリティスキャン通過
+  
+  4_staging:
+    activities:
+      - E2Eテスト実施
+      - 負荷テスト実施
+      - セキュリティテスト
+      - アクセシビリティテスト
+    quality_gates:
+      - E2Eテストパス率 = 100%
+      - パフォーマンス目標達成
+      - セキュリティ脆弱性 = 0
+      - WCAG AA準拠
+  
+  5_production:
+    activities:
+      - スモークテスト
+      - モニタリング
+      - インシデント対応
+    quality_gates:
+      - スモークテスト通過
+      - エラー率 < 0.1%
+      - 可用性 > 99.9%
+```
+
+### 品質ゲート / Quality Gates
+
+```yaml
+quality_gates:
+  commit_stage:
+    required:
+      - ☑ ユニットテストすべて成功
+      - ☑ Lintエラーなし
+      - ☑ コードフォーマット適用済み
+      - ☑ 型チェック通過
+    optional:
+      - カバレッジ増加
+      - 複雑度が基準内
+  
+  pull_request_stage:
+    required:
+      - ☑ すべてのテスト成功
+      - ☑ カバレッジ基準達成
+      - ☑ コードレビュー承認（2名以上）
+      - ☑ セキュリティスキャン通過
+      - ☑ ビルド成功
+    optional:
+      - パフォーマンステスト（主要変更時）
+      - アクセシビリティチェック
+  
+  staging_deployment:
+    required:
+      - ☑ 統合テストすべて成功
+      - ☑ E2Eテスト通過
+      - ☑ セキュリティテスト通過
+      - ☑ パフォーマンステスト基準達成
+    optional:
+      - 負荷テスト（大規模変更時）
+      - 手動探索的テスト
+  
+  production_deployment:
+    required:
+      - ☑ Staging検証完了
+      - ☑ スモークテスト通過
+      - ☑ ロールバック計画準備
+      - ☑ モニタリング設定完了
+      - ☑ プロダクトオーナー承認
+    optional:
+      - カナリアデプロイ
+      - ブルーグリーンデプロイ
+```
+
+---
+
+## 🛠️ 品質ツール / Quality Tools
+
+### テストツール / Testing Tools
+
+```yaml
+testing_tools:
+  unit_testing:
+    - tool: "Jest"
+      purpose: "JavaScriptユニットテスト"
+      coverage: "フロントエンド、バックエンド"
+    
+    - tool: "Vitest"
+      purpose: "Viteベースのユニットテスト"
+      coverage: "フロントエンド（Next.js/React）"
+    
+    - tool: "React Testing Library"
+      purpose: "Reactコンポーネントテスト"
+      coverage: "フロントエンド"
+  
+  integration_testing:
+    - tool: "Supertest"
+      purpose: "APIテスト"
+      coverage: "バックエンド"
+    
+    - tool: "MSW (Mock Service Worker)"
+      purpose: "APIモック"
+      coverage: "フロントエンド、統合テスト"
+  
+  e2e_testing:
+    - tool: "Playwright"
+      purpose: "E2Eテスト"
+      coverage: "フルスタック"
+    
+    - tool: "Cypress"
+      purpose: "E2Eテスト（既存）"
+      coverage: "フロントエンド中心"
+  
+  performance_testing:
+    - tool: "k6"
+      purpose: "負荷テスト、パフォーマンステスト"
+      coverage: "API、バックエンド"
+    
+    - tool: "Lighthouse CI"
+      purpose: "Webパフォーマンス測定"
+      coverage: "フロントエンド"
+  
+  security_testing:
+    - tool: "OWASP ZAP"
+      purpose: "脆弱性スキャン"
+      coverage: "Webアプリケーション"
+    
+    - tool: "Snyk"
+      purpose: "依存関係の脆弱性検査"
+      coverage: "全プロジェクト"
+  
+  accessibility_testing:
+    - tool: "axe-core"
+      purpose: "アクセシビリティ自動テスト"
+      coverage: "フロントエンド"
+    
+    - tool: "Lighthouse"
+      purpose: "アクセシビリティ監査"
+      coverage: "Webアプリケーション"
+```
+
+### 品質分析ツール / Quality Analysis Tools
+
+```yaml
+quality_analysis_tools:
+  static_analysis:
+    - tool: "ESLint"
+      purpose: "JavaScript/TypeScript静的解析"
+    
+    - tool: "Prettier"
+      purpose: "コードフォーマット"
+    
+    - tool: "TypeScript"
+      purpose: "型チェック"
+    
+    - tool: "SonarQube"
+      purpose: "コード品質分析、技術的負債測定"
+  
+  monitoring:
+    - tool: "Sentry"
+      purpose: "エラートラッキング"
+    
+    - tool: "Datadog"
+      purpose: "APM、インフラ監視"
+    
+    - tool: "CloudWatch"
+      purpose: "AWSリソース監視"
+  
+  ci_cd:
+    - tool: "GitHub Actions"
+      purpose: "CI/CDパイプライン"
+    
+    - tool: "Docker"
+      purpose: "コンテナ化、環境一貫性"
+```
+
+---
+
+## 📊 品質レポート / Quality Reports
+
+### 定期レポート / Regular Reports
+
+```yaml
+quality_reports:
+  daily:
+    - CI/CDパイプライン実行結果
+    - テスト成功率
+    - ビルド成功率
+    - 新規バグ数
+  
+  weekly:
+    - テストカバレッジトレンド
+    - コード品質メトリクス
+    - パフォーマンスメトリクス
+    - セキュリティスキャン結果
+  
+  monthly:
+    - 総合品質レポート
+    - 品質目標達成状況
+    - 改善提案
+    - ベンチマーク比較
+  
+  quarterly:
+    - 品質戦略レビュー
+    - ツール評価
+    - プロセス改善
+    - 年間計画更新
+```
+
+---
+
+## 📚 トレーニングとドキュメント / Training and Documentation
+
+### トレーニングプログラム / Training Programs
+
+```yaml
+training_programs:
+  onboarding:
+    - 品質基準の概要
+    - テストツールの使い方
+    - コーディング規約
+    - コードレビュープロセス
+    duration: "1週間"
+  
+  continuous_learning:
+    - テスト駆動開発（TDD）ワークショップ
+    - パフォーマンステストトレーニング
+    - セキュリティベストプラクティス
+    - アクセシビリティ基礎
+    frequency: "四半期ごと"
+  
+  advanced:
+    - 高度なテスト戦略
+    - パフォーマンスチューニング
+    - セキュリティ監査
+    - 品質メトリクス分析
+    frequency: "半年ごと"
+```
+
+---
+
+## 🔗 関連リソース / Related Resources
+
+### 内部ドキュメント / Internal Documents
+- [アーキテクチャ標準](/devin-organization-standards/02-architecture-standards/)
+- [開発プロセス](/devin-organization-standards/03-development-process/)
+- [技術スタック](/devin-organization-standards/05-technology-stack/)
+- [テンプレート集](/devin-organization-standards/08-templates/)
+
+### 外部リソース / External Resources
+- [ISTQB (International Software Testing Qualifications Board)](https://www.istqb.org/)
+- [Test Automation University](https://testautomationu.applitools.com/)
+- [Google Testing Blog](https://testing.googleblog.com/)
+- [Martin Fowler's Testing](https://martinfowler.com/testing/)
+
+---
+
+## バージョン履歴 / Version History
+
+| バージョン | 日付 | 変更内容 | 担当者 |
+|---------|------|---------|--------|
+| 2.0.0 | 2025-01-15 | パフォーマンステスト標準、負荷テスト標準を追加、構造改善 | QA Team |
+| 1.0.0 | 2024-12-01 | 初版作成 | QA Team |
+
+---
+
+## 承認 / Approval
+
+| 役割 | 氏名 | 承認日 |
+|-----|------|--------|
+| QA Manager | [Name] | 2025-01-15 |
+| Engineering Manager | [Name] | 2025-01-15 |
+| CTO | [Name] | 2025-01-15 |
+
+---
+
+## お問い合わせ / Contact
+
+### QA Team
+- **Email**: qa-team@company.com
+- **Slack**: #qa-general
+- **会議**: 毎週木曜日 15:00-16:00
+
+### 品質保証に関する問い合わせ
+- **緊急**: qa-oncall@company.com
+- **一般**: qa-support@company.com
+

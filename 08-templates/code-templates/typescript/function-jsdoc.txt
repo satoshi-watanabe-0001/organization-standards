@@ -1,0 +1,37 @@
+/**
+ * [関数の目的を1行で記述]
+ * 
+ * [詳細説明:
+ *  - この関数が何をするか
+ *  - どのように動作するか
+ *  - 重要な副作用（あれば）
+ *  - ビジネスルール・制約
+ * ]
+ * 
+ * @param paramName - [パラメータの説明
+ *   - 型の説明
+ *   - 制約・バリデーション
+ *   - デフォルト値（あれば）
+ * ]
+ * @returns [戻り値の説明
+ *   - 成功時の戻り値
+ *   - 失敗時の戻り値（null等）
+ * ]
+ * @throws {ErrorType} [エラーが発生する条件]
+ * 
+ * @example
+ * ```typescript
+ * // 基本的な使用例
+ * const result = await functionName(param);
+ * 
+ * // エラーハンドリングの例
+ * try {
+ *   const result = await functionName(param);
+ * } catch (error) {
+ *   // エラー処理
+ * }
+ * ```
+ */
+export async function functionName(paramName: Type): Promise<ReturnType> {
+  // 実装
+}

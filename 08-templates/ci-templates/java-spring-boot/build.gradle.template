@@ -1,0 +1,151 @@
+// ========================================
+// CI/CD品質ゲート設定
+// ========================================
+// このセクションを既存の build.gradle に追加してください
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.0'  // バージョンは最新に更新
+    id 'io.spring.dependency-management' version '1.1.4'
+    
+    // ✅ 必須: 品質チェックプラグイン
+    id 'jacoco'                                    // カバレッジ測定
+    id 'com.diffplug.spotless' version '6.23.3'   // コードフォーマット
+    id 'checkstyle'                                // コーディング規約チェック
+}
+
+group = 'com.example'
+version = '1.0.0'
+sourceCompatibility = '${JAVA_VERSION}'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+// ========================================
+// JaCoCo カバレッジ設定
+// ========================================
+
+jacoco {
+    toolVersion = '0.8.11'  // 最新バージョンを使用
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport  // テスト実行後にレポート生成
+}
+
+jacocoTestReport {
+    dependsOn test
+    
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
+    }
+}
+
+// ✅ 必須: カバレッジ閾値検証（80%）
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.80  // 組織標準: 80%
+            }
+        }
+        
+        rule {
+            element = 'CLASS'
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.70  // クラス単位: 70%以上
+            }
+            
+            // 除外対象（必要に応じて調整）
+            excludes = [
+                '**.config.**',      // 設定クラス
+                '**.dto.**',         // DTOクラス
+                '**.entity.**',      // エンティティクラス
+                '**.*Application',   // Mainクラス
+            ]
+        }
+    }
+}
+
+// ✅ 重要: check タスクに依存関係を追加
+check.dependsOn jacocoTestCoverageVerification
+
+// ========================================
+// Spotless コードフォーマット設定
+// ========================================
+
+spotless {
+    java {
+        // Google Java Style を使用
+        googleJavaFormat('1.18.1')
+        
+        // または Eclipse フォーマッターを使用する場合:
+        // eclipse()
+        
+        // 対象ファイル
+        target 'src/**/*.java'
+        
+        // 除外ファイル
+        targetExclude 'src/generated/**/*.java'
+        
+        // 末尾の空白削除
+        trimTrailingWhitespace()
+        
+        // 改行で終了
+        endWithNewline()
+        
+        // インポート順序の整理
+        importOrder('java', 'javax', 'org', 'com', '')
+        
+        // 未使用インポートの削除
+        removeUnusedImports()
+    }
+}
+
+// ========================================
+// Checkstyle コーディング規約設定
+// ========================================
+
+checkstyle {
+    toolVersion = '10.12.5'  // 最新バージョンを使用
+    
+    // Checkstyle設定ファイル
+    // config/checkstyle/checkstyle.xml を作成してください
+    configFile = file('config/checkstyle/checkstyle.xml')
+    
+    // Checkstyle設定ファイルが無い場合はコメントアウト
+    // configFile = file('config/checkstyle/checkstyle.xml')
+    
+    // 違反時の処理
+    ignoreFailures = false  // エラー時にビルド失敗
+    maxWarnings = 0         // 警告も許容しない
+    maxErrors = 0           // エラーも許容しない
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+// ========================================
+// 参照ドキュメント
+// ========================================
+// - /00-guides/CI-SETUP-CHECKLIST.md
+// - /03-development-process/ci-cd-pipeline.md
+// - /04-quality-standards/code-quality-standards.md
+// - /04-quality-standards/testing-standards.md

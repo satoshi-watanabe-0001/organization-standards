@@ -1,0 +1,63 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main, develop, 'feature/**', 'bugfix/**']
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js ${NODE_VERSION}
+        uses: actions/setup-node@v3
+        with:
+          node-version: '${NODE_VERSION}'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      # ✅ 必須: Lint実行
+      - name: Run Lint
+        run: npm run lint
+      
+      # ✅ 必須: Format Check実行（コードフォーマットチェック）
+      - name: Check Code Formatting
+        run: npm run format:check
+      
+      # ✅ 必須: Type Check実行
+      - name: Type Check
+        run: npm run type-check
+      
+      # ✅ 必須: Build実行
+      - name: Build
+        run: npm run build
+      
+      # ✅ 必須: Test実行（カバレッジ閾値チェック含む）
+      - name: Run Tests with Coverage
+        run: npm run test:coverage
+      
+      # 🟡 推奨: カバレッジレポートのアップロード
+      - name: Upload Coverage Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage/
+      
+      # 🟡 推奨: ビルドアーティファクトのアップロード
+      - name: Upload Build Artifacts
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: dist/
