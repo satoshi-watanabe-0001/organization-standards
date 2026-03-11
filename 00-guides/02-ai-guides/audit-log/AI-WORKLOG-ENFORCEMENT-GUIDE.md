@@ -5,12 +5,23 @@ document_type: mandatory_procedure
 target_ai: all (Devin, Cursor, その他のAIエージェント)
 priority: critical
 enforcement_level: mandatory
-version: 3.0
-last_updated: 2026-02-19
+version: 3.1
+last_updated: 2026-03-10
 changes: ログ方式を structured_output＋messages 必須（監査ログ方式）に置換。従来の Markdown ベースのログは任意。
 related_documents:
-  - AICQ_Devin_reasoning_log.md
+  - AICQ_AUDIT_LOG_SCHEMA.md
+  - AICQ_PLAYBOOK_TEMPLATE.md
+  - AICQ_DATA_MODEL.md
+  - AICQ_METRICS_SPEC.md
+  - AICQ_METRICS_CALCULATION_GUIDE.md
   - AI-WORKLOG-GRANULARITY-GUIDE.md
+  - AI-WORKLOG-IMPLEMENTATION-GUIDE.md
+  - AI-AUDIT-LOG-QUICK-DECISION-GUIDE.md
+  - AI-AUDIT-LOG-SCENARIO-COOKBOOK.md
+  - AI-AUDIT-LOG-UPDATE-API-GUIDE.md
+  - AI-AUDIT-LOG-SELF-CHECK-SCRIPT.md
+  - AI-AUDIT-LOG-DECISION-ID-STANDARD.md
+
 ---
 
 > 🚨 **【必須】作業開始前の絶対条件（V3.0 監査ログ方式）**
@@ -36,7 +47,11 @@ related_documents:
 > 注: 従来の Markdown ログファイル（worklog_*.md）は、本バージョンでは必須ではありません（任意）。
 
 ### 1.2 なぜ structured_output＋messages なのか
-AIの内部CoT（隠れた思考）をそのまま取得できない状況でも、structured_output を監査目的で設計し、messages と合わせて回収することで、意思決定や逸脱の検出、品質メトリクス算出が可能になります。詳細設計は **AICQ_Devin_reasoning_log.md** を参照してください。
+AIの内部CoT（隠れた思考）をそのまま取得できない状況でも、structured_output を監査目的で設計し、messages と合わせて回収することで、意思決定や逸脱の検出、品質メトリクス算出が可能になります。詳細設計は以下を参照してください：
+スキーマ定義: AICQ_AUDIT_LOG_SCHEMA.md
+データモデル: AICQ_DATA_MODEL.md
+Playbook本文: AICQ_PLAYBOOK_TEMPLATE.md
+メトリクス計算: AICQ_METRICS_SPEC.md, AICQ_METRICS_CALCULATION_GUIDE.md
 
 ### 1.3 監査ログの単位・粒度
 監査ログの分割は **推論コンテキスト**を基準とします。
@@ -153,6 +168,26 @@ structured_output は、以下の **フェーズ開始時／完了時／重要�
 ### 3.2 禁止事項
 - structured_output の更新を後回しにして作業を継続すること（監査不能）
 - セッション終了後に都合よく整形して「それっぽいログ」にすること
+
+### 3.3 実践ガイドの活用
+
+セッション中に判断に迷った場合、以下の実践ガイドを参照してください：
+
+**判断支援:**
+- **AI-AUDIT-LOG-QUICK-DECISION-GUIDE.md**: 30秒で判断できるフローチャート、20シナリオの即座判断表
+
+**記録方法:**
+- **AI-AUDIT-LOG-SCENARIO-COOKBOOK.md**: 20シナリオの完全記録例（コピペ可能JSON）
+
+**技術実装:**
+- **AI-AUDIT-LOG-UPDATE-API-GUIDE.md**: structured_output更新のAPI実装（Python/TypeScript）
+
+**品質保証:**
+- **AI-AUDIT-LOG-SELF-CHECK-SCRIPT.md**: セッション終了前の10カテゴリチェック（必須実行）
+
+**命名標準:**
+- **AI-AUDIT-LOG-DECISION-ID-STANDARD.md**: decision_IDの13カテゴリ標準・採番ルール
+
 
 ---
 

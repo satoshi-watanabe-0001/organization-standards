@@ -8,9 +8,15 @@ last_updated: 2026-02-19
 changes: ログ方式を structured_output＋messages 必須（監査ログ方式）に置換。worklog_*.md 前提を撤廃。structured_output スキーマを AICQ_AUDIT_LOG_SCHEMA.md に分離。
 related_documents:
   - AI-WORKLOG-ENFORCEMENT-GUIDE.md
-  - AICQ_Devin_reasoning_log.md
   - AI-WORKLOG-GRANULARITY-GUIDE.md
   - AICQ_AUDIT_LOG_SCHEMA.md
+  - AICQ_DATA_MODEL.md
+  - AICQ_PLAYBOOK_TEMPLATE.md
+  - AICQ_METRICS_SPEC.md
+  - AICQ_METRICS_CALCULATION_GUIDE.md
+  - AI-AUDIT-LOG-UPDATE-API-GUIDE.md
+  - AI-AUDIT-LOG-SELF-CHECK-SCRIPT.md
+  - AI-AUDIT-LOG-DECISION-ID-STANDARD.md
 ---
 
 # 監査ログ取得のための実装ガイド V3.0
